@@ -32,7 +32,10 @@ KeeperSpawner/
 ├── src/KeeperSpawner/GameState.cs      # "oyun içinde miyiz" kontrolü
 ├── src/KeeperSpawner/ItemCatalog.cs    # tüm itemları okur, filtreler, önbelleğe alır
 ├── src/KeeperSpawner/Spawner.cs        # envantere ekleme + oyun bildirimi
-├── src/KeeperSpawner/SpawnerWindow.cs  # menü arayüzü (IMGUI)
+├── src/KeeperSpawner/SpawnerWindow.cs  # menü arayüzü (IMGUI): arama, sekmeler, bilgi satırı
+├── src/KeeperSpawner/ItemView.cs       # ızgara / liste çizimi, kategori bölümleri
+├── src/KeeperSpawner/IconCache.cs      # item ikonlarını çözer ve önbelleğe alır
+├── src/KeeperSpawner/Categories.cs     # item → kategori kuralları
 ├── src/KeeperSpawner/InputBlocker.cs   # menü açıkken oyun girdisini askıya alır
 ├── src/KeeperSpawner/Strings.cs        # mod arayüzü metinleri (TR/EN)
 ├── Directory.Build.props               # Directory.Build.props.user'ı içe aktarır
@@ -76,8 +79,10 @@ Oyun kodunda bulunacaklar:
 - Stacklenemeyen itemlarda max stack = 1.
 
 ### Faz 3 — Cilalama
-- İkonlu ızgara görünümü (oyunun sprite'ları).
-- Kategori sekmeleri, favoriler, son spawn edilenler.
+- ✅ İkonlu ızgara görünümü (oyunun sprite'ları); Izgara/Liste seçimi config'e kaydediliyor. (v0.2.0)
+- ✅ Kategori sekmeleri; "Tümü" sekmesinde ızgara kategori başlıklarıyla bölümlere ayrılıyor. 15 kategori, kurallar `Categories.cs`. (v0.2.0)
+- Favoriler, son spawn edilenler.
+- İsteğe bağlı: pencere arka planı yarı saydam, arkadaki oyun görünüyor; opak arka plan.
 - Adet seçimi (1 / 10 / max) — tıklama davranışı ileride genişletilecek.
 - Item adları oyunun aktif diliyle; mod arayüzü TR/EN.
 - Sorunlu itemlar (görev itemları) için kara liste.
