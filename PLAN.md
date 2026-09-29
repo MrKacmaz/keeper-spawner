@@ -33,6 +33,8 @@ KeeperSpawner/
 ├── src/KeeperSpawner/Spawner.cs        # envantere ekleme
 ├── src/KeeperSpawner/SpawnerWindow.cs  # menü arayüzü
 ├── Directory.Build.props.user          # GamePath (yerel, git'e girmez)
+├── docs/game-api.md                    # Faz 1 keşif notları (oyun API'si)
+├── tools/ue/                           # UnityExplorer C# konsol betikleri
 ├── decompiled/                         # oyun kodunun okunabilir hali (git'e girmez, ASLA yayınlanmaz)
 └── workshop/                           # preview.png, açıklama, INSTALL.txt, .vdf
 ```
@@ -49,14 +51,14 @@ KeeperSpawner/
 4. UnityExplorer (BepInEx5 Mono) kur.
 5. `git init`, `.gitignore` (bin/, obj/, decompiled/, *.user).
 
-### Faz 1 — Keşif (en kritik)
+### Faz 1 — Keşif (en kritik) ✅ (2026-09-29; bulgular: `docs/game-api.md`)
 Oyun kodunda bulunacaklar:
 - Item veritabanı: tüm item tanımları (kimlik, çeviri anahtarı / görünen ad, ikon, max stack).
 - Oyuncu envanterine item ekleyen metot.
 - "Kayıt yüklendi / oyun içindeyiz" durumu (menü ana menüde açılmamalı).
 - Envanter dolunca oyunun davranışı.
 
-**Ara hedef:** UnityExplorer konsolundan bulunan metodu elle çağırıp envantere 1 item eklemek.
+**Ara hedef:** UnityExplorer konsolundan bulunan metodu elle çağırıp envantere 1 item eklemek. ✅ `tools/ue/02-add-stick.cs` ile 50 `stick` eklendi (`ok=True before=0 after=50 leftover=0`).
 
 ### Faz 2 — MVP
 - BepInEx eklenti iskeleti (`[BepInPlugin]`, yüklenince log).
@@ -64,6 +66,7 @@ Oyun kodunda bulunacaklar:
 - O ile açılıp kapanan pencere: arama kutusu + kaydırılabilir item listesi; tıklanınca max stack kadar envantere ekle.
 - **Dikkat:** Arama kutusuna yazı yazılırken "o" harfi menüyü kapatmamalı → metin alanı odaktayken kısayol yok sayılır.
 - ~~P tuşunun oyunda başka bir işlevi var mı kontrol et~~ → P dolu, O seçildi.
+- Liste filtreleri (bkz. `docs/game-api.md`): `overhead`, test/pseudo, envanter kabı ve oyun kaynağı sayılan id'ler gizli; görev itemları varsayılan olarak gizli.
 - Menü açıkken oyun tıklamaları/hareketi engellenir.
 - Item listesi bir kez okunup önbelleğe alınır.
 - Stacklenemeyen itemlarda max stack = 1.
