@@ -14,7 +14,12 @@ Oyun sürümü 1.007.1 (buildid 25601286) üzerinde `Assembly-CSharp.dll` ve `La
   - `iconId : string` → sprite adı
   - `sortOrder : int`
 - Görünen ad: `ItemDef.GetHeader()`, aktif dile göre `LLBase.L(id)` döner. Aktif dil kodu: `LLBase.CurrentLang`.
-- İkon: `LazySingletonSO<EasySpritesCollection>.Instance.GetSprite(def.iconId)`. Önce `HasSprite(name)` ile kontrol edilebilir. Oyunun kendi `UIItemCell`'i de bu yolu kullanıyor.
+- İkon: `LazySingletonSO<EasySpritesCollection>.Instance.GetSprite(def.iconId)`. Oyunun kendi `UIItemCell`'i de bu yolu kullanıyor.
+  - Önce `HasSprite(name)` çağrılmalı; `GetSprite` eksik isimde oyunun loguna uyarı basıyor.
+  - Sprite'lar Addressables `SpriteAtlas`'larından **eşzamanlı** (`WaitForCompletion`) yükleniyor; ilk erişim takılma yapabilir.
+  - `SpriteAtlas.GetSprite` **her çağrıda yeni bir Sprite kopyası** üretir; önbelleğe almadan her karede çağırmak sızıntı yapar.
+  - Oyun `UnloadAtlases()` ile atlasları boşaltabilir; önbellekteki Sprite Unity-null olur, yeniden çözülmeli.
+  - IMGUI'de çizim: `GUI.DrawTextureWithTexCoords(rect, sprite.texture, uv)`. `uv` için `sprite.uv` sınırları kullanılıyor (`textureRect` tight paketlemede erişilemez). 1.007.1'de döndürülmüş atlas sprite'ı görülmedi.
 - Sahte ya da özel id'ler: `"empty"`, `"faith"`, `"inventory"`, `"craftInventory"`. Listeden elenecek.
 
 ### Runtime dökümü (1.007.1, dil `tr`, 814 item)
