@@ -7,7 +7,7 @@ Oyun içinde bir tuşla açılan menüden itemları listeleyip tıklanan itemı 
 | Konu | Karar |
 |---|---|
 | Mod adı | **KeeperSpawner** |
-| Kısayol tuşu | **P** (ayar dosyasından değiştirilebilir) |
+| Kısayol tuşu | **O** (ayar dosyasından değiştirilebilir). P oyunda başka bir eyleme atanmış. |
 | Tıklama davranışı | Şimdilik itemın **max stack**'i kadar ekler |
 | Geliştirme ortamı | Windows (kodlama + derleme + test aynı makinede) |
 | Versiyon kontrol | Git (Windows cihazda başlatılacak) |
@@ -60,10 +60,10 @@ Oyun kodunda bulunacaklar:
 
 ### Faz 2 — MVP
 - BepInEx eklenti iskeleti (`[BepInPlugin]`, yüklenince log).
-- Config (`BepInEx\config\<guid>.cfg`): kısayol tuşu (varsayılan `P`).
-- P ile açılıp kapanan pencere: arama kutusu + kaydırılabilir item listesi; tıklanınca max stack kadar envantere ekle.
-- **Dikkat:** Arama kutusuna yazı yazılırken "p" harfi menüyü kapatmamalı → metin alanı odaktayken kısayol yok sayılır.
-- **Dikkat:** P tuşunun oyunda başka bir işlevi var mı kontrol et (oyunun tuş ayarları).
+- Config (`BepInEx\config\<guid>.cfg`): kısayol tuşu (varsayılan `O`).
+- O ile açılıp kapanan pencere: arama kutusu + kaydırılabilir item listesi; tıklanınca max stack kadar envantere ekle.
+- **Dikkat:** Arama kutusuna yazı yazılırken "o" harfi menüyü kapatmamalı → metin alanı odaktayken kısayol yok sayılır.
+- ~~P tuşunun oyunda başka bir işlevi var mı kontrol et~~ → P dolu, O seçildi.
 - Menü açıkken oyun tıklamaları/hareketi engellenir.
 - Item listesi bir kez okunup önbelleğe alınır.
 - Stacklenemeyen itemlarda max stack = 1.
