@@ -10,7 +10,7 @@ namespace KeeperSpawner
     {
         public const string Guid = "com.mrkacmaz.keeperspawner";
         public const string Name = "KeeperSpawner";
-        public const string Version = "0.1.0";
+        public const string Version = "0.2.0";
 
         internal static ManualLogSource Log;
 
@@ -27,8 +27,10 @@ namespace KeeperSpawner
                 "Görev itemlarını listede göster (kayıtları bozabilir) / Show quest items in the list (may break quests).");
             var uiScale = Config.Bind("UI", "Scale", 0f,
                 "Arayüz ölçeği. 0 = otomatik (ekran yüksekliği / 1080) / UI scale. 0 = automatic (screen height / 1080).");
+            var viewMode = Config.Bind("UI", "View", ViewMode.Grid,
+                "Item görünümü: Grid (ikonlu ızgara) ya da List / Item view: Grid (icons) or List.");
 
-            window = new SpawnerWindow(showQuestItems, uiScale);
+            window = new SpawnerWindow(showQuestItems, uiScale, viewMode);
 
             Log.LogInfo($"{Name} {Version} yüklendi. Kısayol: {toggleKey.Value}");
         }

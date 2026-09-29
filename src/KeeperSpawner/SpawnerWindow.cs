@@ -8,37 +8,46 @@ namespace KeeperSpawner
     internal sealed class SpawnerWindow
     {
         private const int WindowId = 0x4B53_5057; // "KSPW"
-        private const float Width = 460f;
-        private const float ListHeight = 440f;
-        private const float RowHeight = 26f;
+        private const float Width = 620f;
+        private const float ViewHeight = 440f;
+        private const int TabsPerRow = 8;
         private const float StatusSeconds = 3f;
 
         private readonly ConfigEntry<bool> showQuestItems;
         private readonly ConfigEntry<float> uiScale;
+        private readonly ConfigEntry<ViewMode> viewMode;
+        private readonly ItemView view = new ItemView();
 
         private Rect windowRect = new Rect(0, 0, Width, 0);
         private bool positioned;
 
         private string search = string.Empty;
-        private string filteredSearch;
-        private bool filteredShowQuest;
-        private IReadOnlyList<CatalogEntry> filteredSource;
-        private readonly List<CatalogEntry> filtered = new List<CatalogEntry>();
-        private Vector2 scroll;
-        private int visibleFirst;
-        private int visibleLast;
+        /// <summary>null = Tümü.</summary>
+        private ItemCategory? selectedCategory;
 
+        // Son filtrelemenin girdileri; değişmedikçe yeniden kurulmaz
+        private IReadOnlyList<CatalogEntry> builtSource;
+        private string builtSearch;
+        private bool builtShowQuest;
+        private ItemCategory? builtCategory;
+        private ViewMode builtMode;
+        private float builtContentWidth;
+
+        private readonly List<ItemCategory?> tabs = new List<ItemCategory?>();
+        private string[] tabLabels = Array.Empty<string>();
+        private readonly List<CatalogEntry> filtered = new List<CatalogEntry>();
+
+        private CatalogEntry hovered;
         private string status;
         private float statusUntil;
 
-        private GUIStyle rowStyle;
-        private GUIStyle rightLabelStyle;
-        private GUIStyle hintStyle;
+        private GUIStyle infoStyle;
 
-        public SpawnerWindow(ConfigEntry<bool> showQuestItems, ConfigEntry<float> uiScale)
+        public SpawnerWindow(ConfigEntry<bool> showQuestItems, ConfigEntry<float> uiScale, ConfigEntry<ViewMode> viewMode)
         {
             this.showQuestItems = showQuestItems;
             this.uiScale = uiScale;
+            this.viewMode = viewMode;
         }
 
         public bool IsOpen { get; private set; }
@@ -65,7 +74,7 @@ namespace KeeperSpawner
                 return;
             }
             IsOpen = true;
-            filteredSource = null; // katalog ya da dil değişmiş olabilir
+            builtSource = null; // katalog ya da dil değişmiş olabilir
             InputBlocker.Suspend();
         }
 
@@ -76,6 +85,7 @@ namespace KeeperSpawner
                 return;
             }
             IsOpen = false;
+            hovered = null;
             GUIUtility.keyboardControl = 0;
             InputBlocker.Restore();
         }
@@ -114,7 +124,7 @@ namespace KeeperSpawner
             if (!positioned)
             {
                 windowRect.x = (screenW - Width) / 2f;
-                windowRect.y = Mathf.Max(20f, (screenH - ListHeight - 160f) / 2f);
+                windowRect.y = Mathf.Max(20f, (screenH - ViewHeight - 220f) / 2f);
                 positioned = true;
             }
 
@@ -144,7 +154,11 @@ namespace KeeperSpawner
 
         private void DrawContent()
         {
-            // Arama satırı
+            float viewWidth = Width - GUI.skin.window.padding.horizontal - 4f;
+            var scrollbar = GUI.skin.verticalScrollbar;
+            float contentWidth = viewWidth - scrollbar.fixedWidth - scrollbar.margin.horizontal - 4f;
+
+            // Arama ve görünüm satırı
             GUILayout.BeginHorizontal();
             GUILayout.Label(Strings.Search, GUILayout.ExpandWidth(false));
             search = GUILayout.TextField(search ?? string.Empty, GUILayout.ExpandWidth(true));
@@ -152,6 +166,11 @@ namespace KeeperSpawner
             {
                 search = string.Empty;
                 GUIUtility.keyboardControl = 0;
+            }
+            int mode = GUILayout.Toolbar((int)viewMode.Value, new[] { Strings.Grid, Strings.List }, GUILayout.Width(140f));
+            if (mode != (int)viewMode.Value)
+            {
+                viewMode.Value = (ViewMode)mode;
             }
             GUILayout.EndHorizontal();
 
@@ -162,65 +181,139 @@ namespace KeeperSpawner
             }
 
             // GUILayout, Layout geçişiyle sonraki olayda aynı kontrolleri ister;
-            // liste yapısını sadece Layout'ta değiştiriyoruz
+            // sekmeler ve liste sadece Layout'ta yeniden kurulur
             var all = ItemCatalog.All;
             if (Event.current.type == EventType.Layout)
             {
-                RefreshFilter(all);
+                RebuildIfNeeded(all, contentWidth);
             }
 
-            GUILayout.Label(Strings.ItemCount(filtered.Count, all.Count), hintStyle);
+            int currentTab = Mathf.Max(0, tabs.IndexOf(selectedCategory));
+            int newTab = GUILayout.SelectionGrid(currentTab, tabLabels, TabsPerRow);
+            if (newTab != currentTab && newTab >= 0 && newTab < tabs.Count)
+            {
+                selectedCategory = tabs[newTab];
+            }
 
-            DrawList();
+            GUILayout.Label(Strings.ItemCount(filtered.Count, all.Count), infoStyle);
 
-            // Durum ve ipucu satırı
-            bool hasStatus = !string.IsNullOrEmpty(status) && Time.unscaledTime < statusUntil;
-            GUILayout.Label(hasStatus ? status : Strings.Hint, hintStyle);
+            var clicked = view.Draw(viewWidth, ViewHeight, contentWidth, out var hoveredNow);
+            if (Event.current.type == EventType.Repaint)
+            {
+                hovered = hoveredNow;
+            }
+            if (clicked != null)
+            {
+                OnItemClicked(clicked);
+            }
+
+            GUILayout.Label(InfoText(), infoStyle);
         }
 
-        private void DrawList()
+        private string InfoText()
         {
-            scroll = GUILayout.BeginScrollView(scroll, false, true, GUILayout.Height(ListHeight));
-
-            if (filtered.Count == 0)
+            if (hovered != null)
             {
-                GUILayout.Label(Strings.NoResults, hintStyle);
+                string quest = hovered.IsQuest ? $"  <color=#e0a040>({Strings.Quest})</color>" : string.Empty;
+                return $"<b>{hovered.DisplayName}</b>{quest}   <color=#8a8a8a>{hovered.Id}  •  x{hovered.MaxStack}  •  {Categories.Name(hovered.Category)}</color>";
+            }
+            if (!string.IsNullOrEmpty(status) && Time.unscaledTime < statusUntil)
+            {
+                return status;
+            }
+            return Strings.Hint;
+        }
+
+        private void RebuildIfNeeded(IReadOnlyList<CatalogEntry> all, float contentWidth)
+        {
+            bool showQuest = showQuestItems.Value;
+            var mode = viewMode.Value;
+            if (ReferenceEquals(all, builtSource) && search == builtSearch && showQuest == builtShowQuest
+                && selectedCategory == builtCategory && mode == builtMode && Mathf.Approximately(contentWidth, builtContentWidth))
+            {
+                return;
+            }
+
+            // Sekmeler: görünür itemı olan kategoriler (aramadan bağımsız, yazarken sekmeler zıplamasın)
+            var present = new bool[Categories.DisplayOrder.Length];
+            foreach (var entry in all)
+            {
+                if (!entry.IsQuest || showQuest)
+                {
+                    present[(int)entry.Category] = true;
+                }
+            }
+            tabs.Clear();
+            tabs.Add(null);
+            foreach (var category in Categories.DisplayOrder)
+            {
+                if (present[(int)category])
+                {
+                    tabs.Add(category);
+                }
+            }
+            if (selectedCategory.HasValue && !present[(int)selectedCategory.Value])
+            {
+                selectedCategory = null;
+            }
+            tabLabels = new string[tabs.Count];
+            for (int i = 0; i < tabs.Count; i++)
+            {
+                tabLabels[i] = tabs[i].HasValue ? Categories.Name(tabs[i].Value) : Strings.All;
+            }
+
+            // Filtre
+            string[] terms = ItemCatalog.Fold(search).Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            var matches = new List<CatalogEntry>();
+            foreach (var entry in all)
+            {
+                if (entry.IsQuest && !showQuest)
+                {
+                    continue;
+                }
+                if (selectedCategory.HasValue && entry.Category != selectedCategory.Value)
+                {
+                    continue;
+                }
+                if (MatchesAll(entry.SearchKey, terms))
+                {
+                    matches.Add(entry);
+                }
+            }
+
+            // "Tümü" sekmesinde kategori bölümlerine ayır; katalog ada göre sıralı olduğu için
+            // kategori kovalarına sırayla dağıtmak bölüm içi alfabetik sırayı korur
+            bool grouped = !selectedCategory.HasValue;
+            filtered.Clear();
+            if (grouped)
+            {
+                var buckets = new List<CatalogEntry>[Categories.DisplayOrder.Length];
+                foreach (var entry in matches)
+                {
+                    int index = (int)entry.Category;
+                    (buckets[index] ?? (buckets[index] = new List<CatalogEntry>())).Add(entry);
+                }
+                foreach (var bucket in buckets)
+                {
+                    if (bucket != null)
+                    {
+                        filtered.AddRange(bucket);
+                    }
+                }
             }
             else
             {
-                // Sadece görünen satırları çiz, geri kalanı boşlukla doldur (800+ buton her karede pahalı).
-                // Aralık sadece Layout'ta hesaplanır; kaydırma olayı ortasında satır sayısı değişmesin.
-                if (Event.current.type == EventType.Layout)
-                {
-                    visibleFirst = Mathf.Clamp((int)(scroll.y / RowHeight), 0, filtered.Count - 1);
-                    int visible = Mathf.CeilToInt(ListHeight / RowHeight) + 2;
-                    visibleLast = Mathf.Min(filtered.Count, visibleFirst + visible);
-                }
-                int first = Mathf.Min(visibleFirst, filtered.Count);
-                int last = Mathf.Min(visibleLast, filtered.Count);
-
-                GUILayout.Space(first * RowHeight);
-                for (int i = first; i < last; i++)
-                {
-                    DrawRow(filtered[i]);
-                }
-                GUILayout.Space((filtered.Count - last) * RowHeight);
+                filtered.AddRange(matches);
             }
 
-            GUILayout.EndScrollView();
-        }
+            view.Rebuild(filtered, grouped, mode, contentWidth);
 
-        private void DrawRow(CatalogEntry entry)
-        {
-            GUILayout.BeginHorizontal(GUILayout.Height(RowHeight));
-            string label = entry.IsQuest ? $"{entry.DisplayName}  <color=#e0a040>({Strings.Quest})</color>" : entry.DisplayName;
-            label += $"  <color=#888888><size=11>{entry.Id}</size></color>";
-            if (GUILayout.Button(label, rowStyle, GUILayout.Height(RowHeight - 2), GUILayout.ExpandWidth(true)))
-            {
-                OnItemClicked(entry);
-            }
-            GUILayout.Label("x" + entry.MaxStack, rightLabelStyle, GUILayout.Width(44), GUILayout.Height(RowHeight - 2));
-            GUILayout.EndHorizontal();
+            builtSource = all;
+            builtSearch = search;
+            builtShowQuest = showQuest;
+            builtCategory = selectedCategory;
+            builtMode = mode;
+            builtContentWidth = contentWidth;
         }
 
         private void OnItemClicked(CatalogEntry entry)
@@ -255,33 +348,6 @@ namespace KeeperSpawner
             }
         }
 
-        private void RefreshFilter(IReadOnlyList<CatalogEntry> all)
-        {
-            bool showQuest = showQuestItems.Value;
-            if (ReferenceEquals(all, filteredSource) && search == filteredSearch && showQuest == filteredShowQuest)
-            {
-                return;
-            }
-            filteredSource = all;
-            filteredSearch = search;
-            filteredShowQuest = showQuest;
-
-            string[] terms = ItemCatalog.Fold(search).Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            filtered.Clear();
-            foreach (var entry in all)
-            {
-                if (entry.IsQuest && !showQuest)
-                {
-                    continue;
-                }
-                if (MatchesAll(entry.SearchKey, terms))
-                {
-                    filtered.Add(entry);
-                }
-            }
-            scroll = Vector2.zero;
-        }
-
         private static bool MatchesAll(string key, string[] terms)
         {
             foreach (var term in terms)
@@ -312,25 +378,15 @@ namespace KeeperSpawner
 
         private void EnsureStyles()
         {
-            if (rowStyle != null)
+            if (infoStyle != null)
             {
                 return;
             }
-            rowStyle = new GUIStyle(GUI.skin.button)
-            {
-                alignment = TextAnchor.MiddleLeft,
-                richText = true,
-                padding = new RectOffset(8, 8, 2, 2),
-            };
-            rightLabelStyle = new GUIStyle(GUI.skin.label)
-            {
-                alignment = TextAnchor.MiddleRight,
-            };
-            hintStyle = new GUIStyle(GUI.skin.label)
+            infoStyle = new GUIStyle(GUI.skin.label)
             {
                 fontSize = 12,
                 richText = true,
-                normal = { textColor = new Color(0.75f, 0.75f, 0.75f) },
+                normal = { textColor = new Color(0.8f, 0.8f, 0.8f) },
             };
         }
     }
