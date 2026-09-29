@@ -29,9 +29,13 @@ Oyun içinde bir tuşla açılan menüden itemları listeleyip tıklanan itemı 
 KeeperSpawner/
 ├── src/KeeperSpawner/KeeperSpawner.csproj
 ├── src/KeeperSpawner/Plugin.cs         # giriş noktası, config, kısayol
-├── src/KeeperSpawner/ItemCatalog.cs    # tüm itemları okur, önbelleğe alır
-├── src/KeeperSpawner/Spawner.cs        # envantere ekleme
-├── src/KeeperSpawner/SpawnerWindow.cs  # menü arayüzü
+├── src/KeeperSpawner/GameState.cs      # "oyun içinde miyiz" kontrolü
+├── src/KeeperSpawner/ItemCatalog.cs    # tüm itemları okur, filtreler, önbelleğe alır
+├── src/KeeperSpawner/Spawner.cs        # envantere ekleme + oyun bildirimi
+├── src/KeeperSpawner/SpawnerWindow.cs  # menü arayüzü (IMGUI)
+├── src/KeeperSpawner/InputBlocker.cs   # menü açıkken oyun girdisini askıya alır
+├── src/KeeperSpawner/Strings.cs        # mod arayüzü metinleri (TR/EN)
+├── Directory.Build.props               # Directory.Build.props.user'ı içe aktarır
 ├── Directory.Build.props.user          # GamePath (yerel, git'e girmez)
 ├── docs/game-api.md                    # Faz 1 keşif notları (oyun API'si)
 ├── tools/ue/                           # UnityExplorer C# konsol betikleri
@@ -60,7 +64,7 @@ Oyun kodunda bulunacaklar:
 
 **Ara hedef:** UnityExplorer konsolundan bulunan metodu elle çağırıp envantere 1 item eklemek. ✅ `tools/ue/02-add-stick.cs` ile 50 `stick` eklendi (`ok=True before=0 after=50 leftover=0`).
 
-### Faz 2 — MVP
+### Faz 2 — MVP ✅ (2026-09-29; v0.1.0 oyunda test edildi: 726 item listelendi, spawn'lar tam adetle eklendi, log temiz)
 - BepInEx eklenti iskeleti (`[BepInPlugin]`, yüklenince log).
 - Config (`BepInEx\config\<guid>.cfg`): kısayol tuşu (varsayılan `O`).
 - O ile açılıp kapanan pencere: arama kutusu + kaydırılabilir item listesi; tıklanınca max stack kadar envantere ekle.
@@ -82,6 +86,8 @@ Oyun kodunda bulunacaklar:
 ### Faz 4 — Test
 - Yeni kayıt / eski kayıt; spawn edilen itemlar kaydet-yükle sonrası duruyor mu.
 - Envanter doluyken; stack sınırları; stacklenemeyen itemlar.
+- Menü açıkken: arkadaki oyun arayüzüne (uGUI, ör. açık envanter) tıklama geçiyor mu; fare tekerleği kamerayı yakınlaştırıyor mu. `InputBlocker` sadece `LazyInput`'u askıya alıyor.
+- Menü açıkken yürüme tuşu basılıyken O'ya basınca karakter duruyor mu.
 - Diğer modlarla birlikte (ör. GK2 Power Menu).
 - Hem Workshop Loader ile hem elle kurulumla.
 - Hatalar için `BepInEx\LogOutput.log`.
