@@ -215,7 +215,8 @@ namespace KeeperSpawner
             if (hovered != null)
             {
                 string quest = hovered.IsQuest ? $"  <color=#e0a040>({Strings.Quest})</color>" : string.Empty;
-                return $"<b>{hovered.DisplayName}</b>{quest}   <color=#8a8a8a>{hovered.Id}  •  x{hovered.MaxStack}  •  {Categories.Name(hovered.Category)}</color>";
+                string star = hovered.Star > 0 ? $"  <color=#e8c060>{Strings.Star(hovered.Star)}</color>" : string.Empty;
+                return $"<b>{hovered.DisplayName}</b>{star}{quest}   <color=#8a8a8a>{hovered.Id}  •  x{hovered.MaxStack}  •  {Categories.Name(hovered.Category)}</color>";
             }
             if (!string.IsNullOrEmpty(status) && Time.unscaledTime < statusUntil)
             {

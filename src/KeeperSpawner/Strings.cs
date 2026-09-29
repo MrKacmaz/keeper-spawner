@@ -17,6 +17,17 @@ namespace KeeperSpawner
         public static string Hint => IsTr ? "Tıkla: max stack ekle  •  Esc: kapat" : "Click: add max stack  •  Esc: close";
         public static string NoResults => IsTr ? "Sonuç yok" : "No results";
 
+        public static string Star(int star)
+        {
+            switch (star)
+            {
+                case 1: return IsTr ? "Bronz yıldız" : "Bronze star";
+                case 2: return IsTr ? "Gümüş yıldız" : "Silver star";
+                case 3: return IsTr ? "Altın yıldız" : "Gold star";
+                default: return IsTr ? $"{star} yıldız" : $"{star} stars";
+            }
+        }
+
         public static string ItemCount(int shown, int total) =>
             IsTr ? $"{shown} / {total} item" : $"{shown} / {total} items";
 

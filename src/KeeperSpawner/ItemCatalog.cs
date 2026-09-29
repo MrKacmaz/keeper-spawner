@@ -19,8 +19,10 @@ namespace KeeperSpawner
         public int MaxStack;
         public bool IsQuest;
         public ItemCategory Category;
-        /// <summary>Yıldız kalite varyantıysa 1-3, değilse 0.</summary>
+        /// <summary>Yıldızlı kalite (1 bronz, 2 gümüş, 3 altın); yıldızsız itemlarda 0.</summary>
         public int Star;
+        /// <summary>Oyunun yıldız sprite'ı ("item_star_N"), yıldızsızsa null.</summary>
+        public string StarIconId;
     }
 
     /// <summary>
@@ -47,7 +49,6 @@ namespace KeeperSpawner
 
         private static readonly Regex SpriteTag = new Regex("<sprite name=\"([^\"]+)\">", RegexOptions.Compiled);
         private static readonly Regex AnyTag = new Regex("<[^>]+>", RegexOptions.Compiled);
-        private static readonly Regex StarSuffix = new Regex(":(\\d+)$", RegexOptions.Compiled);
 
         private static List<CatalogEntry> entries;
         private static string builtForLang;
@@ -140,14 +141,9 @@ namespace KeeperSpawner
             string display = SpriteTag.Replace(rich, m => "[" + ShortSpriteName(m.Groups[1].Value) + "]");
             display = AnyTag.Replace(display, "").Trim();
 
-            // Yıldız kalite varyantları (id:1, id:2, id:3) aynı adı taşıyor, ayırt edilebilsinler
-            var starMatch = StarSuffix.Match(def.id);
-            int star = 0;
-            if (starMatch.Success)
-            {
-                display += " [" + starMatch.Groups[1].Value + "*]";
-                int.TryParse(starMatch.Groups[1].Value, out star);
-            }
+            // Yıldız kalite varyantları (id:1, id:2, id:3) aynı adı taşıyor; oyun gibi yıldız ikonuyla
+            // ayırt ediliyorlar (UIItemCell: qualityType == Star ise "item_star_" + quality)
+            int star = def.qualityType == ItemDef.QualityType.Star ? Math.Max(0, def.quality) : 0;
 
             return new CatalogEntry
             {
@@ -160,6 +156,7 @@ namespace KeeperSpawner
                 IsQuest = def.isQuestItem,
                 Category = Categories.Classify(def),
                 Star = star,
+                StarIconId = star > 0 ? "item_star_" + star : null,
             };
         }
 

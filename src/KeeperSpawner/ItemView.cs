@@ -181,10 +181,7 @@ namespace KeeperSpawner
             {
                 DrawShadowed(new Rect(rect.x, rect.y, rect.width - 3f, rect.height - 1f), entry.MaxStack.ToString(), badgeStyle);
             }
-            if (entry.Star > 0)
-            {
-                DrawShadowed(new Rect(rect.x, rect.y + 1f, rect.width - 3f, rect.height), entry.Star + "*", starStyle);
-            }
+            DrawStar(new Rect(rect.xMax - 19f, rect.y + 2f, 17f, 17f), entry);
             if (entry.IsQuest)
             {
                 DrawShadowed(new Rect(rect.x + 4f, rect.y + 1f, rect.width, rect.height), "!", questStyle);
@@ -205,6 +202,7 @@ namespace KeeperSpawner
             {
                 IconCache.Draw(iconArea, icon);
             }
+            DrawStar(new Rect(iconArea.xMax - 8f, iconArea.y - 1f, 11f, 11f), entry);
 
             string label = entry.DisplayName;
             if (entry.IsQuest)
@@ -215,6 +213,24 @@ namespace KeeperSpawner
             GUI.Label(new Rect(iconArea.xMax + 6f, rect.y, rect.width - iconArea.width - 70f, rect.height), label, rowLabelStyle);
             GUI.Label(new Rect(rect.xMax - 56f, rect.y, 50f, rect.height), "x" + entry.MaxStack, rowStackStyle);
             return pressed;
+        }
+
+        /// <summary>Oyunun kendi yıldız sprite'ı: item_star_1 bronz, _2 gümüş, _3 altın.</summary>
+        private void DrawStar(Rect area, CatalogEntry entry)
+        {
+            if (entry.StarIconId == null)
+            {
+                return;
+            }
+            if (IconCache.TryGet(entry.StarIconId, out var star))
+            {
+                IconCache.Draw(area, star);
+            }
+            else
+            {
+                // Sprite yoksa (ya da bu karenin bütçesi dolduysa) metinle göster
+                DrawShadowed(area, entry.Star + "*", starStyle);
+            }
         }
 
         private static void DrawShadowed(Rect rect, string text, GUIStyle style)
