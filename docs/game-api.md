@@ -25,7 +25,7 @@ Oyun sürümü 1.007.1 (buildid 25601286) üzerinde `Assembly-CSharp.dll` ve `La
 | `stackCount == 1` | 273 | Tek adet eklenir |
 | `overhead` grubu: başta taşınan büyük itemlar (`wood`, `stone`, `marble`, `body_*`, `box_*`, `iron_ore_2h`) | 29 | **Gizlenecek.** Envantere girmezler; oyunun yerden toplama kodu da `ItemSize.Big` itemları reddediyor |
 | `isQuestItem == true` | 35 | Varsayılan olarak gizli, ayarla açılabilir |
-| `quest_bag` grubunda ama `isQuestItem == false` | 10 | Görev itemı sayılacak (ör. `intro_prison_note`, `keys_looters`, `dynamite`) |
+| `quest_bag` grubunda ama `isQuestItem == false` | 10 | Görev itemı **sayılmıyor**. Bu grupta `cacao` gibi sıradan malzemeler de var; sadece `isQuestItem` bayrağına bakılır |
 | Test/geliştirici itemları (`test_*`, `pseudo_*`, `*_test`, `wood_OLD`, `chair`, `saw`, `fake_porter_slot_filler`) | 31+ | Gizlenecek |
 | Envanter kabı sayılan id'ler (`empty`, `inventory`, `toolBeltInventory`, `craftInventory`) | 4 | Gizlenecek |
 | Oyun kaynağı sayılan id'ler (`faith`, `temptation`, `fire`, `alchemy_flask`, `science`, `game_res_tech_*`, `town_happiness`) | ~9 | Gizlenecek. Bunlar envanter itemı değil, oyun kaynağı |
