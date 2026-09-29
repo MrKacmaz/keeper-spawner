@@ -168,7 +168,7 @@ namespace KeeperSpawner
             }
 
             var iconArea = new Rect(rect.x + 5f, rect.y + 5f, rect.width - 10f, rect.height - 10f);
-            if (IconCache.TryGet(entry.Def, out var icon))
+            if (IconCache.TryGet(entry.Def.iconId, out var icon))
             {
                 IconCache.Draw(iconArea, icon);
             }
@@ -201,7 +201,7 @@ namespace KeeperSpawner
             }
 
             var iconArea = new Rect(rect.x + 4f, rect.y + 1f, rect.height - 2f, rect.height - 2f);
-            if (IconCache.TryGet(entry.Def, out var icon))
+            if (IconCache.TryGet(entry.Def.iconId, out var icon))
             {
                 IconCache.Draw(iconArea, icon);
             }

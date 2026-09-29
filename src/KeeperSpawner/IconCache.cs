@@ -33,10 +33,9 @@ namespace KeeperSpawner
         private static int budget;
 
         /// <summary>Sadece Repaint olayında çağrılmalı (bütçe kare başına sayılır).</summary>
-        public static bool TryGet(ItemDef def, out Icon icon)
+        public static bool TryGet(string name, out Icon icon)
         {
             icon = default;
-            string name = def?.iconId;
             if (string.IsNullOrEmpty(name) || Missing.Contains(name))
             {
                 return false;
