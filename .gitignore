@@ -1,0 +1,14 @@
+# Build çıktıları
+bin/
+obj/
+
+# Oyun kodunun decompile edilmiş hali — ASLA yayınlanmaz
+decompiled/
+
+# Yerel ayarlar (GamePath vb.)
+*.user
+
+# IDE
+.vs/
+.vscode/
+.idea/
