@@ -18,6 +18,9 @@ namespace KeeperSpawner
         public string SearchKey;
         public int MaxStack;
         public bool IsQuest;
+        public ItemCategory Category;
+        /// <summary>Yıldız kalite varyantıysa 1-3, değilse 0.</summary>
+        public int Star;
     }
 
     /// <summary>
@@ -138,10 +141,12 @@ namespace KeeperSpawner
             display = AnyTag.Replace(display, "").Trim();
 
             // Yıldız kalite varyantları (id:1, id:2, id:3) aynı adı taşıyor, ayırt edilebilsinler
-            var star = StarSuffix.Match(def.id);
-            if (star.Success)
+            var starMatch = StarSuffix.Match(def.id);
+            int star = 0;
+            if (starMatch.Success)
             {
-                display += " [" + star.Groups[1].Value + "*]";
+                display += " [" + starMatch.Groups[1].Value + "*]";
+                int.TryParse(starMatch.Groups[1].Value, out star);
             }
 
             return new CatalogEntry
@@ -153,6 +158,8 @@ namespace KeeperSpawner
                 SearchKey = Fold(display + " " + def.id),
                 MaxStack = Math.Max(1, def.stackCount),
                 IsQuest = def.isQuestItem,
+                Category = Categories.Classify(def),
+                Star = star,
             };
         }
 
