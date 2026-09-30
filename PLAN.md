@@ -8,7 +8,7 @@ Oyun içinde bir tuşla açılan menüden itemları listeleyip tıklanan itemı 
 |---|---|
 | Mod adı | **KeeperSpawner** |
 | Kısayol tuşu | **O** (ayar dosyasından değiştirilebilir). P oyunda başka bir eyleme atanmış. |
-| Tıklama davranışı | Şimdilik itemın **max stack**'i kadar ekler |
+| Tıklama davranışı | Varsayılan olarak itemın **max stack**'i kadar ekler; v0.4.0 tasarımıyla 1 / 10 / Maks seçimi ve Shift+tık = 1 adet gelecek |
 | Geliştirme ortamı | Windows (kodlama + derleme + test aynı makinede) |
 | Versiyon kontrol | Git (Windows cihazda başlatılacak) |
 | Yayın yeri | Steam Atölyesi (ileride Nexus) |
@@ -81,9 +81,9 @@ Oyun kodunda bulunacaklar:
 ### Faz 3 — Cilalama
 - ✅ İkonlu ızgara görünümü (oyunun sprite'ları); Izgara/Liste seçimi config'e kaydediliyor. (v0.2.0)
 - ✅ Kategori sekmeleri; "Tümü" sekmesinde ızgara kategori başlıklarıyla bölümlere ayrılıyor. 15 kategori, kurallar `Categories.cs`. (v0.2.0)
-- Favoriler, son spawn edilenler.
-- İsteğe bağlı: pencere arka planı yarı saydam, arkadaki oyun görünüyor; opak arka plan.
-- Adet seçimi (1 / 10 / max) — tıklama davranışı ileride genişletilecek.
+- Favoriler (sağ tık) ve son eklenenler (en fazla 24); ayrı sekmeler + "Tümü"nün başında bölümler. Config'te `Items.Favorites` / `Items.Recent`. (v0.3.0)
+- Opak pencere arka planı (`UI.BackgroundOpacity`, varsayılan 0.97). (v0.3.0)
+- Adet seçimi (1 / 10 / Maks, Shift+tık, bilgi panelinde miktar) → v0.4.0 arayüz tasarımıyla.
 - Item adları oyunun aktif diliyle; mod arayüzü TR/EN.
 - Sorunlu itemlar (görev itemları) için kara liste.
 - İsteğe bağlı: oyunun stiline uygun uGUI arayüz.
