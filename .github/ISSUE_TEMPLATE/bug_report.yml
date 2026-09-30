@@ -1,0 +1,96 @@
+name: Bug report / Hata bildirimi
+description: Something does not work as expected. / Bir şey beklendiği gibi çalışmıyor.
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting! The log file is the most useful part: `Graveyard Keeper 2\BepInEx\LogOutput.log`.
+        Start the game, reproduce the problem, close the game, then attach the file below (it is rewritten on every start).
+
+        Bildirdiğin için teşekkürler! En faydalı kısım log dosyası: `Graveyard Keeper 2\BepInEx\LogOutput.log`.
+        Oyunu aç, sorunu tekrarla, oyunu kapat ve dosyayı aşağıya ekle (her açılışta yeniden yazılır).
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened? / Ne oldu?
+      description: What did you expect and what happened instead? / Ne bekliyordun, ne oldu?
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce / Tekrarlama adımları
+      placeholder: |
+        1. Load a save / Bir kayıt yükle
+        2. Press O / O'ya bas
+        3. ...
+    validations:
+      required: true
+
+  - type: input
+    id: mod-version
+    attributes:
+      label: KeeperSpawner version / Mod sürümü
+      description: Shown in the window title and in the log. / Pencere başlığında ve logda yazar.
+      placeholder: "1.0.0"
+    validations:
+      required: true
+
+  - type: input
+    id: game-version
+    attributes:
+      label: Game version / Oyun sürümü
+      description: Bottom right of the main menu, also in the log ("Oyun sürümü"). / Ana menünün sağ altında, logda da yazar.
+      placeholder: "1.007.1"
+    validations:
+      required: true
+
+  - type: input
+    id: bepinex-version
+    attributes:
+      label: BepInEx version / BepInEx sürümü
+      description: First line of LogOutput.log. / LogOutput.log dosyasının ilk satırı.
+      placeholder: "5.4.23.5"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: install
+    attributes:
+      label: How is the mod installed? / Mod nasıl kuruldu?
+      options:
+        - GK2 Workshop Loader (Steam Workshop)
+        - Manual / Elle (BepInEx\plugins\KeeperSpawner)
+        - Other / Diğer
+    validations:
+      required: true
+
+  - type: input
+    id: language
+    attributes:
+      label: Game language / Oyun dili
+      placeholder: "English / Türkçe / Deutsch ..."
+
+  - type: textarea
+    id: other-mods
+    attributes:
+      label: Other mods / Diğer modlar
+      description: Other BepInEx plugins you use (the log lists them as "Loading [...]"). / Kullandığın diğer BepInEx eklentileri (logda "Loading [...]" satırları).
+
+  - type: textarea
+    id: log
+    attributes:
+      label: LogOutput.log
+      description: Drag and drop the file here, or paste the lines around the error. / Dosyayı buraya sürükle ya da hatanın etrafındaki satırları yapıştır.
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: Screenshot / Ekran görüntüsü
+      description: Optional, especially helpful for display problems. / İsteğe bağlı, görüntü sorunlarında çok işe yarar.
