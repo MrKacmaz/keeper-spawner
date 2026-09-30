@@ -12,7 +12,7 @@ namespace KeeperSpawner
     {
         public const string Guid = "com.mrkacmaz.keeperspawner";
         public const string Name = "KeeperSpawner";
-        public const string Version = "0.4.0";
+        public const string Version = "1.0.0";
 
         // Tasarım: son eklenenler en fazla 5 (HANDOFF.md §5)
         private const int RecentLimit = 5;
