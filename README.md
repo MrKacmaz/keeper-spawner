@@ -69,6 +69,10 @@ At startup the mod checks the game members it uses. If a game update removes or 
 
 The mod does not use the network, does not delete files and does not load other code. It uses reflection only to read and reset the game's input state while the window is open.
 
+## Bug reports
+
+Found a bug or have an idea? [Open an issue](../../issues/new/choose). For bugs, please attach `Graveyard Keeper 2\BepInEx\LogOutput.log` from a session where the problem happened.
+
 ## Building
 
 Requirements: .NET SDK 8 (or newer), the game with BepInEx installed.
@@ -146,6 +150,10 @@ Ayarlar `BepInEx\config\com.mrkacmaz.keeperspawner.cfg` dosyasında (tablo yukar
 ### Uyumluluk
 
 Oyun sürümü 1.007.1 ile test edildi. Mod açılışta kullandığı oyun kodunu kontrol eder; bir şey değiştiyse kendini kapatır ve sebebini `BepInEx\LogOutput.log` dosyasına yazar. Ağ kullanmaz, dosya silmez, başka kod yüklemez.
+
+### Hata bildirimi
+
+Bir hata ya da fikrin mi var? [Issue aç](../../issues/new/choose). Hatalarda, sorunun yaşandığı oturumdan `Graveyard Keeper 2\BepInEx\LogOutput.log` dosyasını ekle.
 
 ### Lisans
 
