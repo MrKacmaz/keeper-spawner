@@ -10,8 +10,15 @@ namespace KeeperSpawner
         List,
     }
 
+    /// <summary>Başlıklı bir item grubu (bir kategori, favoriler ya da son eklenenler).</summary>
+    internal sealed class ItemSection
+    {
+        public string Title;
+        public List<CatalogEntry> Items;
+    }
+
     /// <summary>
-    /// Item listesini ızgara ya da liste olarak, istenirse kategori başlıklarıyla bölümlere ayırarak çizer.
+    /// Item listesini ızgara ya da liste olarak, istenirse başlıklı bölümlere ayırarak çizer.
     /// Scroll alanı GUILayout'a tek bir dikdörtgen olarak bildirilir, içerik mutlak GUI çağrılarıyla ve
     /// sadece görünen satırlar için çizilir. Böylece 700+ item her karede ucuz kalır ve Layout/Repaint
     /// geçişleri arasında kontrol sayısı değişmez.
@@ -23,10 +30,12 @@ namespace KeeperSpawner
         public const float ListRow = 28f;
         public const float HeaderHeight = 26f;
 
+        private static readonly Color FavoriteColor = new Color(0.95f, 0.75f, 0.25f);
+
         private struct Line
         {
-            public bool IsHeader;
-            public ItemCategory Category;
+            public ItemSection Header;
+            public ItemSection Section;
             public int Start;
             public int Count;
             public float Y;
@@ -34,11 +43,11 @@ namespace KeeperSpawner
         }
 
         private readonly List<Line> lines = new List<Line>();
-        private List<CatalogEntry> items = new List<CatalogEntry>();
         private ViewMode mode;
         private int columns = 1;
         private float totalHeight;
         private Vector2 scroll;
+        private string emptyText = string.Empty;
 
         private GUIStyle cellStyle;
         private GUIStyle rowStyle;
@@ -52,10 +61,10 @@ namespace KeeperSpawner
         private GUIStyle emptyStyle;
 
         /// <summary>Filtre, sekme ya da görünüm değişince çağrılır (sadece Layout olayında).</summary>
-        public void Rebuild(List<CatalogEntry> sorted, bool grouped, ViewMode viewMode, float contentWidth)
+        public void Rebuild(IList<ItemSection> sections, bool showHeaders, ViewMode viewMode, float contentWidth, string whenEmpty)
         {
-            items = sorted;
             mode = viewMode;
+            emptyText = whenEmpty ?? string.Empty;
             columns = mode == ViewMode.Grid
                 ? Math.Max(1, (int)((contentWidth + GridGap) / (GridCell + GridGap)))
                 : 1;
@@ -63,46 +72,53 @@ namespace KeeperSpawner
 
             lines.Clear();
             float y = 0f;
-            int i = 0;
-            while (i < items.Count)
+            foreach (var section in sections)
             {
-                int end = items.Count;
-                if (grouped)
+                if (section.Items.Count == 0)
                 {
-                    var category = items[i].Category;
-                    end = i;
-                    while (end < items.Count && items[end].Category == category)
-                    {
-                        end++;
-                    }
-                    lines.Add(new Line { IsHeader = true, Category = category, Count = end - i, Y = y, Height = HeaderHeight });
+                    continue;
+                }
+                if (showHeaders)
+                {
+                    lines.Add(new Line { Header = section, Y = y, Height = HeaderHeight });
                     y += HeaderHeight;
                 }
-                for (int start = i; start < end; start += columns)
+                for (int start = 0; start < section.Items.Count; start += columns)
                 {
-                    lines.Add(new Line { Start = start, Count = Math.Min(columns, end - start), Y = y, Height = rowHeight });
+                    lines.Add(new Line
+                    {
+                        Section = section,
+                        Start = start,
+                        Count = Math.Min(columns, section.Items.Count - start),
+                        Y = y,
+                        Height = rowHeight,
+                    });
                     y += rowHeight;
                 }
-                i = end;
             }
             totalHeight = y;
             scroll = Vector2.zero;
         }
 
-        /// <summary>Tıklanan itemı döner; fare altındaki itemı <paramref name="hovered"/>'a yazar.</summary>
-        public CatalogEntry Draw(float width, float height, float contentWidth, out CatalogEntry hovered)
+        /// <summary>
+        /// Sol tıklanan itemı döner. Sağ tıklananı <paramref name="rightClicked"/>'a, fare altındakini
+        /// <paramref name="hovered"/>'a yazar. <paramref name="isFavorite"/> hücre işaretlemesi için.
+        /// </summary>
+        public CatalogEntry Draw(float width, float height, float contentWidth, Func<CatalogEntry, bool> isFavorite,
+            out CatalogEntry hovered, out CatalogEntry rightClicked)
         {
             EnsureStyles();
             hovered = null;
+            rightClicked = null;
             CatalogEntry clicked = null;
 
             scroll = GUILayout.BeginScrollView(scroll, false, true, GUILayout.Width(width), GUILayout.Height(height));
             var content = GUILayoutUtility.GetRect(contentWidth, Mathf.Max(totalHeight, height - 4f),
                 GUILayout.Width(contentWidth));
 
-            if (items.Count == 0)
+            if (lines.Count == 0)
             {
-                GUI.Label(new Rect(content.x, content.y + 4f, contentWidth, 24f), Strings.NoResults, emptyStyle);
+                GUI.Label(new Rect(content.x, content.y + 4f, contentWidth, 40f), emptyText, emptyStyle);
             }
 
             var ev = Event.current;
@@ -118,26 +134,34 @@ namespace KeeperSpawner
                     continue;
                 }
 
-                if (line.IsHeader)
+                if (line.Header != null)
                 {
-                    DrawHeader(new Rect(content.x, top, contentWidth, line.Height), line);
+                    DrawHeader(new Rect(content.x, top, contentWidth, line.Height), line.Header);
                     continue;
                 }
 
                 for (int k = 0; k < line.Count; k++)
                 {
-                    var entry = items[line.Start + k];
+                    var entry = line.Section.Items[line.Start + k];
                     var rect = mode == ViewMode.Grid
                         ? new Rect(content.x + k * (GridCell + GridGap), top, GridCell, GridCell)
                         : new Rect(content.x, top + 1f, contentWidth, ListRow - 2f);
 
-                    if (mouseInView && rect.Contains(ev.mousePosition))
+                    bool underMouse = mouseInView && rect.Contains(ev.mousePosition);
+                    if (underMouse)
                     {
                         hovered = entry;
+                        // Sağ tık favori; olayı tüketiyoruz ki buton sağ tıkla item eklemesin
+                        if (ev.type == EventType.MouseDown && ev.button == 1)
+                        {
+                            rightClicked = entry;
+                            ev.Use();
+                        }
                     }
 
-                    bool pressed = mode == ViewMode.Grid ? DrawCell(rect, entry) : DrawRow(rect, entry);
-                    if (pressed)
+                    bool favorite = isFavorite(entry);
+                    bool pressed = mode == ViewMode.Grid ? DrawCell(rect, entry, favorite) : DrawRow(rect, entry, favorite);
+                    if (pressed && Event.current.button == 0)
                     {
                         clicked = entry;
                     }
@@ -148,18 +172,17 @@ namespace KeeperSpawner
             return clicked;
         }
 
-        private void DrawHeader(Rect rect, Line line)
+        private void DrawHeader(Rect rect, ItemSection section)
         {
             if (Event.current.type != EventType.Repaint)
             {
                 return;
             }
-            GUI.Label(rect, $"{Categories.Name(line.Category)}  <color=#8a8a8a>({line.Count})</color>", headerStyle);
-            GUI.DrawTexture(new Rect(rect.x, rect.yMax - 3f, rect.width, 1f), Texture2D.whiteTexture, ScaleMode.StretchToFill,
-                true, 0f, new Color(1f, 1f, 1f, 0.15f), 0f, 0f);
+            GUI.Label(rect, $"{section.Title}  <color=#8a8a8a>({section.Items.Count})</color>", headerStyle);
+            DrawFill(new Rect(rect.x, rect.yMax - 3f, rect.width, 1f), new Color(1f, 1f, 1f, 0.15f));
         }
 
-        private bool DrawCell(Rect rect, CatalogEntry entry)
+        private bool DrawCell(Rect rect, CatalogEntry entry, bool favorite)
         {
             bool pressed = GUI.Button(rect, GUIContent.none, cellStyle);
             if (Event.current.type != EventType.Repaint)
@@ -186,10 +209,14 @@ namespace KeeperSpawner
             {
                 DrawShadowed(new Rect(rect.x + 4f, rect.y + 1f, rect.width, rect.height), "!", questStyle);
             }
+            if (favorite)
+            {
+                DrawOutline(rect, FavoriteColor, 2f);
+            }
             return pressed;
         }
 
-        private bool DrawRow(Rect rect, CatalogEntry entry)
+        private bool DrawRow(Rect rect, CatalogEntry entry, bool favorite)
         {
             bool pressed = GUI.Button(rect, GUIContent.none, rowStyle);
             if (Event.current.type != EventType.Repaint)
@@ -197,7 +224,12 @@ namespace KeeperSpawner
                 return pressed;
             }
 
-            var iconArea = new Rect(rect.x + 4f, rect.y + 1f, rect.height - 2f, rect.height - 2f);
+            if (favorite)
+            {
+                DrawFill(new Rect(rect.x, rect.y, 3f, rect.height), FavoriteColor);
+            }
+
+            var iconArea = new Rect(rect.x + 6f, rect.y + 1f, rect.height - 2f, rect.height - 2f);
             if (IconCache.TryGet(entry.Def.iconId, out var icon))
             {
                 IconCache.Draw(iconArea, icon);
@@ -210,7 +242,7 @@ namespace KeeperSpawner
                 label += $"  <color=#e0a040>({Strings.Quest})</color>";
             }
             label += $"  <color=#888888><size=11>{entry.Id}</size></color>";
-            GUI.Label(new Rect(iconArea.xMax + 6f, rect.y, rect.width - iconArea.width - 70f, rect.height), label, rowLabelStyle);
+            GUI.Label(new Rect(iconArea.xMax + 6f, rect.y, rect.width - iconArea.width - 72f, rect.height), label, rowLabelStyle);
             GUI.Label(new Rect(rect.xMax - 56f, rect.y, 50f, rect.height), "x" + entry.MaxStack, rowStackStyle);
             return pressed;
         }
@@ -231,6 +263,19 @@ namespace KeeperSpawner
                 // Sprite yoksa (ya da bu karenin bütçesi dolduysa) metinle göster
                 DrawShadowed(area, entry.Star + "*", starStyle);
             }
+        }
+
+        private static void DrawOutline(Rect rect, Color color, float thickness)
+        {
+            DrawFill(new Rect(rect.x, rect.y, rect.width, thickness), color);
+            DrawFill(new Rect(rect.x, rect.yMax - thickness, rect.width, thickness), color);
+            DrawFill(new Rect(rect.x, rect.y, thickness, rect.height), color);
+            DrawFill(new Rect(rect.xMax - thickness, rect.y, thickness, rect.height), color);
+        }
+
+        private static void DrawFill(Rect rect, Color color)
+        {
+            GUI.DrawTexture(rect, Texture2D.whiteTexture, ScaleMode.StretchToFill, true, 0f, color, 0f, 0f);
         }
 
         private static void DrawShadowed(Rect rect, string text, GUIStyle style)
@@ -295,7 +340,11 @@ namespace KeeperSpawner
                 fontSize = 13,
                 normal = { textColor = new Color(0.95f, 0.6f, 0.2f) },
             };
-            emptyStyle = new GUIStyle(GUI.skin.label) { normal = { textColor = new Color(0.75f, 0.75f, 0.75f) } };
+            emptyStyle = new GUIStyle(GUI.skin.label)
+            {
+                wordWrap = true,
+                normal = { textColor = new Color(0.75f, 0.75f, 0.75f) },
+            };
         }
     }
 }

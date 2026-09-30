@@ -10,7 +10,9 @@ namespace KeeperSpawner
     {
         public const string Guid = "com.mrkacmaz.keeperspawner";
         public const string Name = "KeeperSpawner";
-        public const string Version = "0.2.1";
+        public const string Version = "0.3.0";
+
+        private const int RecentLimit = 24;
 
         internal static ManualLogSource Log;
 
@@ -29,8 +31,14 @@ namespace KeeperSpawner
                 "Arayüz ölçeği. 0 = otomatik (ekran yüksekliği / 1080) / UI scale. 0 = automatic (screen height / 1080).");
             var viewMode = Config.Bind("UI", "View", ViewMode.Grid,
                 "Item görünümü: Grid (ikonlu ızgara) ya da List / Item view: Grid (icons) or List.");
+            var backgroundOpacity = Config.Bind("UI", "BackgroundOpacity", 0.97f,
+                "Pencere arka planının opaklığı (0.2 - 1) / Window background opacity (0.2 - 1).");
+            var favorites = new IdList(Config.Bind("Items", "Favorites", string.Empty,
+                "Favori item id'leri, virgülle ayrılmış (menüde sağ tıkla düzenlenir) / Favorite item ids, comma separated (right-click in the menu)."));
+            var recent = new IdList(Config.Bind("Items", "Recent", string.Empty,
+                "Son eklenen item id'leri, en yeniden eskiye / Recently added item ids, newest first."), RecentLimit);
 
-            window = new SpawnerWindow(showQuestItems, uiScale, viewMode);
+            window = new SpawnerWindow(showQuestItems, uiScale, viewMode, backgroundOpacity, favorites, recent);
 
             Log.LogInfo($"{Name} {Version} yüklendi. Kısayol: {toggleKey.Value}");
         }

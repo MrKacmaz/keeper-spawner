@@ -14,8 +14,21 @@ namespace KeeperSpawner
         public static string All => IsTr ? "Tümü" : "All";
         public static string Grid => IsTr ? "Izgara" : "Grid";
         public static string List => IsTr ? "Liste" : "List";
-        public static string Hint => IsTr ? "Tıkla: max stack ekle  •  Esc: kapat" : "Click: add max stack  •  Esc: close";
+        public static string Favorites => IsTr ? "Favoriler" : "Favorites";
+        public static string Recent => IsTr ? "Son" : "Recent";
+        public static string RecentSection => IsTr ? "Son eklenenler" : "Recently added";
+        public static string FavoriteMark => IsTr ? "favori" : "favorite";
+        public static string Hint => IsTr
+            ? "Tıkla: max stack ekle  •  Sağ tık: favori  •  Esc: kapat"
+            : "Click: add max stack  •  Right-click: favorite  •  Esc: close";
         public static string NoResults => IsTr ? "Sonuç yok" : "No results";
+        public static string NoFavorites => IsTr
+            ? "Henüz favori yok. Bir itema sağ tıklayarak favorilere ekleyebilirsin."
+            : "No favorites yet. Right-click an item to add it.";
+        public static string NoRecent => IsTr ? "Henüz item eklenmedi." : "Nothing added yet.";
+
+        public static string FavoriteAdded(string name) => IsTr ? $"Favorilere eklendi: {name}" : $"Added to favorites: {name}";
+        public static string FavoriteRemoved(string name) => IsTr ? $"Favorilerden çıkarıldı: {name}" : $"Removed from favorites: {name}";
 
         public static string Star(int star)
         {
