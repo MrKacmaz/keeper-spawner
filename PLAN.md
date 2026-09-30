@@ -118,10 +118,10 @@ Oyun kodunda bulunacaklar:
   - ✅ `tools/package.ps1`: derler, DLL'i Workshop Loader güvenlik listesine göre tarar, `artifacts/<sürüm>/content` (Atölye), `KeeperSpawner-<sürüm>.zip` (elle kurulum / Nexus, `/` ayırıcılı) ve `workshop_item.vdf` üretir. Tarama temiz.
   - ✅ `workshop/`: `INSTALL.txt` (EN+TR), `description.en.bbcode`, `description.tr.bbcode`, `keeperspawner.vdf.template`. `CHANGELOG.md`.
   - ✅ Sürüm 1.0.0.
-  - ⏳ `workshop/preview.png` (oyun içi ekran görüntüsünden, <1 MB).
+  - ✅ `workshop/preview.png` (oyun içi ekran görüntüsü, 1550×1012, 267 KB).
+  - ✅ Atölye'ye yüklendi (oyunun yükleyicisiyle): [3810736028](https://steamcommunity.com/sharedfiles/filedetails/?id=3810736028). `tools/package.ps1` varsayılan olarak bu id'yi `.vdf`'e yazar. İlk kontrolde anonim Steam API'si itemı göremedi (Liste dışı / henüz herkese açık değil).
   - ✅ Repo herkese açık, MIT lisansı, README (EN+TR), issue formları.
   - ✅ GitHub release [v1.0.0](https://github.com/MrKacmaz/keeper-spawner/releases/tag/v1.0.0) (`KeeperSpawner-1.0.0.zip`, SHA-256 `0ac5ec56…2660`). Sonraki sürümler: `tools/package.ps1` → `gh release create vX.Y.Z artifacts\X.Y.Z\KeeperSpawner-X.Y.Z.zip --notes-file …`.
-  - ⏳ Yükleme: oyunun kendi yükleyicisiyle (karar).
 - **Oyunun Atölye yükleyicisi** (`SteamWorkshopCreatorService`, `UISteamWorkshopCreatorWindow`):
   - `…\AppData\LocalLow\Lazy Bear Games\Graveyard Keeper 2\Mods\workshop.json` içinde `"workshopCreatorMode": true` → oyunda **Shift+F11**.
   - Tek etiket seçeneği `Translation`. Dosya türü filtresi yok; sadece `_`/`~` ile başlayanları atlar. Önizleme: klasördeki `Thumbnail.png|jpg|jpeg` (içeriğe kopyalanmaz).
