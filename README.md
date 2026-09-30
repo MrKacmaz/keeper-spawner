@@ -26,7 +26,11 @@ Item spawner mod for **Graveyard Keeper 2** (BepInEx 5). Press **O** in game, fi
 
 ## Installation
 
-**With the GK2 Workshop Loader:** install BepInEx and the loader, subscribe to [KeeperSpawner on the Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3810736028) and approve it in the loader.
+**With the GK2 Workshop Loader:**
+
+1. Install BepInEx (step 1 of the manual install below).
+2. Put [`GK2_WorkshopLoader.dll`](https://github.com/Zoriten/-GK2-WorkshopLoader/releases) into `Graveyard Keeper 2\BepInEx\patchers\` (not `plugins`).
+3. Subscribe to [KeeperSpawner on the Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3810736028), start the game and click **Yes** in the loader's security check.
 
 **Manually:**
 
@@ -124,7 +128,11 @@ The game and BepInEx assemblies are referenced from the game folder and are not 
 
 ### Kurulum
 
-**GK2 Workshop Loader ile:** BepInEx'i ve loader'ı kur, [Steam Atölyesi'nde KeeperSpawner](https://steamcommunity.com/sharedfiles/filedetails/?id=3810736028)'a abone ol ve loader'da onayla.
+**GK2 Workshop Loader ile:**
+
+1. BepInEx'i kur (aşağıdaki elle kurulumun 1. adımı).
+2. [`GK2_WorkshopLoader.dll`](https://github.com/Zoriten/-GK2-WorkshopLoader/releases) dosyasını `Graveyard Keeper 2\BepInEx\patchers\` klasörüne koy (`plugins` değil).
+3. [Steam Atölyesi'nde KeeperSpawner](https://steamcommunity.com/sharedfiles/filedetails/?id=3810736028)'a abone ol, oyunu aç ve loader'ın güvenlik penceresinde **Evet**'e bas.
 
 **Elle:**
 

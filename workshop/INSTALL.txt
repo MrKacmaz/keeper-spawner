@@ -5,8 +5,11 @@ REQUIREMENTS
 - BepInEx 5.4.23.5 (win_x64): https://github.com/BepInEx/BepInEx/releases/tag/v5.4.23.5
 
 INSTALL WITH GK2 WORKSHOP LOADER
-1. Install BepInEx and the GK2 Workshop Loader.
-2. Subscribe to KeeperSpawner on the Steam Workshop and approve it in the loader.
+1. Install BepInEx (steps 1-2 of the manual install below).
+2. Put GK2_WorkshopLoader.dll (https://github.com/Zoriten/-GK2-WorkshopLoader/releases)
+   into Graveyard Keeper 2\BepInEx\patchers\ (not plugins).
+3. Subscribe to KeeperSpawner on the Steam Workshop, start the game and click "Yes"
+   in the loader's security check.
 
 MANUAL INSTALL
 1. Extract BepInEx_win_x64_5.4.23.5.zip next to GraveyardKeeper2.exe.
@@ -36,8 +39,11 @@ GEREKSİNİMLER
 - BepInEx 5.4.23.5 (win_x64): https://github.com/BepInEx/BepInEx/releases/tag/v5.4.23.5
 
 GK2 WORKSHOP LOADER İLE KURULUM
-1. BepInEx'i ve GK2 Workshop Loader'ı kur.
-2. Steam Atölyesi'nde KeeperSpawner'a abone ol ve loader'da onayla.
+1. BepInEx'i kur (aşağıdaki elle kurulumun 1-2. adımları).
+2. GK2_WorkshopLoader.dll dosyasını (https://github.com/Zoriten/-GK2-WorkshopLoader/releases)
+   Graveyard Keeper 2\BepInEx\patchers\ klasörüne koy (plugins değil).
+3. Steam Atölyesi'nde KeeperSpawner'a abone ol, oyunu aç ve loader'ın güvenlik
+   penceresinde "Evet"e bas.
 
 ELLE KURULUM
 1. BepInEx_win_x64_5.4.23.5.zip dosyasını GraveyardKeeper2.exe'nin yanına çıkar.
