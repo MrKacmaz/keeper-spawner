@@ -4,7 +4,7 @@ Item spawner mod for **Graveyard Keeper 2** (BepInEx 5). Press **O** in game, fi
 
 [Türkçe](#türkçe)
 
-![KeeperSpawner in game](docs/images/screenshot.webp)
+![KeeperSpawner in game](docs/images/screenshot.png)
 
 ## Features
 
