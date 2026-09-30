@@ -10,7 +10,8 @@
 #   KeeperSpawner-<sürüm>.zip        elle kurulum / Nexus (Thumbnail olmadan)
 #   workshop_item.vdf                SteamCMD workshop_build_item için
 param(
-    [string]$PublishedFileId = "0",
+    # Steam Atölyesi item'ı: https://steamcommunity.com/sharedfiles/filedetails/?id=3810736028
+    [string]$PublishedFileId = "3810736028",
     [string]$ChangeNote = "",
     [switch]$SkipBuild
 )

@@ -26,7 +26,7 @@ Item spawner mod for **Graveyard Keeper 2** (BepInEx 5). Press **O** in game, fi
 
 ## Installation
 
-**With the GK2 Workshop Loader:** install BepInEx and the loader, subscribe to KeeperSpawner on the Steam Workshop and approve it in the loader.
+**With the GK2 Workshop Loader:** install BepInEx and the loader, subscribe to [KeeperSpawner on the Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3810736028) and approve it in the loader.
 
 **Manually:**
 
@@ -124,7 +124,7 @@ The game and BepInEx assemblies are referenced from the game folder and are not 
 
 ### Kurulum
 
-**GK2 Workshop Loader ile:** BepInEx'i ve loader'ı kur, Steam Atölyesi'nde KeeperSpawner'a abone ol ve loader'da onayla.
+**GK2 Workshop Loader ile:** BepInEx'i ve loader'ı kur, [Steam Atölyesi'nde KeeperSpawner](https://steamcommunity.com/sharedfiles/filedetails/?id=3810736028)'a abone ol ve loader'da onayla.
 
 **Elle:**
 
