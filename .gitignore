@@ -5,6 +5,9 @@ obj/
 # Oyun kodunun decompile edilmiş hali — ASLA yayınlanmaz
 decompiled/
 
+# Yayın paketleri (tools/package.ps1 üretir)
+artifacts/
+
 # Yerel ayarlar (GamePath vb.)
 *.user
 
