@@ -90,7 +90,7 @@ Oyun kodunda bulunacaklar:
 - Favoriler (sağ tık) ve son eklenenler (en fazla 24); ayrı sekmeler + "Tümü"nün başında bölümler. Config'te `Items.Favorites` / `Items.Recent`. (v0.3.0)
 - Opak pencere arka planı (`UI.BackgroundOpacity`, varsayılan 0.97). (v0.3.0)
 - v0.4.0 arayüz yeniden tasarımı (`docs/ui-handoff/`): çelik çerçeveli 1120×720 pencere, sol dikey kategori listesi, arama + Tık modu (1/10/Maks) + kalite filtresi, ızgara/liste, sağda item bilgi paneli (miktar, ID kopyala, favori, son 5), alt çubukta bildirim ve tuş ipuçları. Son eklenenler 24'ten 5'e indi; "Tümü" artık favori/son bölümlerini içermiyor (tasarım). **Oyunda test bekliyor.**
-- Item adları oyunun aktif diliyle; mod arayüzü TR/EN.
+- Item adları oyunun aktif diliyle; mod arayüzü oyunun 17 dilinin hepsinde (en, tr, de, fr, es/es-mx, pt-br, ru, uk-ua, it, pl, ja, zh_cn, zh_cht, ko, th, vn; bilinmeyen dil → en). Tablo `Strings.cs`. **Oyunda test bekliyor** (CJK/Tay harfleri varsayılan fontla, uzun Almanca metinler).
 - Sorunlu itemlar (görev itemları) için kara liste.
 - İsteğe bağlı: oyunun stiline uygun uGUI arayüz.
 
