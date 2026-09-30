@@ -48,6 +48,7 @@ namespace KeeperSpawner
             window = new SpawnerWindow(showQuestItems, uiScale, viewMode, clickAmount, lastCategory, fontName,
                 backdropOpacity, favorites, recent);
 
+            Strings.Validate();
             Log.LogInfo($"{Name} {Version} yüklendi. Kısayol: {toggleKey.Value}");
         }
 

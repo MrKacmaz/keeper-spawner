@@ -17,8 +17,8 @@ namespace KeeperSpawner
                 (Strings.KeyClick, Strings.ClickHint(clickAmount.Value)),
                 (Strings.KeyShiftClick, Strings.OneItem),
                 (Strings.KeyRightClick, Strings.FavoriteHint),
-                ("Ctrl+F", Strings.SearchHint),
-                ("Esc", Strings.CloseHint),
+                (Strings.KeyCtrlF, Strings.SearchHint),
+                (Strings.KeyEsc, Strings.CloseHint),
             };
             float x = inner.xMax;
             for (int i = hints.Length - 1; i >= 0; i--)

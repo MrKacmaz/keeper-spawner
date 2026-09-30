@@ -89,28 +89,8 @@ namespace KeeperSpawner
             return ItemCategory.Other;
         }
 
-        public static string Name(ItemCategory category)
-        {
-            bool tr = Strings.IsTr;
-            switch (category)
-            {
-                case ItemCategory.Building: return tr ? "İnşaat" : "Building";
-                case ItemCategory.Food: return tr ? "Yiyecek" : "Food";
-                case ItemCategory.Farming: return tr ? "Tarım" : "Farming";
-                case ItemCategory.Alchemy: return tr ? "Simya" : "Alchemy";
-                case ItemCategory.Potions: return tr ? "İksirler" : "Potions";
-                case ItemCategory.Tools: return tr ? "Aletler" : "Tools";
-                case ItemCategory.Equipment: return tr ? "Ekipman" : "Equipment";
-                case ItemCategory.Fishing: return tr ? "Balıkçılık" : "Fishing";
-                case ItemCategory.BodyParts: return tr ? "Organlar" : "Body parts";
-                case ItemCategory.Graves: return tr ? "Mezar" : "Graves";
-                case ItemCategory.Church: return tr ? "Kilise" : "Church";
-                case ItemCategory.Papers: return tr ? "Kâğıt" : "Papers";
-                case ItemCategory.Bags: return tr ? "Çantalar" : "Bags";
-                case ItemCategory.Quest: return tr ? "Görev" : "Quest";
-                default: return tr ? "Diğer" : "Other";
-            }
-        }
+        /// <summary>Kategorinin oyunun aktif dilindeki adı (çeviriler Strings'te).</summary>
+        public static string Name(ItemCategory category) => Strings.Category(category);
 
         private static bool HasPrefix(string id, string[] prefixes)
         {
