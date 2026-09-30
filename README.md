@@ -1,8 +1,12 @@
+<p align="center">
+  <img src="docs/images/banner.png" alt="KeeperSpawner – item spawner mod for Graveyard Keeper 2" width="480">
+</p>
+
 # KeeperSpawner
 
 Item spawner mod for **Graveyard Keeper 2** (BepInEx 5). Press **O** in game, find an item and click it to add it to your inventory.
 
-[Türkçe](#türkçe)
+[Türkçe](#türkçe) · [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3810736028) · [Releases](../../releases)
 
 ![KeeperSpawner in game](docs/images/screenshot.png)
 
