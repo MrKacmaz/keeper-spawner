@@ -116,7 +116,11 @@ Oyun kodunda bulunacaklar:
 - Önizleme görseli (<1 MB), EN + TR açıklama, BepInEx kurulum linki, kısayol ve ayarlar.
 
 ### Faz 6 — Bakım
-- Oyun güncellemesi metotları bozarsa mod çökmez; loga uyarı yazıp kendini devre dışı bırakır.
+- Oyun güncellemesi metotları bozarsa mod çökmez; loga uyarı yazıp kendini devre dışı bırakır. ✅ (kod hazır, **oyunda test bekliyor**)
+  - `GameCompat.Check()` açılışta kullanılan oyun API'lerini reflection ile doğrular. Zorunlu biri eksikse mod kapanır, isteğe bağlı olan eksikse (oyun bildirimi, ikonlar, girdi donma temizliği) sadece o özellik kapanır.
+  - `Update`/`OnGUI` sarmalı: `MissingMemberException`/`TypeLoadException` gelirse mod hemen kapanır; diğer hatalar birer kez loglanır, 30 hatadan sonra mod kapanır. Kapalıyken kısayola basınca 17 dilde uyarı çıkar.
+  - Test için `Debug.ForceIncompatible = true`.
+  - Açılışta oyun sürümü ve test edilen sürüm (`GameCompat.TestedGameVersion`) loglanır; her oyun güncellemesinden sonra güncellenmeli.
 - SemVer (1.0.0, 1.1.0…) ve Atölye değişiklik notları.
 
 ## Riskler
