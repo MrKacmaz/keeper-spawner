@@ -70,7 +70,7 @@ namespace KeeperSpawner
                 return false;
             }
 
-            var entry = new Entry { Sprite = sprite, Icon = CreateIcon(sprite) };
+            var entry = new Entry { Sprite = sprite, Icon = FromSprite(sprite) };
             Cache[name] = entry;
             icon = entry.Icon;
             return true;
@@ -95,7 +95,7 @@ namespace KeeperSpawner
             }
         }
 
-        private static Icon CreateIcon(Sprite sprite)
+        public static Icon FromSprite(Sprite sprite)
         {
             // Atlas sprite'larında textureRect "tight" paketlemede erişilemez; uv sınırlarını kullan
             var uvs = sprite.uv;
@@ -132,6 +132,12 @@ namespace KeeperSpawner
                 Mathf.Round(area.y + (area.height - dh) / 2f),
                 dw, dh);
             GUI.DrawTextureWithTexCoords(rect, icon.Texture, icon.Uv);
+        }
+
+        /// <summary>İkonu alanı tam dolduracak şekilde çizer (oyunun kendi UI ölçeklemesi gibi).</summary>
+        public static void DrawStretched(Rect area, Icon icon)
+        {
+            GUI.DrawTextureWithTexCoords(area, icon.Texture, icon.Uv);
         }
     }
 }

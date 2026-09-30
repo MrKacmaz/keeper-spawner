@@ -345,11 +345,7 @@ namespace KeeperSpawner
             x += badgeW + 14f;
 
             var close = new Rect(r.xMax - 10f - 36f, cy - 18f, 36f, 36f);
-            if (GUI.Button(close, GUIContent.none, KsTheme.Close))
-            {
-                Close();
-            }
-            KsTheme.GlyphClose(new Rect(close.x + 10f, close.y + 10f, 16f, 16f), KsTheme.Hex("#fbe3d6"));
+            DrawCloseButton(close);
 
             // Süs: uzayan çizgi ◆ 90px çizgi
             float left = x + 12f, right = close.x - 14f - 12f;
@@ -361,6 +357,43 @@ namespace KeeperSpawner
                 KsTheme.Diamond(new Vector2(diaX + 4f, cy), 8f, KsTheme.Accent, KsTheme.Hex("#3a2410"));
                 KsTheme.Fill(new Rect(right - 90f, cy - 1f, 90f, 2f), line);
             }
+        }
+
+        /// <summary>
+        /// Kapat düğmesi: oyunun kendi pencerelerindeki sprite'lar (normal / üstünde / basılı).
+        /// Bulunamazlarsa tasarımın kırmızı kare + piksel X çizimi.
+        /// </summary>
+        private void DrawCloseButton(Rect rect)
+        {
+            if (GameSprites.TryGet(GameSprites.CloseNormal, out var normal))
+            {
+                if (GUI.Button(rect, GUIContent.none, GUIStyle.none))
+                {
+                    Close();
+                }
+                if (KsTheme.Repaint)
+                {
+                    bool hover = rect.Contains(Event.current.mousePosition);
+                    bool pressed = hover && UnityEngine.Input.GetMouseButton(0);
+                    var icon = normal;
+                    if (pressed && GameSprites.TryGet(GameSprites.ClosePressed, out var down))
+                    {
+                        icon = down;
+                    }
+                    else if (hover && GameSprites.TryGet(GameSprites.CloseHover, out var over))
+                    {
+                        icon = over;
+                    }
+                    IconCache.DrawStretched(rect, icon);
+                }
+                return;
+            }
+
+            if (GUI.Button(rect, GUIContent.none, KsTheme.Close))
+            {
+                Close();
+            }
+            KsTheme.GlyphClose(new Rect(rect.x + 10f, rect.y + 10f, 16f, 16f), KsTheme.Hex("#fbe3d6"));
         }
 
         /// <summary>Logo: oyunun sandık ikonu (tasarımdaki altın sandık yer tutucusunun yerine).</summary>
