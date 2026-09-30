@@ -104,6 +104,7 @@ namespace KeeperSpawner
         private Color toastColor;
         private float toastUntil;
         private float copiedUntil;
+        private string lastDrawError;
 
         public SpawnerWindow(ConfigEntry<bool> showQuestItems, ConfigEntry<float> uiScale, ConfigEntry<ViewMode> viewMode,
             ConfigEntry<ClickAmount> clickAmount, ConfigEntry<string> lastCategory, ConfigEntry<string> fontName,
@@ -228,9 +229,16 @@ namespace KeeperSpawner
                     ev.Use();
                 }
             }
-            catch (Exception e)
+            // Oyun API'si eksik hataları Plugin'e gitsin (mod kendini kapatır); diğerleri burada kalır
+            catch (Exception e) when (!GameCompat.IsCompatibilityError(e))
             {
-                Plugin.Log.LogError($"Pencere çizilemedi: {e}");
+                // Aynı hata her karede tekrarlanabilir; logu bir kez yaz
+                string key = e.GetType().Name + "|" + e.Message;
+                if (key != lastDrawError)
+                {
+                    lastDrawError = key;
+                    Plugin.Log.LogError($"Pencere çizilemedi: {e}");
+                }
                 ShowToast(Strings.Error, KsTheme.ItemName);
             }
             finally
@@ -471,7 +479,7 @@ namespace KeeperSpawner
                 }
                 Plugin.Log.LogInfo($"Spawn {entry.Id}: istenen {amount}, eklenen {added}");
             }
-            catch (Exception e)
+            catch (Exception e) when (!GameCompat.IsCompatibilityError(e))
             {
                 Plugin.Log.LogError($"Spawn başarısız [{entry.Id}]: {e}");
                 ShowToast(Strings.Error, KsTheme.ItemName);

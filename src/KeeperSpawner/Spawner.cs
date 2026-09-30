@@ -32,7 +32,8 @@ namespace KeeperSpawner
             }
 
             int added = inventory.Data.GetTotalCountInInventory(entry.Id) - before;
-            if (added > 0)
+            // Notify ayrı metot: oyun bildirimi API'si değiştiyse onu derlemeye bile kalkmıyoruz
+            if (added > 0 && GameCompat.GameNotifications)
             {
                 Notify(entry, added);
             }

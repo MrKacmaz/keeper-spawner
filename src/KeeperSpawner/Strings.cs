@@ -187,6 +187,31 @@ namespace KeeperSpawner
         private static readonly string[] searchHintRow = { "search", "ara", "suchen", "rechercher", "buscar", "buscar", "поиск", "пошук", "cerca", "szukaj", "検索", "搜索", "搜尋", "검색", "ค้นหา", "tìm" };
         private static readonly string[] closeHintRow = { "close", "kapat", "schließen", "fermer", "cerrar", "fechar", "закрыть", "закрити", "chiudi", "zamknij", "閉じる", "关闭", "關閉", "닫기", "ปิด", "đóng" };
 
+        private static readonly string[] disabledNoticeRow =
+        {
+            "KeeperSpawner is disabled: not compatible with this game version. See the BepInEx log.",
+            "KeeperSpawner devre dışı: bu oyun sürümüyle uyumsuz. Ayrıntılar BepInEx logunda.",
+            "KeeperSpawner ist deaktiviert: nicht kompatibel mit dieser Spielversion. Siehe BepInEx-Log.",
+            "KeeperSpawner est désactivé : incompatible avec cette version du jeu. Voir le journal BepInEx.",
+            "KeeperSpawner está desactivado: no es compatible con esta versión del juego. Consulta el registro de BepInEx.",
+            "KeeperSpawner está desativado: incompatível com esta versão do jogo. Veja o log do BepInEx.",
+            "KeeperSpawner отключён: несовместим с этой версией игры. См. журнал BepInEx.",
+            "KeeperSpawner вимкнено: несумісний з цією версією гри. Див. журнал BepInEx.",
+            "KeeperSpawner è disattivato: non compatibile con questa versione del gioco. Vedi il log di BepInEx.",
+            "KeeperSpawner jest wyłączony: niezgodny z tą wersją gry. Zobacz log BepInEx.",
+            "KeeperSpawner は無効です: このゲームバージョンと互換性がありません。BepInEx のログを確認してください。",
+            "KeeperSpawner 已禁用：与当前游戏版本不兼容。请查看 BepInEx 日志。",
+            "KeeperSpawner 已停用：與目前遊戲版本不相容。請查看 BepInEx 日誌。",
+            "KeeperSpawner 비활성화됨: 이 게임 버전과 호환되지 않습니다. BepInEx 로그를 확인하세요.",
+            "KeeperSpawner ถูกปิดใช้งาน: ไม่รองรับเกมเวอร์ชันนี้ ดูบันทึก BepInEx",
+            "KeeperSpawner đã tắt: không tương thích với phiên bản game này. Xem log BepInEx.",
+        };
+
+        public static string DisabledNotice => T(disabledNoticeRow);
+
+        /// <summary>Dil sistemi de bozuksa kullanılır.</summary>
+        public static string DisabledNoticeFallback => disabledNoticeRow[0];
+
         public static string Added(int added, string name) => $"+{added}  {name}  {T(addedRow)}";
         public static string AddedPartial(int added, int requested, string name) => $"+{added}/{requested}  {name}  {T(addedPartialRow)}";
         public static string InventoryFull => T(inventoryFullRow);

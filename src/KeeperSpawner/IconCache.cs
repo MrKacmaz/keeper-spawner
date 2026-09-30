@@ -36,7 +36,8 @@ namespace KeeperSpawner
         public static bool TryGet(string name, out Icon icon)
         {
             icon = default;
-            if (string.IsNullOrEmpty(name) || Missing.Contains(name))
+            // Resolve ayrı metot: sprite API'si değiştiyse onu derlemeye kalkmadan ikonsuz devam
+            if (!GameCompat.Icons || string.IsNullOrEmpty(name) || Missing.Contains(name))
             {
                 return false;
             }
