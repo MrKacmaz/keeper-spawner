@@ -126,6 +126,7 @@ Oyun kodunda bulunacaklar:
   - `…\AppData\LocalLow\Lazy Bear Games\Graveyard Keeper 2\Mods\workshop.json` içinde `"workshopCreatorMode": true` → oyunda **Shift+F11**.
   - Tek etiket seçeneği `Translation`. Dosya türü filtresi yok; sadece `_`/`~` ile başlayanları atlar. Önizleme: klasördeki `Thumbnail.png|jpg|jpeg` (içeriğe kopyalanmaz).
   - **Her yüklemede** görünürlüğü `Unlisted` yapar ve açıklamayı başlıkla değiştirir → güncellemeden sonra açıklamayı ve (herkese açıksa) görünürlüğü Steam sayfasından yeniden ayarlamak gerekir. Güncellemeler için SteamCMD + `workshop_item.vdf` daha rahat olabilir.
+- ✅ **Atölye → Workshop Loader → oyun zinciri test edildi (2026-09-30):** loader itemı tanıdı, güvenlik taraması uyarısız, onaydan sonra `BepInEx\plugins\_Workshop\3810736028\` altına kurdu, KeeperSpawner 1.0.0 oradan yüklenip çalıştı. Loader bir **preloader patcher**: `BepInEx\patchers\` klasörüne kurulur (README, açıklamalar ve `INSTALL.txt` buna göre düzeltildi; `INSTALL.txt` Atölye içeriğinde olduğu için sonraki sürümle gider).
 - **Workshop Loader** (`docs/FOR_MODDERS.txt`): normal BepInEx 5 eklentisi değişiklik gerektirmez; öğeyi `BepInEx\plugins\_Workshop\<ItemID>\` altına kopyalar; framework DLL'lerini kopyalamaz; her güncellemede oyuncu yeniden onaylar; plugin klasörüne yazılan dosyaları siler.
 
 ### Faz 6 — Bakım
