@@ -41,6 +41,13 @@ Oyun sürümü 1.007.1 (buildid 25601286) üzerinde `Assembly-CSharp.dll` ve `La
 
 `type` dağılımı: 601 `None`, 69 `Preach` (dualar), geri kalanı alet, silah ve organ türleri. Kategori sekmeleri için `type` tek başına yetmiyor, `itemGroupIds` (`buil_bag`, `food_bag`, `alch_bag`, `tool`, `weapon`, `seed`, `fishes`, `bodypart` …) daha iyi bir ayrım veriyor.
 
+### UI sprite'ları ve font
+
+- Pencere parçaları (kapat düğmesi, çerçeveler, başlıklar) `EasySpritesCollection`'da **yok**; UI prefab'larına bağlı. Oyun pencerelerini açılışta önceden yüklediği için `Resources.FindObjectsOfTypeAll<Sprite>()` ile isimle bulunabiliyorlar (`tools/ue/03-find-close-sprite.cs`).
+- Kapat düğmesi: `comm-btn_close-active` / `-over` / `-press` / `-inactive` (26×26, her biri ayrı doku). Arka plakası `comm-btn-close_bg` (50×26). Küçük X: `btn_i-close_cross-s` (12×12).
+- Diğer pencere parçaları: `main_window-header_1`, `main_window-header_1-dec_side_3`, `comm-frame_1-border`, `comm-frame_bg_1`, `comm-cell_dark`.
+- Font: oyun yazıları TextMeshPro ile çiziliyor; yüklü Unity `Font` nesneleri sadece `LegacyRuntime, NotInter-Regular, CONSOLA, arial, LiberationSans, VeraMono(-Bold)`. Piksel font IMGUI'nin kullanabileceği biçimde yüklü değil.
+
 ## Envantere ekleme
 
 Oyunun kendi senaryo düğümü `GK2.FlowCanvasNodes.Flow_AddItem` şunu yapıyor:
