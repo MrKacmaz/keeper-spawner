@@ -8,7 +8,7 @@ Oyun içinde bir tuşla açılan menüden itemları listeleyip tıklanan itemı 
 |---|---|
 | Mod adı | **KeeperSpawner** |
 | Kısayol tuşu | **O** (ayar dosyasından değiştirilebilir). P oyunda başka bir eyleme atanmış. |
-| Tıklama davranışı | Varsayılan olarak itemın **max stack**'i kadar ekler; v0.4.0 tasarımıyla 1 / 10 / Maks seçimi ve Shift+tık = 1 adet gelecek |
+| Tıklama davranışı | Araç çubuğundaki **Tık** moduna göre 1 / 10 / Maks (varsayılan Maks); Shift+tık = 1 adet; bilgi panelinden 1-999 (v0.4.0) |
 | Geliştirme ortamı | Windows (kodlama + derleme + test aynı makinede) |
 | Versiyon kontrol | Git (Windows cihazda başlatılacak) |
 | Yayın yeri | Steam Atölyesi (ileride Nexus) |
@@ -32,8 +32,14 @@ KeeperSpawner/
 ├── src/KeeperSpawner/GameState.cs      # "oyun içinde miyiz" kontrolü
 ├── src/KeeperSpawner/ItemCatalog.cs    # tüm itemları okur, filtreler, önbelleğe alır
 ├── src/KeeperSpawner/Spawner.cs        # envantere ekleme + oyun bildirimi
-├── src/KeeperSpawner/SpawnerWindow.cs  # menü arayüzü (IMGUI): arama, sekmeler, bilgi satırı
-├── src/KeeperSpawner/ItemView.cs       # ızgara / liste çizimi, kategori bölümleri
+├── src/KeeperSpawner/SpawnerWindow.cs  # pencere çekirdeği (IMGUI): durum, çerçeve, başlık, kısayollar
+├── src/KeeperSpawner/SpawnerWindow.*.cs# paneller: Sidebar, Toolbar, Content, Info, Footer
+├── src/KeeperSpawner/ItemView.cs       # ızgara / liste çizimi, bölümler
+├── src/KeeperSpawner/KsTheme.cs        # v0.4 tema: renkler, 9-dilim dokular, GUIStyle'lar
+├── src/KeeperSpawner/FontFinder.cs     # oyunun piksel fontunu bulur (UI.Font)
+├── src/KeeperSpawner/ItemIcons.cs      # logo ve kategori ikonları (gerçek item sprite'ları)
+├── src/KeeperSpawner/IdList.cs         # favoriler (config)
+├── src/KeeperSpawner/RecentList.cs     # son eklenenler + adet (config)
 ├── src/KeeperSpawner/IconCache.cs      # item ikonlarını çözer ve önbelleğe alır
 ├── src/KeeperSpawner/Categories.cs     # item → kategori kuralları
 ├── src/KeeperSpawner/InputBlocker.cs   # menü açıkken oyun girdisini askıya alır
@@ -83,7 +89,7 @@ Oyun kodunda bulunacaklar:
 - ✅ Kategori sekmeleri; "Tümü" sekmesinde ızgara kategori başlıklarıyla bölümlere ayrılıyor. 15 kategori, kurallar `Categories.cs`. (v0.2.0)
 - Favoriler (sağ tık) ve son eklenenler (en fazla 24); ayrı sekmeler + "Tümü"nün başında bölümler. Config'te `Items.Favorites` / `Items.Recent`. (v0.3.0)
 - Opak pencere arka planı (`UI.BackgroundOpacity`, varsayılan 0.97). (v0.3.0)
-- Adet seçimi (1 / 10 / Maks, Shift+tık, bilgi panelinde miktar) → v0.4.0 arayüz tasarımıyla.
+- v0.4.0 arayüz yeniden tasarımı (`docs/ui-handoff/`): çelik çerçeveli 1120×720 pencere, sol dikey kategori listesi, arama + Tık modu (1/10/Maks) + kalite filtresi, ızgara/liste, sağda item bilgi paneli (miktar, ID kopyala, favori, son 5), alt çubukta bildirim ve tuş ipuçları. Son eklenenler 24'ten 5'e indi; "Tümü" artık favori/son bölümlerini içermiyor (tasarım). **Oyunda test bekliyor.**
 - Item adları oyunun aktif diliyle; mod arayüzü TR/EN.
 - Sorunlu itemlar (görev itemları) için kara liste.
 - İsteğe bağlı: oyunun stiline uygun uGUI arayüz.
