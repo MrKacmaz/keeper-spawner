@@ -1,0 +1,43 @@
+[h1]KeeperSpawner[/h1]
+Graveyard Keeper 2 için hafif bir item spawner. Oyunda [b]O[/b]'ya bas, itemı bul ve tıklayarak envanterine ekle.
+
+[h2]Özellikler[/h2]
+[list]
+[*]Oyunun kendi ikonlarıyla 726 normal item; adlar oyunun dilinde, bronz / gümüş / altın kalite yıldızlarıyla
+[*]15 kategori (inşaat, yiyecek, tarım, simya, iksirler, aletler, ekipman, balıkçılık, organlar, mezar, kilise, kâğıt, çantalar, görev, diğer)
+[*]İsim ya da id ile arama; Türkçe harflere duyarsız ("kilic" yazınca "Kılıç" bulunur)
+[*]Kalite filtresi, ızgara ya da liste görünümü
+[*]Tık 1, 10 ya da tam yığın ekler; Shift+Tık 1 adet ekler; bilgi panelinden 999'a kadar istediğin miktar
+[*]Favoriler (sağ tık) ve son eklenen 5 item
+[*]Görev itemları varsayılan olarak gizli, yanlışlıkla görevleri bozmazsın
+[*]Arayüz oyunun 17 dilinin hepsinde
+[/list]
+
+[h2]Gereksinimler[/h2]
+[list]
+[*][url=https://github.com/BepInEx/BepInEx/releases/tag/v5.4.23.5]BepInEx 5.4.23.5 (win_x64)[/url]
+[*]Atölye'den yüklemek için GK2 Workshop Loader; ya da elle kurulum (itemdaki INSTALL.txt)
+[/list]
+
+[h2]Tuşlar[/h2]
+[table]
+[tr][td]O[/td][td]Aç / kapat (değiştirilebilir)[/td][/tr]
+[tr][td]Tık[/td][td]Seçili miktarı ekle[/td][/tr]
+[tr][td]Shift+Tık[/td][td]1 adet ekle[/td][/tr]
+[tr][td]Sağ tık[/td][td]Favori[/td][/tr]
+[tr][td]Ctrl+F[/td][td]Arama[/td][/tr]
+[tr][td]Esc[/td][td]Kapat[/td][/tr]
+[/table]
+
+Ayarlar: [i]BepInEx\config\com.mrkacmaz.keeperspawner.cfg[/i] (kısayol, arayüz ölçeği, görünüm, arka plan karartma, görev itemları).
+
+[h2]Bilmen gerekenler[/h2]
+[list]
+[*]Oyun sürümü 1.007.1 ile test edildi. Bir oyun güncellemesinden sonra mod kullandığı oyun kodunu kontrol eder; bir şey değiştiyse oyununu bozmak yerine kendini kapatır ve sebebini [i]BepInEx\LogOutput.log[/i] dosyasına yazar.
+[*]Itemlar oyunun kendi senaryolarının kullandığı çağrıyla eklenir, kayıtta kalır. Yine de kaydının yedeğini almak iyi fikir.
+[*]Workshop Loader güvenlik notu: mod reflection'ı sadece pencere açıkken oyunun kendi girdi durumunu okumak ve sıfırlamak için kullanır. Ağ kullanmaz, dosya silmez, başka kod yüklemez.
+[*]Bu oyunun Atölye'si sadece "Translation" etiketi sunduğu için bu item, bir kod modu olsa da bu etiketi taşıyor.
+[/list]
+
+[h2]Kaynak kod[/h2]
+[url=https://github.com/MrKacmaz/keeper-spawner]github.com/MrKacmaz/keeper-spawner[/url]

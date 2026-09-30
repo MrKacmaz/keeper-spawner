@@ -1,0 +1,60 @@
+KeeperSpawner - item spawner for Graveyard Keeper 2
+=====================================================
+
+REQUIREMENTS
+- BepInEx 5.4.23.5 (win_x64): https://github.com/BepInEx/BepInEx/releases/tag/v5.4.23.5
+
+INSTALL WITH GK2 WORKSHOP LOADER
+1. Install BepInEx and the GK2 Workshop Loader.
+2. Subscribe to KeeperSpawner on the Steam Workshop and approve it in the loader.
+
+MANUAL INSTALL
+1. Extract BepInEx_win_x64_5.4.23.5.zip next to GraveyardKeeper2.exe.
+2. Start the game once and close it (BepInEx creates its folders).
+3. Copy the BepInEx folder from this package into the game folder, so that you get:
+       Graveyard Keeper 2\BepInEx\plugins\KeeperSpawner\KeeperSpawner.dll
+
+USAGE
+- Load a save and press O to open the spawner (the key can be changed in the config).
+- Click: add the amount chosen under "Click" (1 / 10 / Max). Shift+Click: add 1.
+- Right-click: add or remove a favorite. Ctrl+F: search. Esc: close.
+
+SETTINGS
+  BepInEx\config\com.mrkacmaz.keeperspawner.cfg (created after the first start)
+
+UNINSTALL
+  Delete Graveyard Keeper 2\BepInEx\plugins\KeeperSpawner (or unsubscribe in the loader).
+
+LOG
+  Problems are written to Graveyard Keeper 2\BepInEx\LogOutput.log.
+
+
+KeeperSpawner - Graveyard Keeper 2 için item spawner
+=====================================================
+
+GEREKSİNİMLER
+- BepInEx 5.4.23.5 (win_x64): https://github.com/BepInEx/BepInEx/releases/tag/v5.4.23.5
+
+GK2 WORKSHOP LOADER İLE KURULUM
+1. BepInEx'i ve GK2 Workshop Loader'ı kur.
+2. Steam Atölyesi'nde KeeperSpawner'a abone ol ve loader'da onayla.
+
+ELLE KURULUM
+1. BepInEx_win_x64_5.4.23.5.zip dosyasını GraveyardKeeper2.exe'nin yanına çıkar.
+2. Oyunu bir kez açıp kapat (BepInEx klasörlerini oluşturur).
+3. Bu paketteki BepInEx klasörünü oyun klasörüne kopyala; sonuç şöyle olmalı:
+       Graveyard Keeper 2\BepInEx\plugins\KeeperSpawner\KeeperSpawner.dll
+
+KULLANIM
+- Bir kayıt yükle ve spawner'ı açmak için O'ya bas (tuş ayar dosyasından değiştirilebilir).
+- Tık: "Tık" altında seçili miktarı ekler (1 / 10 / Maks). Shift+Tık: 1 adet ekler.
+- Sağ tık: favorilere ekler/çıkarır. Ctrl+F: arama. Esc: kapat.
+
+AYARLAR
+  BepInEx\config\com.mrkacmaz.keeperspawner.cfg (ilk açılıştan sonra oluşur)
+
+KALDIRMA
+  Graveyard Keeper 2\BepInEx\plugins\KeeperSpawner klasörünü sil (ya da loader'da aboneliği bırak).
+
+LOG
+  Sorunlar Graveyard Keeper 2\BepInEx\LogOutput.log dosyasına yazılır.

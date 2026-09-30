@@ -1,0 +1,43 @@
+[h1]KeeperSpawner[/h1]
+A lightweight item spawner for Graveyard Keeper 2. Press [b]O[/b] in game, find an item and click it to add it to your inventory.
+
+[h2]Features[/h2]
+[list]
+[*]All 726 regular items with the game's own icons, names in your game language and bronze / silver / gold quality stars
+[*]15 categories (building, food, farming, alchemy, potions, tools, equipment, fishing, body parts, graves, church, papers, bags, quest, other)
+[*]Search by name or id, accent-insensitive
+[*]Quality filter, grid or list view
+[*]Click adds 1, 10 or a full stack; Shift+Click adds 1; the info panel lets you pick any amount up to 999
+[*]Favorites (right-click) and the last 5 added items
+[*]Quest items are hidden by default so you do not break quests by accident
+[*]UI in all 17 languages of the game
+[/list]
+
+[h2]Requirements[/h2]
+[list]
+[*][url=https://github.com/BepInEx/BepInEx/releases/tag/v5.4.23.5]BepInEx 5.4.23.5 (win_x64)[/url]
+[*]GK2 Workshop Loader to load it from the Workshop, or install it manually (see INSTALL.txt in the item)
+[/list]
+
+[h2]Controls[/h2]
+[table]
+[tr][td]O[/td][td]Open / close (configurable)[/td][/tr]
+[tr][td]Click[/td][td]Add the selected amount[/td][/tr]
+[tr][td]Shift+Click[/td][td]Add 1[/td][/tr]
+[tr][td]Right-click[/td][td]Favorite[/td][/tr]
+[tr][td]Ctrl+F[/td][td]Search[/td][/tr]
+[tr][td]Esc[/td][td]Close[/td][/tr]
+[/table]
+
+Settings: [i]BepInEx\config\com.mrkacmaz.keeperspawner.cfg[/i] (hotkey, UI scale, view, backdrop, quest items).
+
+[h2]Good to know[/h2]
+[list]
+[*]Tested with game version 1.007.1. After a game update the mod checks the game code it uses; if something changed it switches itself off and writes the reason to [i]BepInEx\LogOutput.log[/i] instead of breaking your game.
+[*]Items are added with the same call the game's own scripts use, so they stay in your save. Keeping a backup of your save is still a good idea.
+[*]Security note for the Workshop Loader: the mod uses reflection only to read and reset the game's own input state while the window is open. It does not use the network, does not delete files and does not load other code.
+[*]The Workshop of this game only offers the "Translation" tag, so this item carries it even though it is a code mod.
+[/list]
+
+[h2]Source[/h2]
+[url=https://github.com/MrKacmaz/keeper-spawner]github.com/MrKacmaz/keeper-spawner[/url]
