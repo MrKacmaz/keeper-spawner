@@ -7,28 +7,53 @@ namespace KeeperSpawner
     {
         public static bool IsTr => LLBase.CurrentLang == "tr";
 
-        public static string Search => IsTr ? "Ara:" : "Search:";
-        public static string Clear => IsTr ? "Temizle" : "Clear";
-        public static string ShowQuestItems => IsTr ? "Görev itemlarını göster" : "Show quest items";
-        public static string Quest => IsTr ? "görev" : "quest";
+        // Sol panel
+        public static string Categories => IsTr ? "Kategoriler" : "Categories";
         public static string All => IsTr ? "Tümü" : "All";
-        public static string Grid => IsTr ? "Izgara" : "Grid";
-        public static string List => IsTr ? "Liste" : "List";
         public static string Favorites => IsTr ? "Favoriler" : "Favorites";
-        public static string Recent => IsTr ? "Son" : "Recent";
-        public static string RecentSection => IsTr ? "Son eklenenler" : "Recently added";
-        public static string FavoriteMark => IsTr ? "favori" : "favorite";
-        public static string Hint => IsTr
-            ? "Tıkla: max stack ekle  •  Sağ tık: favori  •  Esc: kapat"
-            : "Click: add max stack  •  Right-click: favorite  •  Esc: close";
-        public static string NoResults => IsTr ? "Sonuç yok" : "No results";
-        public static string NoFavorites => IsTr
-            ? "Henüz favori yok. Bir itema sağ tıklayarak favorilere ekleyebilirsin."
-            : "No favorites yet. Right-click an item to add it.";
-        public static string NoRecent => IsTr ? "Henüz item eklenmedi." : "Nothing added yet.";
+        public static string Recent => IsTr ? "Son eklenenler" : "Recently added";
 
-        public static string FavoriteAdded(string name) => IsTr ? $"Favorilere eklendi: {name}" : $"Added to favorites: {name}";
-        public static string FavoriteRemoved(string name) => IsTr ? $"Favorilerden çıkarıldı: {name}" : $"Removed from favorites: {name}";
+        // Araç çubuğu ve filtreler
+        public static string SearchPlaceholder => IsTr ? "İsim veya id ara  (ör. kalas, ingot_iron)" : "Search name or id  (e.g. plank, ingot_iron)";
+        public static string Click => IsTr ? "Tık:" : "Click:";
+        public static string Max => IsTr ? "Maks" : "Max";
+        public static string Quality => IsTr ? "Kalite" : "Quality";
+        public static string QualityAll => IsTr ? "Hepsi" : "All";
+        public static string ShowQuestItems => IsTr ? "Görev itemlarını göster" : "Show quest items";
+        public static string ItemCount(int shown, int total) =>
+            $"<color=#f2c94c>{shown}</color> / {total} " + (IsTr ? "item" : "items");
+
+        // İçerik
+        public static string ColumnItem => IsTr ? "Item" : "Item";
+        public static string ColumnId => "ID";
+        public static string ColumnCategory => IsTr ? "Kategori" : "Category";
+        public static string ColumnStack => IsTr ? "Yığın" : "Stack";
+        public static string EmptyTitle => IsTr ? "Bu filtrelerle item bulunamadı" : "No items match these filters";
+        public static string EmptyHint => IsTr ? "Aramayı veya kalite filtresini değiştirmeyi dene." : "Try changing the search or quality filter.";
+        public static string ResetFilters => IsTr ? "Filtreleri sıfırla" : "Reset filters";
+        public static string Quest => IsTr ? "görev" : "quest";
+
+        // Bilgi paneli
+        public static string ItemInfo => IsTr ? "Item Bilgisi" : "Item Info";
+        public static string MaxStack => IsTr ? "Maks yığın" : "Max stack";
+        public static string IdCopied => IsTr ? "ID panoya kopyalandı" : "ID copied to clipboard";
+        public static string Amount => IsTr ? "Miktar" : "Amount";
+        public static string AddToInventory(int amount) => (IsTr ? "Envantere ekle" : "Add to inventory") + "  ×" + amount;
+        public static string AddFavorite => IsTr ? "Favorilere ekle" : "Add to favorites";
+        public static string InFavorites => IsTr ? "Favorilerde" : "In favorites";
+        public static string RecentTitle => IsTr ? "Son Eklenenler" : "Recently Added";
+        public static string NoRecent => IsTr ? "Henüz bir şey eklemedin." : "Nothing added yet.";
+
+        public static string StarShort(int star)
+        {
+            switch (star)
+            {
+                case 1: return IsTr ? "Bronz" : "Bronze";
+                case 2: return IsTr ? "Gümüş" : "Silver";
+                case 3: return IsTr ? "Altın" : "Gold";
+                default: return string.Empty;
+            }
+        }
 
         public static string Star(int star)
         {
@@ -37,22 +62,33 @@ namespace KeeperSpawner
                 case 1: return IsTr ? "Bronz yıldız" : "Bronze star";
                 case 2: return IsTr ? "Gümüş yıldız" : "Silver star";
                 case 3: return IsTr ? "Altın yıldız" : "Gold star";
-                default: return IsTr ? $"{star} yıldız" : $"{star} stars";
+                default: return string.Empty;
             }
         }
 
-        public static string ItemCount(int shown, int total) =>
-            IsTr ? $"{shown} / {total} item" : $"{shown} / {total} items";
-
+        // Alt çubuk
         public static string Added(int added, string name) =>
-            $"+{added} {name}";
-
-        public static string Partial(int added, int requested, string name) =>
-            IsTr ? $"Envanter dolu: {added}/{requested} {name} eklendi"
-                 : $"Inventory full: added {added}/{requested} {name}";
-
+            IsTr ? $"+{added}  {name}  envantere eklendi" : $"+{added}  {name}  added to inventory";
+        public static string AddedPartial(int added, int requested, string name) =>
+            IsTr ? $"+{added}/{requested}  {name}  eklendi, envanter doldu" : $"+{added}/{requested}  {name}  added, inventory full";
         public static string InventoryFull => IsTr ? "Envanter dolu" : "Inventory full";
-
         public static string Error => IsTr ? "Hata, ayrıntılar BepInEx logunda" : "Error, see BepInEx log";
+
+        public static string KeyClick => IsTr ? "Tık" : "Click";
+        public static string KeyShiftClick => IsTr ? "Shift+Tık" : "Shift+Click";
+        public static string KeyRightClick => IsTr ? "Sağ tık" : "Right-click";
+        public static string ClickHint(ClickAmount mode)
+        {
+            switch (mode)
+            {
+                case ClickAmount.One: return IsTr ? "1 adet ekle" : "add 1";
+                case ClickAmount.Ten: return IsTr ? "10 adet ekle" : "add 10";
+                default: return IsTr ? "maks yığın ekle" : "add max stack";
+            }
+        }
+        public static string OneItem => IsTr ? "1 adet" : "1 item";
+        public static string FavoriteHint => IsTr ? "favori" : "favorite";
+        public static string SearchHint => IsTr ? "ara" : "search";
+        public static string CloseHint => IsTr ? "kapat" : "close";
     }
 }

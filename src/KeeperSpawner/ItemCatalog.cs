@@ -51,6 +51,14 @@ namespace KeeperSpawner
         private static readonly Regex AnyTag = new Regex("<[^>]+>", RegexOptions.Compiled);
 
         private static List<CatalogEntry> entries;
+        private static readonly Dictionary<string, CatalogEntry> ById = new Dictionary<string, CatalogEntry>();
+
+        /// <summary>Katalogdaki (gizli olmayan) bir itemı id ile bulur.</summary>
+        public static bool TryGet(string id, out CatalogEntry entry)
+        {
+            entry = null;
+            return id != null && All != null && ById.TryGetValue(id, out entry);
+        }
         private static string builtForLang;
 
         public static IReadOnlyList<CatalogEntry> All
@@ -93,6 +101,11 @@ namespace KeeperSpawner
             });
 
             entries = list;
+            ById.Clear();
+            foreach (var entry in list)
+            {
+                ById[entry.Id] = entry;
+            }
             builtForLang = LLBase.CurrentLang;
             Plugin.Log.LogInfo($"Katalog kuruldu: {list.Count} item, {skipped} gizli (dil: {builtForLang})");
         }
