@@ -94,7 +94,7 @@ Oyun kodunda bulunacaklar:
 - Sorunlu itemlar (görev itemları) için kara liste.
 - İsteğe bağlı: oyunun stiline uygun uGUI arayüz.
 
-### Faz 4 — Test
+### Faz 4 — Test ✅ (2026-09-30; kullanıcı tüm maddeleri oyunda geçti. Kalan: `Debug.ForceIncompatible` ile devre dışı yolu)
 - Yeni kayıt / eski kayıt; spawn edilen itemlar kaydet-yükle sonrası duruyor mu.
 - Envanter doluyken; stack sınırları; stacklenemeyen itemlar.
 - Menü açıkken: arkadaki oyun arayüzüne (uGUI, ör. açık envanter) tıklama geçiyor mu; fare tekerleği kamerayı yakınlaştırıyor mu. `InputBlocker` sadece `LazyInput`'u askıya alıyor.
@@ -114,6 +114,18 @@ Oyun kodunda bulunacaklar:
 - Asset'ler `Path.GetDirectoryName(Info.Location)`'a göre yüklenir; plugin klasörüne yazılmaz.
 - Yükleme: SteamCMD `workshop_build_item` + `.vdf` (appid 4358690). Önce gizli yükle, test et, sonra herkese açık. Oyunun kendi yükleyicisi var mı kontrol et.
 - Önizleme görseli (<1 MB), EN + TR açıklama, BepInEx kurulum linki, kısayol ve ayarlar.
+- **Durum (2026-09-30):**
+  - ✅ `tools/package.ps1`: derler, DLL'i Workshop Loader güvenlik listesine göre tarar, `artifacts/<sürüm>/content` (Atölye), `KeeperSpawner-<sürüm>.zip` (elle kurulum / Nexus, `/` ayırıcılı) ve `workshop_item.vdf` üretir. Tarama temiz.
+  - ✅ `workshop/`: `INSTALL.txt` (EN+TR), `description.en.bbcode`, `description.tr.bbcode`, `keeperspawner.vdf.template`. `CHANGELOG.md`.
+  - ✅ Sürüm 1.0.0.
+  - ⏳ `workshop/preview.png` (oyun içi ekran görüntüsünden, <1 MB).
+  - ⏳ Repo herkese açılacak (açıklamada kaynak kod linki var).
+  - ⏳ Yükleme: oyunun kendi yükleyicisiyle (karar).
+- **Oyunun Atölye yükleyicisi** (`SteamWorkshopCreatorService`, `UISteamWorkshopCreatorWindow`):
+  - `…\AppData\LocalLow\Lazy Bear Games\Graveyard Keeper 2\Mods\workshop.json` içinde `"workshopCreatorMode": true` → oyunda **Shift+F11**.
+  - Tek etiket seçeneği `Translation`. Dosya türü filtresi yok; sadece `_`/`~` ile başlayanları atlar. Önizleme: klasördeki `Thumbnail.png|jpg|jpeg` (içeriğe kopyalanmaz).
+  - **Her yüklemede** görünürlüğü `Unlisted` yapar ve açıklamayı başlıkla değiştirir → güncellemeden sonra açıklamayı ve (herkese açıksa) görünürlüğü Steam sayfasından yeniden ayarlamak gerekir. Güncellemeler için SteamCMD + `workshop_item.vdf` daha rahat olabilir.
+- **Workshop Loader** (`docs/FOR_MODDERS.txt`): normal BepInEx 5 eklentisi değişiklik gerektirmez; öğeyi `BepInEx\plugins\_Workshop\<ItemID>\` altına kopyalar; framework DLL'lerini kopyalamaz; her güncellemede oyuncu yeniden onaylar; plugin klasörüne yazılan dosyaları siler.
 
 ### Faz 6 — Bakım
 - Oyun güncellemesi metotları bozarsa mod çökmez; loga uyarı yazıp kendini devre dışı bırakır. ✅ (kod hazır, **oyunda test bekliyor**)
