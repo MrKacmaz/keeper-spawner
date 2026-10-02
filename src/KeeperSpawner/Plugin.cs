@@ -22,7 +22,24 @@ namespace KeeperSpawner
 
         internal static ManualLogSource Log;
 
-        private ConfigEntry<KeyboardShortcut> toggleKey;
+        /// <summary>İsteğe bağlı GK2 Mod Framework köprüsü (KeeperSpawner.GK2Framework) bu örneği kullanır.</summary>
+        internal static Plugin Instance { get; private set; }
+
+        // Köprü bu girdileri Mods menüsünde gösterir; mod devre dışı kalsa da bağlı olmaları için Awake'in başında bağlanırlar
+        internal ConfigEntry<KeyboardShortcut> ToggleKey { get; private set; }
+        internal ConfigEntry<bool> ShowQuestItems { get; private set; }
+        internal ConfigEntry<ClickAmount> ClickAmount { get; private set; }
+        internal ConfigEntry<ViewMode> View { get; private set; }
+        internal ConfigEntry<float> UiScale { get; private set; }
+        internal ConfigEntry<float> BackdropOpacity { get; private set; }
+
+        internal bool IsDisabled => disabled;
+
+        private ConfigEntry<bool> forceIncompatible;
+        private ConfigEntry<string> lastCategory;
+        private ConfigEntry<string> fontName;
+        private ConfigEntry<string> favorites;
+        private ConfigEntry<string> recent;
         private SpawnerWindow window;
 
         private bool disabled;
@@ -34,13 +51,10 @@ namespace KeeperSpawner
         private void Awake()
         {
             Log = Logger;
+            Instance = this;
+            BindConfig();
 
-            toggleKey = Config.Bind("General", "ToggleKey", new KeyboardShortcut(KeyCode.O),
-                "Spawner menüsünü açıp kapatan tuş / Key that toggles the spawner menu.");
-            var forceIncompatible = Config.Bind("Debug", "ForceIncompatible", false,
-                "Test için: modu uyumsuz oyun sürümündeymiş gibi devre dışı bırakır / For testing: disables the mod as if the game version were incompatible.");
-
-            Log.LogInfo($"{Name} {Version} yükleniyor. Oyun sürümü: {GameCompat.RunningGameVersion()} (test edilen: {GameCompat.TestedGameVersion})");
+            Log.LogInfo($"{Name} {Version} loading. Game version: {GameCompat.RunningGameVersion()} (tested: {GameCompat.TestedGameVersion})");
 
             bool compatible;
             try
@@ -49,17 +63,17 @@ namespace KeeperSpawner
             }
             catch (Exception e)
             {
-                Log.LogError($"Uyumluluk kontrolü başarısız: {e}");
+                Log.LogError($"Compatibility check failed: {e}");
                 compatible = false;
             }
             if (forceIncompatible.Value)
             {
-                Log.LogWarning("Debug.ForceIncompatible açık, mod devre dışı bırakılıyor.");
+                Log.LogWarning("Debug.ForceIncompatible is on, disabling the mod.");
                 compatible = false;
             }
             if (!compatible)
             {
-                Disable("oyun sürümüyle uyumsuz");
+                Disable("not compatible with this game version");
                 return;
             }
 
@@ -70,39 +84,46 @@ namespace KeeperSpawner
             }
             catch (Exception e)
             {
-                HandleError(e, "başlatma");
+                HandleError(e, "Startup");
                 if (window == null)
                 {
-                    Disable("başlatılamadı");
+                    Disable("could not start");
                     return;
                 }
             }
-            Log.LogInfo($"{Name} {Version} yüklendi. Kısayol: {toggleKey.Value}");
+            Log.LogInfo($"{Name} {Version} loaded. Press {ToggleKey.Value} in game to open the spawner.");
+        }
+
+        private void BindConfig()
+        {
+            ToggleKey = Config.Bind("General", "ToggleKey", new KeyboardShortcut(KeyCode.O),
+                "Spawner menüsünü açıp kapatan tuş / Key that toggles the spawner menu.");
+            forceIncompatible = Config.Bind("Debug", "ForceIncompatible", false,
+                "Test için: modu uyumsuz oyun sürümündeymiş gibi devre dışı bırakır / For testing: disables the mod as if the game version were incompatible.");
+            ShowQuestItems = Config.Bind("Items", "ShowQuestItems", false,
+                "Görev itemlarını listede göster (kayıtları bozabilir) / Show quest items in the list (may break quests).");
+            UiScale = Config.Bind("UI", "Scale", 0f,
+                "Arayüz ölçeği. 0 = otomatik (ekran yüksekliği / 1080) / UI scale. 0 = automatic (screen height / 1080).");
+            View = Config.Bind("UI", "View", ViewMode.Grid,
+                "Item görünümü: Grid (ikonlu ızgara) ya da List / Item view: Grid (icons) or List.");
+            ClickAmount = Config.Bind("UI", "ClickAmount", KeeperSpawner.ClickAmount.Max,
+                "Tıklayınca eklenen miktar: One, Ten, Max / Amount added per click: One, Ten, Max.");
+            lastCategory = Config.Bind("UI", "Category", "All",
+                "Son seçili kategori (menüde değişir) / Last selected category (changed from the menu).");
+            fontName = Config.Bind("UI", "Font", string.Empty,
+                "Arayüz fontu. Boş = otomatik (oyunun piksel fontu), \"-\" = Unity varsayılanı, ya da logdaki font adlarından biri / UI font. Empty = automatic, \"-\" = Unity default, or a font name from the log.");
+            BackdropOpacity = Config.Bind("UI", "BackdropOpacity", 0.55f,
+                "Pencere açıkken oyun sahnesini karartma oranı (0 - 1) / How much the game scene is dimmed behind the window (0 - 1).");
+            favorites = Config.Bind("Items", "Favorites", string.Empty,
+                "Favori item id'leri, virgülle ayrılmış (menüde sağ tıkla düzenlenir) / Favorite item ids, comma separated (right-click in the menu).");
+            recent = Config.Bind("Items", "Recent", string.Empty,
+                "Son eklenen itemlar, en yeniden eskiye (id=adet) / Recently added items, newest first (id=amount).");
         }
 
         private void CreateWindow()
         {
-            var showQuestItems = Config.Bind("Items", "ShowQuestItems", false,
-                "Görev itemlarını listede göster (kayıtları bozabilir) / Show quest items in the list (may break quests).");
-            var uiScale = Config.Bind("UI", "Scale", 0f,
-                "Arayüz ölçeği. 0 = otomatik (ekran yüksekliği / 1080) / UI scale. 0 = automatic (screen height / 1080).");
-            var viewMode = Config.Bind("UI", "View", ViewMode.Grid,
-                "Item görünümü: Grid (ikonlu ızgara) ya da List / Item view: Grid (icons) or List.");
-            var clickAmount = Config.Bind("UI", "ClickAmount", ClickAmount.Max,
-                "Tıklayınca eklenen miktar: One, Ten, Max / Amount added per click: One, Ten, Max.");
-            var lastCategory = Config.Bind("UI", "Category", "All",
-                "Son seçili kategori (menüde değişir) / Last selected category (changed from the menu).");
-            var fontName = Config.Bind("UI", "Font", string.Empty,
-                "Arayüz fontu. Boş = otomatik (oyunun piksel fontu), \"-\" = Unity varsayılanı, ya da logdaki font adlarından biri / UI font. Empty = automatic, \"-\" = Unity default, or a font name from the log.");
-            var backdropOpacity = Config.Bind("UI", "BackdropOpacity", 0.55f,
-                "Pencere açıkken oyun sahnesini karartma oranı (0 - 1) / How much the game scene is dimmed behind the window (0 - 1).");
-            var favorites = new IdList(Config.Bind("Items", "Favorites", string.Empty,
-                "Favori item id'leri, virgülle ayrılmış (menüde sağ tıkla düzenlenir) / Favorite item ids, comma separated (right-click in the menu)."));
-            var recent = new RecentList(Config.Bind("Items", "Recent", string.Empty,
-                "Son eklenen itemlar, en yeniden eskiye (id=adet) / Recently added items, newest first (id=amount)."), RecentLimit);
-
-            window = new SpawnerWindow(showQuestItems, uiScale, viewMode, clickAmount, lastCategory, fontName,
-                backdropOpacity, favorites, recent);
+            window = new SpawnerWindow(ShowQuestItems, UiScale, View, ClickAmount, lastCategory, fontName,
+                BackdropOpacity, new IdList(favorites), new RecentList(recent, RecentLimit));
         }
 
         private void Update()
@@ -110,7 +131,7 @@ namespace KeeperSpawner
             if (disabled)
             {
                 // Kullanıcı kısayola basarsa neden açılmadığını görsün
-                if (toggleKey.Value.IsDown())
+                if (ToggleKey.Value.IsDown())
                 {
                     noticeUntil = Time.unscaledTime + NoticeSeconds;
                 }
@@ -132,7 +153,7 @@ namespace KeeperSpawner
                     return;
                 }
 
-                if (toggleKey.Value.IsDown())
+                if (ToggleKey.Value.IsDown())
                 {
                     window.Toggle();
                 }
@@ -182,16 +203,16 @@ namespace KeeperSpawner
             string key = where + "|" + e.GetType().Name + "|" + e.Message;
             if (loggedErrors.Add(key))
             {
-                Log.LogError($"{where} hatası: {e}");
+                Log.LogError($"{where} error: {e}");
             }
 
             if (GameCompat.IsCompatibilityError(e))
             {
-                Disable("oyun API'si eksik: " + e.Message);
+                Disable("game API missing: " + e.Message);
             }
             else if (errorCount >= MaxErrors)
             {
-                Disable($"çok fazla hata ({errorCount})");
+                Disable($"too many errors ({errorCount})");
             }
         }
 
@@ -210,7 +231,7 @@ namespace KeeperSpawner
             {
                 // girdi sistemi de bozuksa yapacak bir şey yok
             }
-            Log.LogError($"{Name} devre dışı: {reason}. Oyun sürümü: {GameCompat.RunningGameVersion()}, test edilen: {GameCompat.TestedGameVersion}.");
+            Log.LogError($"{Name} disabled: {reason}. Game version: {GameCompat.RunningGameVersion()}, tested: {GameCompat.TestedGameVersion}.");
         }
 
         private void DrawDisabledNotice()

@@ -1,0 +1,67 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- İsteğe bağlı GK2 Mod Framework köprüsü. Framework kurulu değilse BepInEx sadece bu eklentiyi atlar,
+       KeeperSpawner.dll normal çalışır (docs/OPTIONAL_INTEGRATION.md, Framework 0.1.19). -->
+  <PropertyGroup>
+    <!-- GK2.Framework.dll netstandard2.1 hedefliyor; net472 onu referans alamaz -->
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyName>KeeperSpawner.GK2Framework</AssemblyName>
+    <RootNamespace>KeeperSpawner.GK2Framework</RootNamespace>
+    <Version>1.1.0</Version>
+    <LangVersion>latest</LangVersion>
+    <DebugType>portable</DebugType>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+
+    <ManagedPath>$(GamePath)\GraveyardKeeper2_Data\Managed</ManagedPath>
+    <BepInExCorePath>$(GamePath)\BepInEx\core</BepInExCorePath>
+    <FrameworkDll>$(GamePath)\BepInEx\plugins\GK2.Framework.dll</FrameworkDll>
+    <PluginDeployPath>$(GamePath)\BepInEx\plugins\KeeperSpawner</PluginDeployPath>
+    <MainDll>$(MSBuildThisFileDirectory)..\KeeperSpawner\bin\$(Configuration)\KeeperSpawner.dll</MainDll>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Sadece derleme sırası için; KeeperSpawner net472 olduğundan çıktısı aşağıda doğrudan referans alınır -->
+    <ProjectReference Include="..\KeeperSpawner\KeeperSpawner.csproj" ReferenceOutputAssembly="false" SkipGetTargetFrameworkProperties="true" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="KeeperSpawner">
+      <HintPath>$(MainDll)</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="GK2.Framework">
+      <HintPath>$(FrameworkDll)</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="BepInEx">
+      <HintPath>$(BepInExCorePath)\BepInEx.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="LazyBearTechnology">
+      <HintPath>$(ManagedPath)\LazyBearTechnology.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>$(ManagedPath)\UnityEngine.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>$(ManagedPath)\UnityEngine.CoreModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <Target Name="CheckFramework" BeforeTargets="ResolveAssemblyReferences">
+    <Error Condition="'$(GamePath)' == ''"
+           Text="GamePath tanımlı değil. Repo kökünde Directory.Build.props.user oluşturup GamePath'i oyun klasörüne ayarla." />
+    <Error Condition="!Exists('$(FrameworkDll)')"
+           Text="GK2 Mod Framework bulunamadı: $(FrameworkDll). Köprüyü derlemek için Framework'ü (Nexus: graveyardkeeper2/mods/42) oyuna kur." />
+  </Target>
+
+  <Target Name="DeployToGame" AfterTargets="Build">
+    <Copy SourceFiles="$(TargetPath);$(TargetDir)$(TargetName).pdb" DestinationFolder="$(PluginDeployPath)" SkipUnchangedFiles="true" />
+    <Message Importance="high" Text="KeeperSpawner.GK2Framework -> $(PluginDeployPath)" />
+  </Target>
+
+</Project>

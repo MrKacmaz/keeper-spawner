@@ -18,12 +18,13 @@ namespace KeeperSpawner
 
         private static string cachedLang;
         private static int cachedIndex;
+        private static string languageOverride;
 
         private static int Index
         {
             get
             {
-                string lang = LLBase.CurrentLang;
+                string lang = languageOverride ?? LLBase.CurrentLang;
                 if (lang != cachedLang)
                 {
                     cachedLang = lang;
@@ -36,6 +37,29 @@ namespace KeeperSpawner
 
         private static string T(string[] row) => row[Index] ?? row[0];
 
+        /// <summary>
+        /// Metni verilen dilde üretir. GK2 Mod Framework köprüsü Mods menüsü metinlerini kayıt anında bir kez alır;
+        /// o an <c>LLBase.CurrentLang</c> henüz kayıtlı dile ayarlanmamış olabilir, bu yüzden Framework'ün okuduğu dili verir.
+        /// Framework dil kodlarında "-" yerine "_" kullanır (pt_br, uk_ua, es_mx).
+        /// </summary>
+        public static string In(string lang, Func<string> text)
+        {
+            string previous = languageOverride;
+            if (!string.IsNullOrEmpty(lang))
+            {
+                lang = lang.ToLowerInvariant();
+                languageOverride = lang.StartsWith("zh") ? lang : lang.Replace('_', '-');
+            }
+            try
+            {
+                return text();
+            }
+            finally
+            {
+                languageOverride = previous;
+            }
+        }
+
         /// <summary>Tüm satırların dil sayısı kadar eleman içerdiğini kontrol eder (açılışta bir kez).</summary>
         public static void Validate()
         {
@@ -44,7 +68,7 @@ namespace KeeperSpawner
                 if (field.FieldType == typeof(string[]) && field.Name != nameof(LanguageIds)
                     && field.GetValue(null) is string[] row && row.Length != LanguageIds.Length)
                 {
-                    Plugin.Log.LogWarning($"Çeviri satırı eksik: {field.Name} ({row.Length}/{LanguageIds.Length})");
+                    Plugin.Log.LogWarning($"Incomplete translation row: {field.Name} ({row.Length}/{LanguageIds.Length})");
                 }
             }
         }
@@ -237,6 +261,62 @@ namespace KeeperSpawner
         public static string FavoriteHint => T(favoriteHintRow);
         public static string SearchHint => T(searchHintRow);
         public static string CloseHint => T(closeHintRow);
+
+        // ------------------------------------------------------------------
+        // GK2 Mod Framework "Mods" menüsü (KeeperSpawner.GK2Framework köprüsü)
+        // ------------------------------------------------------------------
+
+        private static readonly string[] modDescriptionRow =
+        {
+            "Item spawner. Press {0} in game, find an item and click it to add it to your inventory.",
+            "Item spawner. Oyunda {0} tuşuna bas, itemı bul ve tıklayarak envanterine ekle.",
+            "Item-Spawner. Drücke im Spiel {0}, suche einen Gegenstand und klicke ihn an, um ihn deinem Inventar hinzuzufügen.",
+            "Générateur d'objets. Appuyez sur {0} en jeu, trouvez un objet et cliquez dessus pour l'ajouter à votre inventaire.",
+            "Generador de objetos. Pulsa {0} en el juego, busca un objeto y haz clic para añadirlo a tu inventario.",
+            "Gerador de itens. Pressione {0} no jogo, encontre um item e clique nele para adicioná-lo ao inventário.",
+            "Спавнер предметов. Нажмите {0} в игре, найдите предмет и щёлкните по нему, чтобы добавить его в инвентарь.",
+            "Спавнер предметів. Натисніть {0} у грі, знайдіть предмет і клацніть по ньому, щоб додати його до інвентаря.",
+            "Generatore di oggetti. Premi {0} in gioco, trova un oggetto e cliccalo per aggiungerlo all'inventario.",
+            "Spawner przedmiotów. Naciśnij {0} w grze, znajdź przedmiot i kliknij go, aby dodać go do ekwipunku.",
+            "アイテムスポナー。ゲーム中に {0} を押し、アイテムを探してクリックするとインベントリに追加されます。",
+            "物品生成器。在游戏中按 {0}，找到物品并点击即可添加到背包。",
+            "物品生成器。在遊戲中按 {0}，找到物品並點擊即可加入背包。",
+            "아이템 스포너. 게임 중 {0} 키를 눌러 아이템을 찾고 클릭하면 인벤토리에 추가됩니다.",
+            "ตัวเสกไอเท็ม กด {0} ในเกม ค้นหาไอเท็มแล้วคลิกเพื่อเพิ่มลงในกระเป๋า",
+            "Công cụ tạo vật phẩm. Nhấn {0} trong game, tìm vật phẩm và nhấp để thêm vào túi đồ.",
+        };
+        private static readonly string[] toggleKeyNameRow = { "Open / close key", "Açma / kapama tuşu", "Taste zum Öffnen / Schließen", "Touche d'ouverture / fermeture", "Tecla para abrir / cerrar", "Tecla para abrir / fechar", "Клавиша открытия / закрытия", "Клавіша відкриття / закриття", "Tasto apri / chiudi", "Klawisz otwierania / zamykania", "開く / 閉じるキー", "打开 / 关闭按键", "開啟 / 關閉按鍵", "열기 / 닫기 키", "ปุ่มเปิด / ปิด", "Phím mở / đóng" };
+        private static readonly string[] toggleKeyDescRow = { "Opens the spawner window while you are in game.", "Oyundayken spawner penceresini açar.", "Öffnet das Spawner-Fenster im Spiel.", "Ouvre la fenêtre du générateur en jeu.", "Abre la ventana del generador durante la partida.", "Abre a janela do gerador durante o jogo.", "Открывает окно спавнера в игре.", "Відкриває вікно спавнера у грі.", "Apre la finestra del generatore durante il gioco.", "Otwiera okno spawnera w grze.", "ゲーム中にスポナーウィンドウを開きます。", "在游戏中打开生成器窗口。", "在遊戲中開啟生成器視窗。", "게임 중 스포너 창을 엽니다.", "เปิดหน้าต่างตัวเสกระหว่างเล่นเกม", "Mở cửa sổ tạo vật phẩm khi đang chơi." };
+        private static readonly string[] showQuestDescRow = { "Spawning quest items can break quests.", "Görev itemları eklemek görevleri bozabilir.", "Questgegenstände zu erzeugen kann Quests kaputt machen.", "Générer des objets de quête peut bloquer des quêtes.", "Generar objetos de misión puede romper misiones.", "Gerar itens de missão pode quebrar missões.", "Квестовые предметы могут сломать квесты.", "Квестові предмети можуть зламати квести.", "Generare oggetti delle missioni può rompere le missioni.", "Przedmioty z zadań mogą zepsuć zadania.", "クエストアイテムを追加するとクエストが進行不能になる場合があります。", "生成任务物品可能会破坏任务。", "生成任務物品可能會破壞任務。", "퀘스트 아이템을 추가하면 퀘스트가 망가질 수 있습니다.", "การเสกไอเท็มเควสต์อาจทำให้เควสต์พัง", "Tạo vật phẩm nhiệm vụ có thể làm hỏng nhiệm vụ." };
+        private static readonly string[] clickAmountNameRow = { "Amount per click", "Tık başına miktar", "Menge pro Klick", "Quantité par clic", "Cantidad por clic", "Quantidade por clique", "Количество за клик", "Кількість за клік", "Quantità per clic", "Ilość na kliknięcie", "クリックごとの数量", "每次点击数量", "每次點擊數量", "클릭당 수량", "จำนวนต่อคลิก", "Số lượng mỗi lần nhấp" };
+        private static readonly string[] clickAmountDescRow = { "One = 1, Ten = 10, Max = a full stack. Shift+Click always adds 1.", "One = 1, Ten = 10, Max = tam yığın. Shift+Tık her zaman 1 ekler.", "One = 1, Ten = 10, Max = voller Stapel. Umschalt+Klick fügt immer 1 hinzu.", "One = 1, Ten = 10, Max = une pile complète. Maj+Clic ajoute toujours 1.", "One = 1, Ten = 10, Max = una pila completa. Mayús+Clic siempre añade 1.", "One = 1, Ten = 10, Max = uma pilha completa. Shift+Clique sempre adiciona 1.", "One = 1, Ten = 10, Max = полный стак. Shift+Клик всегда добавляет 1.", "One = 1, Ten = 10, Max = повний стос. Shift+Клік завжди додає 1.", "One = 1, Ten = 10, Max = una pila intera. Maiusc+Clic aggiunge sempre 1.", "One = 1, Ten = 10, Max = pełny stos. Shift+Klik zawsze dodaje 1.", "One = 1、Ten = 10、Max = 最大スタック。Shift+クリックは常に1個追加します。", "One = 1，Ten = 10，Max = 满堆叠。Shift+点击始终添加 1 个。", "One = 1，Ten = 10，Max = 滿堆疊。Shift+點擊始終加入 1 個。", "One = 1, Ten = 10, Max = 최대 스택. Shift+클릭은 항상 1개를 추가합니다.", "One = 1, Ten = 10, Max = เต็มกอง Shift+คลิกจะเพิ่ม 1 ชิ้นเสมอ", "One = 1, Ten = 10, Max = đầy chồng. Shift+Nhấp luôn thêm 1." };
+        private static readonly string[] viewNameRow = { "Item view", "Item görünümü", "Ansicht", "Affichage des objets", "Vista de objetos", "Visualização de itens", "Вид списка", "Вигляд списку", "Vista oggetti", "Widok przedmiotów", "表示形式", "物品视图", "物品檢視", "아이템 보기", "มุมมองไอเท็ม", "Kiểu hiển thị" };
+        private static readonly string[] viewDescRow = { "Grid with icons or a list.", "İkonlu ızgara ya da liste.", "Raster mit Symbolen oder Liste.", "Grille avec icônes ou liste.", "Cuadrícula con iconos o lista.", "Grade com ícones ou lista.", "Сетка с иконками или список.", "Сітка з іконками або список.", "Griglia con icone o elenco.", "Siatka z ikonami lub lista.", "アイコンのグリッドまたはリスト。", "图标网格或列表。", "圖示網格或清單。", "아이콘 격자 또는 목록.", "ตารางไอคอนหรือรายการ", "Lưới biểu tượng hoặc danh sách." };
+        private static readonly string[] scaleNameRow = { "UI scale", "Arayüz ölçeği", "UI-Skalierung", "Échelle de l'interface", "Escala de la interfaz", "Escala da interface", "Масштаб интерфейса", "Масштаб інтерфейсу", "Scala interfaccia", "Skala interfejsu", "UIの大きさ", "界面缩放", "介面縮放", "UI 크기", "ขนาด UI", "Tỉ lệ giao diện" };
+        private static readonly string[] scaleDescRow = { "0 = automatic (screen height / 1080).", "0 = otomatik (ekran yüksekliği / 1080).", "0 = automatisch (Bildschirmhöhe / 1080).", "0 = automatique (hauteur d'écran / 1080).", "0 = automático (altura de pantalla / 1080).", "0 = automático (altura da tela / 1080).", "0 = автоматически (высота экрана / 1080).", "0 = автоматично (висота екрана / 1080).", "0 = automatico (altezza schermo / 1080).", "0 = automatycznie (wysokość ekranu / 1080).", "0 = 自動（画面の高さ / 1080）。", "0 = 自动（屏幕高度 / 1080）。", "0 = 自動（螢幕高度 / 1080）。", "0 = 자동 (화면 높이 / 1080).", "0 = อัตโนมัติ (ความสูงหน้าจอ / 1080)", "0 = tự động (chiều cao màn hình / 1080)." };
+        private static readonly string[] backdropNameRow = { "Background dimming", "Arka plan karartma", "Hintergrund abdunkeln", "Assombrissement du fond", "Oscurecer el fondo", "Escurecer o fundo", "Затемнение фона", "Затемнення фону", "Oscuramento sfondo", "Przyciemnienie tła", "背景の暗さ", "背景变暗", "背景變暗", "배경 어둡게", "ความมืดของพื้นหลัง", "Làm tối nền" };
+        private static readonly string[] backdropDescRow = { "How much the game is dimmed behind the window.", "Pencere açıkken oyunun ne kadar karartılacağı.", "Wie stark das Spiel hinter dem Fenster abgedunkelt wird.", "À quel point le jeu est assombri derrière la fenêtre.", "Cuánto se oscurece el juego detrás de la ventana.", "Quanto o jogo escurece atrás da janela.", "Насколько затемняется игра за окном.", "Наскільки затемнюється гра за вікном.", "Quanto si oscura il gioco dietro la finestra.", "Jak bardzo gra jest przyciemniona za oknem.", "ウィンドウの後ろのゲーム画面を暗くする度合い。", "窗口后方游戏画面的变暗程度。", "視窗後方遊戲畫面的變暗程度。", "창 뒤의 게임 화면을 어둡게 하는 정도.", "ระดับความมืดของเกมด้านหลังหน้าต่าง", "Mức làm tối game phía sau cửa sổ." };
+        private static readonly string[] statusNameRow = { "Status", "Durum", "Status", "État", "Estado", "Status", "Состояние", "Стан", "Stato", "Stan", "状態", "状态", "狀態", "상태", "สถานะ", "Trạng thái" };
+        private static readonly string[] statusDescRow = { "Problems are written to BepInEx\\LogOutput.log.", "Sorunlar BepInEx\\LogOutput.log dosyasına yazılır.", "Probleme werden in BepInEx\\LogOutput.log geschrieben.", "Les problèmes sont écrits dans BepInEx\\LogOutput.log.", "Los problemas se escriben en BepInEx\\LogOutput.log.", "Os problemas são gravados em BepInEx\\LogOutput.log.", "Проблемы записываются в BepInEx\\LogOutput.log.", "Проблеми записуються в BepInEx\\LogOutput.log.", "I problemi vengono scritti in BepInEx\\LogOutput.log.", "Problemy są zapisywane w BepInEx\\LogOutput.log.", "問題は BepInEx\\LogOutput.log に記録されます。", "问题会写入 BepInEx\\LogOutput.log。", "問題會寫入 BepInEx\\LogOutput.log。", "문제는 BepInEx\\LogOutput.log에 기록됩니다.", "ปัญหาจะถูกบันทึกใน BepInEx\\LogOutput.log", "Lỗi được ghi vào BepInEx\\LogOutput.log." };
+        private static readonly string[] statusActiveRow = { "Active, press {0} in game", "Etkin, oyunda {0} tuşuna bas", "Aktiv, im Spiel {0} drücken", "Actif, appuyez sur {0} en jeu", "Activo, pulsa {0} en el juego", "Ativo, pressione {0} no jogo", "Активен, нажмите {0} в игре", "Активний, натисніть {0} у грі", "Attivo, premi {0} in gioco", "Aktywny, naciśnij {0} w grze", "有効、ゲーム中に {0} を押す", "已启用，在游戏中按 {0}", "已啟用，在遊戲中按 {0}", "활성, 게임 중 {0} 키", "ทำงานอยู่ กด {0} ในเกม", "Đang bật, nhấn {0} trong game" };
+        private static readonly string[] statusDisabledRow = { "Disabled, see the log", "Devre dışı, loga bak", "Deaktiviert, siehe Log", "Désactivé, voir le journal", "Desactivado, consulta el registro", "Desativado, veja o log", "Отключён, см. журнал", "Вимкнено, див. журнал", "Disattivato, vedi il log", "Wyłączony, zobacz log", "無効、ログを確認", "已禁用，请查看日志", "已停用，請查看日誌", "비활성, 로그 확인", "ปิดใช้งาน ดูบันทึก", "Đã tắt, xem log" };
+
+        public static string ModDescription(string key) => string.Format(T(modDescriptionRow), key);
+        public static string ToggleKeyName => T(toggleKeyNameRow);
+        public static string ToggleKeyDescription => T(toggleKeyDescRow);
+        public static string ShowQuestItemsDescription => T(showQuestDescRow);
+        public static string ClickAmountName => T(clickAmountNameRow);
+        public static string ClickAmountDescription => T(clickAmountDescRow);
+        public static string ViewName => T(viewNameRow);
+        public static string ViewDescription => T(viewDescRow);
+        public static string ScaleName => T(scaleNameRow);
+        public static string ScaleDescription => T(scaleDescRow);
+        public static string BackdropName => T(backdropNameRow);
+        public static string BackdropDescription => T(backdropDescRow);
+        public static string StatusName => T(statusNameRow);
+        public static string StatusDescription => T(statusDescRow);
+        public static string StatusActive(string key) => string.Format(T(statusActiveRow), key);
+        public static string StatusDisabled => T(statusDisabledRow);
 
         // ------------------------------------------------------------------
         // Kategoriler

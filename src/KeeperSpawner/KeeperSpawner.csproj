@@ -16,6 +16,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <!-- İsteğe bağlı GK2 Mod Framework köprüsü config girdilerine ve çevirilere erişir -->
+    <InternalsVisibleTo Include="KeeperSpawner.GK2Framework" />
+  </ItemGroup>
+
+  <ItemGroup>
     <!-- .NET Framework 4.7.2 targeting pack kurulu olmadan derleyebilmek için -->
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
   </ItemGroup>
