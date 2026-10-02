@@ -91,7 +91,7 @@ namespace KeeperSpawner
                 catch (Exception e)
                 {
                     skipped++;
-                    Plugin.Log.LogWarning($"Item atlandı [{def.id}]: {e.Message}");
+                    Plugin.Log.LogWarning($"Skipped item [{def.id}]: {e.Message}");
                 }
             }
             list.Sort((a, b) =>
@@ -107,7 +107,7 @@ namespace KeeperSpawner
                 ById[entry.Id] = entry;
             }
             builtForLang = LLBase.CurrentLang;
-            Plugin.Log.LogInfo($"Katalog kuruldu: {list.Count} item, {skipped} gizli (dil: {builtForLang})");
+            Plugin.Log.LogInfo($"Catalog built: {list.Count} items, {skipped} hidden (language: {builtForLang})");
         }
 
         private static bool IsHidden(ItemDef def)

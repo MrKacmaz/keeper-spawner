@@ -90,11 +90,11 @@ namespace KeeperSpawner
 
             if (MissingOptional.Count > 0)
             {
-                Plugin.Log.LogWarning($"Bazı oyun API'leri bulunamadı, ilgili özellikler kapalı: {string.Join(", ", MissingOptional.ToArray())}");
+                Plugin.Log.LogWarning($"Some game APIs are missing, related features are off: {string.Join(", ", MissingOptional.ToArray())}");
             }
             if (MissingRequired.Count > 0)
             {
-                Plugin.Log.LogError($"Zorunlu oyun API'leri bulunamadı: {MissingRequiredSummary}");
+                Plugin.Log.LogError($"Required game APIs are missing: {MissingRequiredSummary}");
             }
             return MissingRequired.Count == 0;
         }

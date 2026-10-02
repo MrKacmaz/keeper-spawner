@@ -62,7 +62,7 @@ namespace KeeperSpawner
             }
             catch (Exception e)
             {
-                Plugin.Log.LogWarning($"Girdi durumu temizlenemedi: {e.Message}");
+                Plugin.Log.LogWarning($"Could not reset input state: {e.Message}");
             }
         }
     }

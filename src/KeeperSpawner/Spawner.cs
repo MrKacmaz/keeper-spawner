@@ -50,7 +50,7 @@ namespace KeeperSpawner
             }
             catch (Exception e)
             {
-                Plugin.Log.LogWarning($"Bildirim gösterilemedi: {e.Message}");
+                Plugin.Log.LogWarning($"Could not show notification: {e.Message}");
             }
         }
     }

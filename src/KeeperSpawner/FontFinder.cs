@@ -22,7 +22,7 @@ namespace KeeperSpawner
             }
             catch (Exception e)
             {
-                Plugin.Log.LogWarning($"Fontlar listelenemedi: {e.Message}");
+                Plugin.Log.LogWarning($"Could not list fonts: {e.Message}");
                 return null;
             }
 
@@ -30,7 +30,7 @@ namespace KeeperSpawner
             {
                 logged = true;
                 string list = string.Join(", ", fonts.Select(f => $"{f.name}{(f.dynamic ? "" : " (statik)")}{(SupportsTurkish(f) ? "" : " (TR yok)")}").ToArray());
-                Plugin.Log.LogInfo($"Yüklü fontlar ({fonts.Length}): {list}");
+                Plugin.Log.LogInfo($"Loaded fonts ({fonts.Length}): {list}");
             }
 
             if (setting == "-")
@@ -43,18 +43,18 @@ namespace KeeperSpawner
                 var named = fonts.FirstOrDefault(f => string.Equals(f.name, setting, StringComparison.OrdinalIgnoreCase));
                 if (named != null)
                 {
-                    Plugin.Log.LogInfo($"Arayüz fontu: {named.name} (ayardan)");
+                    Plugin.Log.LogInfo($"UI font: {named.name} (from config)");
                     return named;
                 }
-                Plugin.Log.LogWarning($"UI.Font = \"{setting}\" bulunamadı, otomatik seçime geçiliyor.");
+                Plugin.Log.LogWarning($"UI.Font = \"{setting}\" not found, using automatic selection.");
             }
 
             var auto = fonts.FirstOrDefault(f => f.dynamic
                 && f.name.IndexOf("pixel", StringComparison.OrdinalIgnoreCase) >= 0
                 && SupportsTurkish(f));
             Plugin.Log.LogInfo(auto != null
-                ? $"Arayüz fontu: {auto.name} (otomatik)"
-                : "Arayüz fontu: Unity varsayılanı (uygun piksel font bulunamadı)");
+                ? $"UI font: {auto.name} (automatic)"
+                : "UI font: Unity default (no suitable pixel font found)");
             return auto;
         }
 

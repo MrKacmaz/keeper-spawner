@@ -59,7 +59,7 @@ namespace KeeperSpawner
             }
             if (wanted.Count > 0)
             {
-                Plugin.Log.LogDebug($"Oyun sprite'ları bulunamadı: {string.Join(", ", new List<string>(wanted).ToArray())}");
+                Plugin.Log.LogDebug($"Game sprites not found: {string.Join(", ", new List<string>(wanted).ToArray())}");
             }
         }
     }

@@ -237,7 +237,7 @@ namespace KeeperSpawner
                 if (key != lastDrawError)
                 {
                     lastDrawError = key;
-                    Plugin.Log.LogError($"Pencere çizilemedi: {e}");
+                    Plugin.Log.LogError($"Could not draw window: {e}");
                 }
                 ShowToast(Strings.Error, KsTheme.ItemName);
             }
@@ -477,11 +477,11 @@ namespace KeeperSpawner
                         ? Strings.AddedPartial(added, amount, entry.DisplayName + quality)
                         : Strings.Added(added, entry.DisplayName + quality), added < amount ? KsTheme.ItemName : KsTheme.Success);
                 }
-                Plugin.Log.LogInfo($"Spawn {entry.Id}: istenen {amount}, eklenen {added}");
+                Plugin.Log.LogInfo($"Spawn {entry.Id}: requested {amount}, added {added}");
             }
             catch (Exception e) when (!GameCompat.IsCompatibilityError(e))
             {
-                Plugin.Log.LogError($"Spawn başarısız [{entry.Id}]: {e}");
+                Plugin.Log.LogError($"Spawn failed [{entry.Id}]: {e}");
                 ShowToast(Strings.Error, KsTheme.ItemName);
             }
         }

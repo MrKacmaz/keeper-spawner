@@ -91,7 +91,7 @@ namespace KeeperSpawner
             }
             catch (System.Exception e)
             {
-                Plugin.Log.LogWarning($"İkon yüklenemedi [{name}]: {e.Message}");
+                Plugin.Log.LogWarning($"Could not load icon [{name}]: {e.Message}");
                 return null;
             }
         }
