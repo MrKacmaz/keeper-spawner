@@ -3,6 +3,8 @@ KeeperSpawner - item spawner for Graveyard Keeper 2
 
 REQUIREMENTS
 - BepInEx 5.4.23.5 (win_x64): https://github.com/BepInEx/BepInEx/releases/tag/v5.4.23.5
+- Optional: GK2 Mod Framework 0.1.19+ (https://www.nexusmods.com/graveyardkeeper2/mods/42)
+  for the in-game Mods menu. KeeperSpawner works without it.
 
 INSTALL WITH GK2 WORKSHOP LOADER
 1. Install BepInEx (steps 1-2 of the manual install below).
@@ -16,9 +18,14 @@ MANUAL INSTALL
 2. Start the game once and close it (BepInEx creates its folders).
 3. Copy the BepInEx folder from this package into the game folder, so that you get:
        Graveyard Keeper 2\BepInEx\plugins\KeeperSpawner\KeeperSpawner.dll
+       Graveyard Keeper 2\BepInEx\plugins\KeeperSpawner\KeeperSpawner.GK2Framework.dll
+   The second DLL is the optional GK2 Mod Framework bridge. Without the Framework,
+   BepInEx skips it ("missing dependencies" in the log); that is expected.
+Do not install KeeperSpawner both from the Workshop and manually.
 
 USAGE
-- Load a save and press O to open the spawner (the key can be changed in the config).
+- Load a save and press the letter O (not zero) to open the spawner. The key can be
+  changed in the config or, with GK2 Mod Framework, in Mods > KeeperSpawner > Settings.
 - Click: add the amount chosen under "Click" (1 / 10 / Max). Shift+Click: add 1.
 - Right-click: add or remove a favorite. Ctrl+F: search. Esc: close.
 
@@ -30,6 +37,7 @@ UNINSTALL
 
 LOG
   Problems are written to Graveyard Keeper 2\BepInEx\LogOutput.log.
+  "KeeperSpawner 1.1.0 loaded" means the mod started.
 
 
 KeeperSpawner - Graveyard Keeper 2 için item spawner
@@ -37,6 +45,8 @@ KeeperSpawner - Graveyard Keeper 2 için item spawner
 
 GEREKSİNİMLER
 - BepInEx 5.4.23.5 (win_x64): https://github.com/BepInEx/BepInEx/releases/tag/v5.4.23.5
+- İsteğe bağlı: oyun içi Mods menüsü için GK2 Mod Framework 0.1.19+
+  (https://www.nexusmods.com/graveyardkeeper2/mods/42). KeeperSpawner onsuz da çalışır.
 
 GK2 WORKSHOP LOADER İLE KURULUM
 1. BepInEx'i kur (aşağıdaki elle kurulumun 1-2. adımları).
@@ -50,9 +60,14 @@ ELLE KURULUM
 2. Oyunu bir kez açıp kapat (BepInEx klasörlerini oluşturur).
 3. Bu paketteki BepInEx klasörünü oyun klasörüne kopyala; sonuç şöyle olmalı:
        Graveyard Keeper 2\BepInEx\plugins\KeeperSpawner\KeeperSpawner.dll
+       Graveyard Keeper 2\BepInEx\plugins\KeeperSpawner\KeeperSpawner.GK2Framework.dll
+   İkinci DLL isteğe bağlı GK2 Mod Framework köprüsüdür. Framework yoksa BepInEx onu
+   atlar (logda "missing dependencies"); bu normaldir.
+KeeperSpawner'ı hem Atölye'den hem elle kurma.
 
 KULLANIM
-- Bir kayıt yükle ve spawner'ı açmak için O'ya bas (tuş ayar dosyasından değiştirilebilir).
+- Bir kayıt yükle ve spawner'ı açmak için O harfine bas (sıfır değil). Tuş ayar dosyasından
+  ya da GK2 Mod Framework ile Mods > KeeperSpawner > Settings'ten değiştirilebilir.
 - Tık: "Tık" altında seçili miktarı ekler (1 / 10 / Maks). Shift+Tık: 1 adet ekler.
 - Sağ tık: favorilere ekler/çıkarır. Ctrl+F: arama. Esc: kapat.
 
@@ -64,3 +79,4 @@ KALDIRMA
 
 LOG
   Sorunlar Graveyard Keeper 2\BepInEx\LogOutput.log dosyasına yazılır.
+  "KeeperSpawner 1.1.0 loaded" satırı modun başladığını gösterir.

@@ -21,11 +21,13 @@ Item spawner mod for **Graveyard Keeper 2** (BepInEx 5). Press **O** in game, fi
 - Quest items hidden by default, so you do not break quests by accident
 - UI in all 17 languages of the game
 - Switches itself off with a log message, instead of breaking the game, if a game update changes the code it relies on
+- Shows up in the game's **Mods** menu when [GK2 Mod Framework](https://www.nexusmods.com/graveyardkeeper2/mods/42) is installed (optional)
 
 ## Requirements
 
 - Graveyard Keeper 2 (tested with 1.007.1)
 - [BepInEx 5.4.23.5 (win_x64)](https://github.com/BepInEx/BepInEx/releases/tag/v5.4.23.5)
+- Optional: [GK2 Mod Framework](https://www.nexusmods.com/graveyardkeeper2/mods/42) 0.1.19 or newer, for the in-game Mods menu and settings
 - Optional: GK2 Workshop Loader, to install it from the Steam Workshop
 
 ## Installation
@@ -42,7 +44,13 @@ Item spawner mod for **Graveyard Keeper 2** (BepInEx 5). Press **O** in game, fi
 2. Download `KeeperSpawner-<version>.zip` from [Releases](../../releases) and extract it into the game folder, so that you get
    `Graveyard Keeper 2\BepInEx\plugins\KeeperSpawner\KeeperSpawner.dll`.
 
-To uninstall, delete the `BepInEx\plugins\KeeperSpawner` folder.
+The package also contains `KeeperSpawner.GK2Framework.dll`, the optional bridge to GK2 Mod Framework. Without the Framework, BepInEx skips it with a "missing dependencies" line in the log; that is expected and KeeperSpawner still works.
+
+Do not install KeeperSpawner both from the Workshop and manually: BepInEx loads only one copy. To uninstall, delete the `BepInEx\plugins\KeeperSpawner` folder.
+
+## GK2 Mod Framework
+
+With [GK2 Mod Framework](https://www.nexusmods.com/graveyardkeeper2/mods/42) installed, open **Mods** from the main menu or the pause menu and select KeeperSpawner. It shows the version, whether the mod is active and which key opens it, and lets you change the hotkey, amount per click, quest items, view, UI scale and background dimming. The values are KeeperSpawner's own config entries, so the Mods menu and the `.cfg` file always agree.
 
 ## Controls
 
@@ -71,6 +79,17 @@ To uninstall, delete the `BepInEx\plugins\KeeperSpawner` folder.
 | `Items.Favorites`, `Items.Recent`, `UI.Category` | | Saved by the window |
 | `Debug.ForceIncompatible` | `false` | Test the "incompatible game version" path |
 
+## Troubleshooting
+
+**Nothing happens when I press O.**
+
+- Load a save first. The window does not open in the main menu.
+- The key is the letter **O**, not the number zero. You can change it in the config or in the Mods menu.
+- Open `Graveyard Keeper 2\BepInEx\LogOutput.log` and look for `KeeperSpawner 1.1.0 loaded`. If the line is missing, BepInEx did not load the mod: check that `BepInEx\plugins\KeeperSpawner\KeeperSpawner.dll` exists and that BepInEx itself starts (it creates `BepInEx\LogOutput.log`).
+- `KeeperSpawner disabled: ...` in the log means a game update changed something the mod needs. Please report it with the log.
+
+**KeeperSpawner is missing from the Mods menu.** `KeeperSpawner.GK2Framework.dll` must be next to `KeeperSpawner.dll`, and you need KeeperSpawner 1.1.0+ and GK2 Mod Framework 0.1.19+. The log should contain `Registered GK2 mod [com.mrkacmaz.keeperspawner]`.
+
 ## Compatibility
 
 At startup the mod checks the game members it uses. If a game update removes or changes one of them, the mod switches itself off and writes the reason to `BepInEx\LogOutput.log`; pressing the hotkey then shows a notice. Optional parts (the game's own "+N item" notification, item icons) only turn themselves off.
@@ -83,7 +102,7 @@ Found a bug or have an idea? [Open an issue](../../issues/new/choose). For bugs,
 
 ## Building
 
-Requirements: .NET SDK 8 (or newer), the game with BepInEx installed.
+Requirements: .NET SDK 8 (or newer), the game with BepInEx installed. The optional Framework bridge (`src/KeeperSpawner.GK2Framework`) also needs [GK2 Mod Framework](https://www.nexusmods.com/graveyardkeeper2/mods/42) installed in the game (`BepInEx\plugins\GK2.Framework.dll`).
 
 1. Create `Directory.Build.props.user` in the repository root (it is git-ignored):
 
@@ -95,10 +114,10 @@ Requirements: .NET SDK 8 (or newer), the game with BepInEx installed.
    </Project>
    ```
 
-2. Build. The DLL is copied to `BepInEx\plugins\KeeperSpawner\` of the game automatically.
+2. Build. The DLLs are copied to `BepInEx\plugins\KeeperSpawner\` of the game automatically. Building the bridge builds the main mod too; build only `src\KeeperSpawner\KeeperSpawner.csproj` if you do not have the Framework.
 
    ```
-   dotnet build src\KeeperSpawner\KeeperSpawner.csproj -c Release
+   dotnet build src\KeeperSpawner.GK2Framework\KeeperSpawner.GK2Framework.csproj -c Release
    ```
 
 3. Release package (Workshop folder, manual-install zip, SteamCMD vdf) in `artifacts\<version>\`:
@@ -129,6 +148,7 @@ The game and BepInEx assemblies are referenced from the game folder and are not 
 - Görev itemları varsayılan olarak gizli
 - Arayüz oyunun 17 dilinin hepsinde
 - Bir oyun güncellemesi kullandığı kodu değiştirirse oyunu bozmak yerine kendini kapatır ve sebebini loga yazar
+- [GK2 Mod Framework](https://www.nexusmods.com/graveyardkeeper2/mods/42) kuruluysa oyunun **Mods** menüsünde görünür; ayarlar oradan da değiştirilebilir (isteğe bağlı)
 
 ### Kurulum
 
@@ -144,7 +164,13 @@ The game and BepInEx assemblies are referenced from the game folder and are not 
 2. [Releases](../../releases) sayfasından `KeeperSpawner-<sürüm>.zip` dosyasını indirip oyun klasörüne çıkar; sonuç
    `Graveyard Keeper 2\BepInEx\plugins\KeeperSpawner\KeeperSpawner.dll` olmalı.
 
-Kaldırmak için `BepInEx\plugins\KeeperSpawner` klasörünü sil.
+Paketteki `KeeperSpawner.GK2Framework.dll`, GK2 Mod Framework için isteğe bağlı köprüdür. Framework yoksa BepInEx onu logda "missing dependencies" yazarak atlar; bu normaldir, KeeperSpawner yine çalışır.
+
+KeeperSpawner'ı hem Atölye'den hem elle kurma; BepInEx sadece birini yükler. Kaldırmak için `BepInEx\plugins\KeeperSpawner` klasörünü sil.
+
+### GK2 Mod Framework
+
+[GK2 Mod Framework](https://www.nexusmods.com/graveyardkeeper2/mods/42) (0.1.19 ya da üstü) kuruluysa ana menüden ya da duraklatma menüsünden **Mods**'u açıp KeeperSpawner'ı seç. Sürümü, modun etkin olup olmadığını ve hangi tuşla açıldığını gösterir; açma tuşu, tık başına miktar, görev itemları, görünüm, arayüz ölçeği ve arka plan karartma oradan değiştirilebilir. Değerler KeeperSpawner'ın kendi ayar dosyasına yazılır.
 
 ### Tuşlar
 
@@ -158,6 +184,12 @@ Kaldırmak için `BepInEx\plugins\KeeperSpawner` klasörünü sil.
 | Esc | Önce arama kutusundan çık, sonra kapat |
 
 Ayarlar `BepInEx\config\com.mrkacmaz.keeperspawner.cfg` dosyasında (tablo yukarıda, İngilizce bölümde).
+
+### Sorun giderme
+
+**O'ya basınca bir şey olmuyor.** Önce bir kayıt yükle (pencere ana menüde açılmaz). Tuş sıfır değil, **O** harfi. `BepInEx\LogOutput.log` içinde `KeeperSpawner 1.1.0 loaded` satırı yoksa BepInEx modu yüklememiştir; `BepInEx\plugins\KeeperSpawner\KeeperSpawner.dll` dosyasının yerinde olduğunu kontrol et. `KeeperSpawner disabled: ...` satırı, bir oyun güncellemesinden sonra uyumsuzluk demektir; logla birlikte bildir.
+
+**Mods menüsünde KeeperSpawner yok.** `KeeperSpawner.GK2Framework.dll` dosyası `KeeperSpawner.dll`'in yanında olmalı; KeeperSpawner 1.1.0+ ve GK2 Mod Framework 0.1.19+ gerekir. Logda `Registered GK2 mod [com.mrkacmaz.keeperspawner]` satırı görünmeli.
 
 ### Uyumluluk
 

@@ -1,5 +1,7 @@
 [h1]KeeperSpawner[/h1]
-A lightweight item spawner for Graveyard Keeper 2. Press [b]O[/b] in game, find an item and click it to add it to your inventory.
+A lightweight item spawner for Graveyard Keeper 2. Press [b]O[/b] (the letter) in game, find an item and click it to add it to your inventory.
+
+[b]New in 1.1.0:[/b] KeeperSpawner shows up in the game's [b]Mods[/b] menu when [url=https://www.nexusmods.com/graveyardkeeper2/mods/42]GK2 Mod Framework[/url] is installed, with its status and settings. The Framework is optional.
 
 [h2]Features[/h2]
 [list]
@@ -11,12 +13,14 @@ A lightweight item spawner for Graveyard Keeper 2. Press [b]O[/b] in game, find 
 [*]Favorites (right-click) and the last 5 added items
 [*]Quest items are hidden by default so you do not break quests by accident
 [*]UI in all 17 languages of the game
+[*]Optional GK2 Mod Framework support: see the mod and change its settings from Mods in the main menu or pause menu
 [/list]
 
 [h2]Requirements[/h2]
 [list]
 [*][url=https://github.com/BepInEx/BepInEx/releases/tag/v5.4.23.5]BepInEx 5.4.23.5 (win_x64)[/url]
 [*][url=https://github.com/Zoriten/-GK2-WorkshopLoader/releases]GK2 Workshop Loader[/url] to load it from the Workshop: put [i]GK2_WorkshopLoader.dll[/i] into [i]BepInEx\patchers[/i] (not plugins), subscribe, start the game and click [b]Yes[/b] in the loader's security check. Or install it manually (see INSTALL.txt in the item).
+[*]Optional: [url=https://www.nexusmods.com/graveyardkeeper2/mods/42]GK2 Mod Framework[/url] 0.1.19 or newer for the in-game Mods menu. Without it, BepInEx skips the small bridge DLL ([i]KeeperSpawner.GK2Framework.dll[/i]) and KeeperSpawner works as before.
 [/list]
 
 [h2]Controls[/h2]
@@ -29,11 +33,19 @@ A lightweight item spawner for Graveyard Keeper 2. Press [b]O[/b] in game, find 
 [tr][td]Esc[/td][td]Close[/td][/tr]
 [/table]
 
-Settings: [i]BepInEx\config\com.mrkacmaz.keeperspawner.cfg[/i] (hotkey, UI scale, view, backdrop, quest items).
+Settings: [i]BepInEx\config\com.mrkacmaz.keeperspawner.cfg[/i] (hotkey, UI scale, view, backdrop, quest items), or Mods > KeeperSpawner > Settings with GK2 Mod Framework.
+
+[h2]Nothing happens when I press O?[/h2]
+[list]
+[*]Load a save first; the window does not open in the main menu.
+[*]It is the letter O, not zero.
+[*]Look for [i]KeeperSpawner 1.1.0 loaded[/i] in [i]BepInEx\LogOutput.log[/i]. If it is missing, BepInEx did not load the mod (check BepInEx and the Workshop Loader install).
+[*]Do not install the mod both from the Workshop and manually.
+[/list]
 
 [h2]Good to know[/h2]
 [list]
-[*]Tested with game version 1.007.1. After a game update the mod checks the game code it uses; if something changed it switches itself off and writes the reason to [i]BepInEx\LogOutput.log[/i] instead of breaking your game.
+[*]Tested with game version 1.007.1 and GK2 Mod Framework 0.1.19. After a game update the mod checks the game code it uses; if something changed it switches itself off and writes the reason to [i]BepInEx\LogOutput.log[/i] instead of breaking your game.
 [*]Items are added with the same call the game's own scripts use, so they stay in your save. Keeping a backup of your save is still a good idea.
 [*]Security note for the Workshop Loader: the mod uses reflection only to read and reset the game's own input state while the window is open. It does not use the network, does not delete files and does not load other code.
 [*]The Workshop of this game only offers the "Translation" tag, so this item carries it even though it is a code mod.

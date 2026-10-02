@@ -43,13 +43,15 @@ KeeperSpawner/
 ├── src/KeeperSpawner/IconCache.cs      # item ikonlarını çözer ve önbelleğe alır
 ├── src/KeeperSpawner/Categories.cs     # item → kategori kuralları
 ├── src/KeeperSpawner/InputBlocker.cs   # menü açıkken oyun girdisini askıya alır
-├── src/KeeperSpawner/Strings.cs        # mod arayüzü metinleri (TR/EN)
+├── src/KeeperSpawner/Strings.cs        # mod arayüzü metinleri (17 dil)
+├── src/KeeperSpawner.GK2Framework/     # isteğe bağlı GK2 Mod Framework köprüsü (netstandard2.1, v1.1.0)
 ├── Directory.Build.props               # Directory.Build.props.user'ı içe aktarır
 ├── Directory.Build.props.user          # GamePath (yerel, git'e girmez)
 ├── docs/game-api.md                    # Faz 1 keşif notları (oyun API'si)
 ├── tools/ue/                           # UnityExplorer C# konsol betikleri
 ├── decompiled/                         # oyun kodunun okunabilir hali (git'e girmez, ASLA yayınlanmaz)
-└── workshop/                           # preview.png, açıklama, INSTALL.txt, .vdf
+├── workshop/                           # preview.png, açıklama, INSTALL.txt, .vdf
+└── nexus/                              # Nexus sayfa metinleri (açıklama, özet, dosyalar, gereksinimler)
 ```
 
 - Oyun DLL'lerine (`Assembly-CSharp.dll`, `UnityEngine*.dll`) doğrudan oyun klasöründen referans verilir (`$(GamePath)\GraveyardKeeper2_Data\Managed\`); kopyalanmaz.
@@ -136,6 +138,17 @@ Oyun kodunda bulunacaklar:
   - Test için `Debug.ForceIncompatible = true`.
   - Açılışta oyun sürümü ve test edilen sürüm (`GameCompat.TestedGameVersion`) loglanır; her oyun güncellemesinden sonra güncellenmeli.
 - SemVer (1.0.0, 1.1.0…) ve Atölye değişiklik notları.
+
+### v1.1.0 — GK2 Mod Framework entegrasyonu (2026-10-02)
+- Sebep: Nexus'ta ([mods/275](https://www.nexusmods.com/graveyardkeeper2/mods/275)) bir kullanıcı modun Framework'ün Mods menüsünde görünmediğini ve O ile açılmadığını yazdı (muhtemelen sıfıra bastı ya da ana menüde denedi).
+- [GK2 Mod Framework](https://www.nexusmods.com/graveyardkeeper2/mods/42) 0.1.19 "optional integration" deseni: ana DLL Framework'e referans vermez; `KeeperSpawner.GK2Framework.dll` köprüsü hem KeeperSpawner'a hem Framework'e hard dependency verir. Framework yoksa BepInEx sadece köprüyü atlar.
+- Köprü `frameworkManagesEnabledState: false`, `requiresKnownBuild: false` (uyumluluğu `GameCompat` denetler). Ayarlar KeeperSpawner'ın kendi `ConfigEntry`'leri (0.1.19 girdi benimseme): ToggleKey, ClickAmount, ShowQuestItems, View, Scale, BackdropOpacity + salt okunur Durum satırı. Font (pencere bir kez kurulur) ve iç durum girdileri gösterilmez.
+- Config girdileri artık uyumluluk kontrolünden önce bağlanıyor (mod kapalıyken de menüde görünsünler). Köprü `InternalsVisibleTo` ile erişir.
+- Metinler kayıt anında `FrameworkLocalization.CurrentLanguage` ile çözülür (`Strings.In`); o an `LLBase.CurrentLang` henüz ayarlı olmayabilir. Bölüm başlıkları (General/Items/UI) İngilizce kalıyor: Framework onları sadece kendi klasöründeki JSON'dan çeviriyor, Atölye oraya dosya koyamaz.
+- Framework `netstandard2.1` → köprü de `netstandard2.1`; net472 ana DLL'e doğrudan `Reference` ile bağlanır (ProjectReference sadece derleme sırası için).
+- Log mesajları İngilizceye çevrildi.
+- ✅ Oyunda test edildi (Framework 0.1.19, build 25601286): kayıt `status=Compatible`, Mods menüsünde açıklama/ayarlar Türkçe, Durum satırı doğru.
+- Workshop Loader DLL atlama listesi (`0Harmony`, `BepInEx`, `Unity.`…) köprüyü etkilemiyor.
 
 ## Riskler
 

@@ -1,5 +1,7 @@
 [h1]KeeperSpawner[/h1]
-Graveyard Keeper 2 için hafif bir item spawner. Oyunda [b]O[/b]'ya bas, itemı bul ve tıklayarak envanterine ekle.
+Graveyard Keeper 2 için hafif bir item spawner. Oyunda [b]O[/b] harfine bas, itemı bul ve tıklayarak envanterine ekle.
+
+[b]1.1.0'da yeni:[/b] [url=https://www.nexusmods.com/graveyardkeeper2/mods/42]GK2 Mod Framework[/url] kuruluysa KeeperSpawner oyunun [b]Mods[/b] menüsünde durumu ve ayarlarıyla görünür. Framework isteğe bağlı.
 
 [h2]Özellikler[/h2]
 [list]
@@ -11,12 +13,14 @@ Graveyard Keeper 2 için hafif bir item spawner. Oyunda [b]O[/b]'ya bas, itemı 
 [*]Favoriler (sağ tık) ve son eklenen 5 item
 [*]Görev itemları varsayılan olarak gizli, yanlışlıkla görevleri bozmazsın
 [*]Arayüz oyunun 17 dilinin hepsinde
+[*]İsteğe bağlı GK2 Mod Framework desteği: modu ve ayarlarını ana menüden ya da duraklatma menüsünden Mods ile gör ve değiştir
 [/list]
 
 [h2]Gereksinimler[/h2]
 [list]
 [*][url=https://github.com/BepInEx/BepInEx/releases/tag/v5.4.23.5]BepInEx 5.4.23.5 (win_x64)[/url]
 [*]Atölye'den yüklemek için [url=https://github.com/Zoriten/-GK2-WorkshopLoader/releases]GK2 Workshop Loader[/url]: [i]GK2_WorkshopLoader.dll[/i] dosyasını [i]BepInEx\patchers[/i] klasörüne koy (plugins değil), abone ol, oyunu aç ve loader'ın güvenlik penceresinde [b]Evet[/b]'e bas. Ya da elle kurulum (itemdaki INSTALL.txt).
+[*]İsteğe bağlı: oyun içi Mods menüsü için [url=https://www.nexusmods.com/graveyardkeeper2/mods/42]GK2 Mod Framework[/url] 0.1.19 ya da üstü. Kurulu değilse BepInEx küçük köprü DLL'ini ([i]KeeperSpawner.GK2Framework.dll[/i]) atlar, KeeperSpawner eskisi gibi çalışır.
 [/list]
 
 [h2]Tuşlar[/h2]
@@ -29,11 +33,19 @@ Graveyard Keeper 2 için hafif bir item spawner. Oyunda [b]O[/b]'ya bas, itemı 
 [tr][td]Esc[/td][td]Kapat[/td][/tr]
 [/table]
 
-Ayarlar: [i]BepInEx\config\com.mrkacmaz.keeperspawner.cfg[/i] (kısayol, arayüz ölçeği, görünüm, arka plan karartma, görev itemları).
+Ayarlar: [i]BepInEx\config\com.mrkacmaz.keeperspawner.cfg[/i] (kısayol, arayüz ölçeği, görünüm, arka plan karartma, görev itemları) ya da GK2 Mod Framework ile Mods > KeeperSpawner > Settings.
+
+[h2]O'ya basınca bir şey olmuyor mu?[/h2]
+[list]
+[*]Önce bir kayıt yükle; pencere ana menüde açılmaz.
+[*]Tuş sıfır değil, O harfi.
+[*][i]BepInEx\LogOutput.log[/i] içinde [i]KeeperSpawner 1.1.0 loaded[/i] satırını ara. Yoksa BepInEx modu yüklememiştir (BepInEx ve Workshop Loader kurulumunu kontrol et).
+[*]Modu hem Atölye'den hem elle kurma.
+[/list]
 
 [h2]Bilmen gerekenler[/h2]
 [list]
-[*]Oyun sürümü 1.007.1 ile test edildi. Bir oyun güncellemesinden sonra mod kullandığı oyun kodunu kontrol eder; bir şey değiştiyse oyununu bozmak yerine kendini kapatır ve sebebini [i]BepInEx\LogOutput.log[/i] dosyasına yazar.
+[*]Oyun sürümü 1.007.1 ve GK2 Mod Framework 0.1.19 ile test edildi. Bir oyun güncellemesinden sonra mod kullandığı oyun kodunu kontrol eder; bir şey değiştiyse oyununu bozmak yerine kendini kapatır ve sebebini [i]BepInEx\LogOutput.log[/i] dosyasına yazar.
 [*]Itemlar oyunun kendi senaryolarının kullandığı çağrıyla eklenir, kayıtta kalır. Yine de kaydının yedeğini almak iyi fikir.
 [*]Workshop Loader güvenlik notu: mod reflection'ı sadece pencere açıkken oyunun kendi girdi durumunu okumak ve sıfırlamak için kullanır. Ağ kullanmaz, dosya silmez, başka kod yüklemez.
 [*]Bu oyunun Atölye'si sadece "Translation" etiketi sunduğu için bu item, bir kod modu olsa da bu etiketi taşıyor.
