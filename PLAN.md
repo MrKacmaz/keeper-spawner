@@ -120,7 +120,7 @@ Oyun kodunda bulunacaklar:
   - ✅ `tools/package.ps1`: derler, DLL'i Workshop Loader güvenlik listesine göre tarar, `artifacts/<sürüm>/content` (Atölye), `KeeperSpawner-<sürüm>.zip` (elle kurulum / Nexus, `/` ayırıcılı) ve `workshop_item.vdf` üretir. Tarama temiz.
   - ✅ `workshop/`: `INSTALL.txt` (EN+TR), `description.en.bbcode`, `description.tr.bbcode`, `keeperspawner.vdf.template`. `CHANGELOG.md`.
   - ✅ Sürüm 1.0.0.
-  - ✅ `workshop/preview.png`: 1920×1080 kapak (`docs/images/cover.png` ile aynı, 302 KB; 2026-10-02, ilk sürümde oyun içi ekran görüntüsüydü).
+  - ✅ `workshop/preview.png`: 1024×1024 kare kapak (`docs/images/banner.png` ile aynı). Atölye listeleri önizlemeyi kare gösterir; 16:9 `docs/images/cover.png` siyah bantlı görünüyor, o yüzden kullanılmıyor.
   - ✅ Atölye'ye yüklendi (oyunun yükleyicisiyle): [3810736028](https://steamcommunity.com/sharedfiles/filedetails/?id=3810736028). `tools/package.ps1` varsayılan olarak bu id'yi `.vdf`'e yazar. İlk kontrolde anonim Steam API'si itemı göremedi (Liste dışı / henüz herkese açık değil).
   - ✅ Repo herkese açık, MIT lisansı, README (EN+TR), issue formları.
   - ✅ GitHub release [v1.0.0](https://github.com/MrKacmaz/keeper-spawner/releases/tag/v1.0.0) (`KeeperSpawner-1.0.0.zip`, SHA-256 `0ac5ec56…2660`). Sonraki sürümler: `tools/package.ps1` → `gh release create vX.Y.Z artifacts\X.Y.Z\KeeperSpawner-X.Y.Z.zip --notes-file …`.
