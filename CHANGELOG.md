@@ -3,6 +3,24 @@
 Sürümler [SemVer](https://semver.org/) kurallarına göre: düzeltmeler `1.0.x`, yeni özellikler `1.x.0`.
 Atölye değişiklik notları bu dosyadan alınır.
 
+## 1.1.0 — GK2 Mod Framework desteği
+
+Graveyard Keeper 2 1.007.1 (Steam build 25601286) ve GK2 Mod Framework 0.1.19 ile test edildi.
+
+- [GK2 Mod Framework](https://www.nexusmods.com/graveyardkeeper2/mods/42) kuruluysa KeeperSpawner oyunun **Mods** menüsünde görünür: sürüm, durum ("Etkin, oyunda O tuşuna bas" / "Devre dışı"), açıklama ve ayarlar (açma tuşu, tık başına miktar, görev itemları, görünüm, arayüz ölçeği, arka plan karartma). Ayarlar KeeperSpawner'ın kendi config dosyasına yazılır.
+- Framework isteğe bağlı: entegrasyon ayrı bir DLL'de (`KeeperSpawner.GK2Framework.dll`). Framework yoksa BepInEx sadece onu atlar, KeeperSpawner eskisi gibi çalışır.
+- Mods menüsü metinleri oyunun 17 dilinde.
+- Log mesajları İngilizce (hata raporlarını herkes okuyabilsin diye).
+
+### English
+
+Tested with Graveyard Keeper 2 1.007.1 (Steam build 25601286) and GK2 Mod Framework 0.1.19.
+
+- With [GK2 Mod Framework](https://www.nexusmods.com/graveyardkeeper2/mods/42) installed, KeeperSpawner shows up in the game's **Mods** menu: version, status ("Active, press O in game" / "Disabled"), description and settings (hotkey, amount per click, quest items, view, UI scale, background dimming). Settings are saved to KeeperSpawner's own config file.
+- The Framework is optional: the integration lives in a separate DLL (`KeeperSpawner.GK2Framework.dll`). Without the Framework, BepInEx skips only that DLL and KeeperSpawner works as before.
+- Mods menu texts in all 17 languages of the game.
+- Log messages are now in English, so anyone can read bug reports.
+
 ## 1.0.0 — ilk yayın
 
 Graveyard Keeper 2 1.007.1 ile test edildi.
