@@ -23,6 +23,16 @@ Item spawner mod for **Graveyard Keeper 2** (BepInEx 5). Press **O** in game, fi
 - Switches itself off with a log message, instead of breaking the game, if a game update changes the code it relies on
 - Shows up in the game's **Mods** menu when [GK2 Mod Framework](https://www.nexusmods.com/graveyardkeeper2/mods/42) is installed (optional)
 
+## Screenshots
+
+<p>
+  <img src="docs/images/gallery/03-spawner-all-items.png" alt="All items" width="32%">
+  <img src="docs/images/gallery/04-spawner-food-added.png" alt="Adding food" width="32%">
+  <img src="docs/images/gallery/09-main-menu-mods-button.png" alt="Mods button in the main menu" width="32%">
+</p>
+
+More in [docs/images/gallery](docs/images/gallery).
+
 ## Requirements
 
 - Graveyard Keeper 2 (tested with 1.007.1)
