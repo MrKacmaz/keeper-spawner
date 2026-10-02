@@ -6,7 +6,7 @@
 
 Item spawner mod for **Graveyard Keeper 2** (BepInEx 5). Press **O** in game, find an item and click it to add it to your inventory.
 
-[Türkçe](#türkçe) · [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3810736028) · [Releases](../../releases)
+[Türkçe](#türkçe) · [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3810736028) · [Nexus Mods](https://www.nexusmods.com/graveyardkeeper2/mods/275) · [Releases](../../releases)
 
 ![KeeperSpawner in game](docs/images/screenshot.png)
 
@@ -51,7 +51,7 @@ More in [docs/images/gallery](docs/images/gallery).
 **Manually:**
 
 1. Extract `BepInEx_win_x64_5.4.23.5.zip` next to `GraveyardKeeper2.exe`, start the game once and close it.
-2. Download `KeeperSpawner-<version>.zip` from [Releases](../../releases) and extract it into the game folder, so that you get
+2. Download `KeeperSpawner-<version>.zip` from [Releases](../../releases) or [Nexus Mods](https://www.nexusmods.com/graveyardkeeper2/mods/275) and extract it into the game folder, so that you get
    `Graveyard Keeper 2\BepInEx\plugins\KeeperSpawner\KeeperSpawner.dll`.
 
 The package also contains `KeeperSpawner.GK2Framework.dll`, the optional bridge to GK2 Mod Framework. Without the Framework, BepInEx skips it with a "missing dependencies" line in the log; that is expected and KeeperSpawner still works.
@@ -171,7 +171,7 @@ The game and BepInEx assemblies are referenced from the game folder and are not 
 **Elle:**
 
 1. [BepInEx 5.4.23.5 (win_x64)](https://github.com/BepInEx/BepInEx/releases/tag/v5.4.23.5) zip'ini `GraveyardKeeper2.exe`'nin yanına çıkar, oyunu bir kez açıp kapat.
-2. [Releases](../../releases) sayfasından `KeeperSpawner-<sürüm>.zip` dosyasını indirip oyun klasörüne çıkar; sonuç
+2. [Releases](../../releases) ya da [Nexus Mods](https://www.nexusmods.com/graveyardkeeper2/mods/275) sayfasından `KeeperSpawner-<sürüm>.zip` dosyasını indirip oyun klasörüne çıkar; sonuç
    `Graveyard Keeper 2\BepInEx\plugins\KeeperSpawner\KeeperSpawner.dll` olmalı.
 
 Paketteki `KeeperSpawner.GK2Framework.dll`, GK2 Mod Framework için isteğe bağlı köprüdür. Framework yoksa BepInEx onu logda "missing dependencies" yazarak atlar; bu normaldir, KeeperSpawner yine çalışır.
