@@ -5,6 +5,7 @@
 # Çıktı: artifacts\<sürüm>\
 #   content\                         Atölye içerik klasörü (oyunun yükleyicisi ya da SteamCMD için)
 #     BepInEx\plugins\KeeperSpawner\KeeperSpawner.dll
+#     BepInEx\plugins\KeeperSpawner\KeeperSpawner.GK2Framework.dll   isteğe bağlı GK2 Mod Framework köprüsü
 #     INSTALL.txt
 #     Thumbnail.png                  (workshop\preview.png varsa; oyunun yükleyicisi önizleme olarak kullanır)
 #   KeeperSpawner-<sürüm>.zip        elle kurulum / Nexus (Thumbnail olmadan)
@@ -19,6 +20,8 @@ param(
 $ErrorActionPreference = "Stop"
 $root = Split-Path -Parent $PSScriptRoot
 $project = Join-Path $root "src\KeeperSpawner\KeeperSpawner.csproj"
+# Köprü projesi ana projeye derleme sırası referansı verir; onu derlemek ikisini de derler
+$bridgeProject = Join-Path $root "src\KeeperSpawner.GK2Framework\KeeperSpawner.GK2Framework.csproj"
 
 # Sürüm csproj'dan
 [xml]$csproj = Get-Content -Raw -Encoding UTF8 $project
@@ -28,26 +31,31 @@ if (-not $ChangeNote) { $ChangeNote = "v$version" }
 Write-Host "KeeperSpawner $version paketleniyor"
 
 if (-not $SkipBuild) {
-    & dotnet build $project -c Release -nologo -v quiet
+    & dotnet build $bridgeProject -c Release -nologo -v quiet
     if ($LASTEXITCODE -ne 0) { throw "Derleme başarısız." }
 }
-$dll = Join-Path $root "src\KeeperSpawner\bin\Release\KeeperSpawner.dll"
-if (-not (Test-Path $dll)) { throw "DLL bulunamadı: $dll" }
+$dlls = @(
+    (Join-Path $root "src\KeeperSpawner\bin\Release\KeeperSpawner.dll"),
+    (Join-Path $root "src\KeeperSpawner.GK2Framework\bin\Release\KeeperSpawner.GK2Framework.dll")
+)
 
 # Workshop Loader'ın oyuncuya uyarı gösterdiği API'ler (docs: FOR_MODDERS.txt, madde 5)
 $flagged = "System.Net", "UnityWebRequest", "WebClient", "HttpClient", "Socket", "System.Diagnostics.Process",
     "Assembly.Load", "LoadFrom", "LoadFile", "System.Reflection.Emit", "ILGenerator", "TypeBuilder", "DynamicMethod",
     "Microsoft.Win32", "Registry", "File.Delete", "Directory.Delete", "GetFolderPath", "DllImport"
-$text = [Text.Encoding]::ASCII.GetString([IO.File]::ReadAllBytes($dll))
-$hits = @($flagged | Where-Object { $text.Contains($_) })
-if ($hits.Count -gt 0) { throw "DLL güvenlik uyarısı verecek API içeriyor: $($hits -join ', ')" }
+foreach ($dll in $dlls) {
+    if (-not (Test-Path $dll)) { throw "DLL bulunamadı: $dll" }
+    $text = [Text.Encoding]::ASCII.GetString([IO.File]::ReadAllBytes($dll))
+    $hits = @($flagged | Where-Object { $text.Contains($_) })
+    if ($hits.Count -gt 0) { throw "$(Split-Path -Leaf $dll) güvenlik uyarısı verecek API içeriyor: $($hits -join ', ')" }
+}
 Write-Host "Güvenlik taraması temiz"
 
 $out = Join-Path $root "artifacts\$version"
 $content = Join-Path $out "content"
 $pluginDir = Join-Path $content "BepInEx\plugins\KeeperSpawner"
 New-Item -ItemType Directory -Force $pluginDir | Out-Null
-Copy-Item $dll $pluginDir -Force
+Copy-Item $dlls $pluginDir -Force
 Copy-Item (Join-Path $root "workshop\INSTALL.txt") $content -Force
 
 # Önizleme: Atölye 1 MB üstünü kabul etmiyor
