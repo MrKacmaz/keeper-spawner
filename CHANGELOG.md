@@ -3,6 +3,13 @@
 Sürümler [SemVer](https://semver.org/) kurallarına göre: düzeltmeler `1.0.x`, yeni özellikler `1.x.0`.
 Atölye değişiklik notları bu dosyadan alınır.
 
+## Unreleased
+
+- Envanter kapasitesi ayarı GK2 Mod Framework Mods menüsüne eklendi. Ayarın adı ve açıklaması oyunun 17 dilini destekler (es-mx, İspanyolca çevirisini kullanır); config açıklaması da tüm çevirileri içerir.
+- Added the inventory capacity setting to the GK2 Mod Framework Mods menu, with its name and description in all 17 game languages (es-mx reuses Spanish). The config description includes all translations too.
+- Config dosyasına `Inventory.Size` eklendi: oyuncunun temel envanter kapasitesi 40–1000 slot olarak belirlenebilir; 0 mevcut kapasiteyi korur. Düşürürken dolu slotlar korunur. Kapasite oyun kaydına yazılır.
+- Added `Inventory.Size` to configure player inventory capacity (40–1000 slots, 0 leaves it unchanged), preserving occupied slots when reducing capacity. Capacity is saved with the game.
+
 ## 1.1.0 — GK2 Mod Framework desteği
 
 Graveyard Keeper 2 1.007.1 (Steam build 25601286) ve GK2 Mod Framework 0.1.19 ile test edildi.

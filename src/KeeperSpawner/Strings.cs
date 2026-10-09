@@ -309,6 +309,47 @@ namespace KeeperSpawner
         public static string ClickAmountDescription => T(clickAmountDescRow);
         public static string ViewName => T(viewNameRow);
         public static string ViewDescription => T(viewDescRow);
+        private static readonly string[] inventorySizeNameRow =
+        {
+            "Inventory capacity", "Envanter kapasitesi", "Inventarkapazität", "Capacité de l'inventaire",
+            "Capacidad del inventario", "Capacidade do inventário", "Вместимость инвентаря", "Місткість інвентаря",
+            "Capacità dell'inventario", "Pojemność ekwipunku", "インベントリ容量", "背包容量", "背包容量",
+            "인벤토리 용량", "ความจุกระเป๋า", "Sức chứa túi đồ",
+        };
+        private static readonly string[] inventorySizeDescRow =
+        {
+            "Player inventory slots: 0 = leave unchanged, 40–1000 = capacity (1–39 uses 40). Occupied slots are preserved. Saved with the game; 0 does not restore the previous size. Reopen the inventory to see changes.",
+            "Oyuncu envanteri slotları: 0 = değiştirme, 40–1000 = kapasite (1–39 için 40 uygulanır). Dolu slotlar korunur. Oyun kaydına yazılır; 0 önceki boyutu geri yüklemez. Değişiklikleri görmek için envanteri yeniden aç.",
+            "Inventarplätze: 0 = unverändert, 40–1000 = Kapazität (1–39 ergibt 40). Belegte Plätze bleiben erhalten. Wird im Spielstand gespeichert; 0 stellt die vorherige Größe nicht wieder her. Inventar erneut öffnen.",
+            "Emplacements : 0 = inchangé, 40–1000 = capacité (1–39 donne 40). Les emplacements occupés sont conservés. Enregistré dans la sauvegarde ; 0 ne rétablit pas la taille précédente. Rouvrez l'inventaire.",
+            "Espacios del inventario: 0 = sin cambios, 40–1000 = capacidad (1–39 usa 40). Se conservan los espacios ocupados. Se guarda en la partida; 0 no restaura el tamaño anterior. Vuelve a abrir el inventario.",
+            "Espaços do inventário: 0 = sem alteração, 40–1000 = capacidade (1–39 usa 40). Os espaços ocupados são preservados. Salvo na partida; 0 não restaura o tamanho anterior. Reabra o inventário.",
+            "Ячейки инвентаря: 0 = без изменений, 40–1000 = вместимость (1–39 означает 40). Занятые ячейки сохраняются. Записывается в сохранение; 0 не возвращает прежний размер. Откройте инвентарь заново.",
+            "Комірки інвентаря: 0 = без змін, 40–1000 = місткість (1–39 означає 40). Зайняті комірки зберігаються. Записується у збереження гри; 0 не відновлює попередній розмір. Відкрийте інвентар знову.",
+            "Slot dell'inventario: 0 = invariato, 40–1000 = capacità (1–39 usa 40). Gli slot occupati vengono conservati. Salvato nella partita; 0 non ripristina la dimensione precedente. Riapri l'inventario.",
+            "Miejsca w ekwipunku: 0 = bez zmian, 40–1000 = pojemność (1–39 daje 40). Zajęte miejsca są zachowane. Wartość trafia do zapisu gry; 0 nie przywraca poprzedniego rozmiaru. Otwórz ekwipunek ponownie.",
+            "インベントリのスロット数：0＝変更なし、40～1000＝容量（1～39は40）。使用中のスロットは保持されます。ゲームに保存され、0にしても元の容量には戻りません。インベントリを開き直してください。",
+            "玩家背包格数：0＝不更改，40–1000＝容量（1–39按40处理）。保留已占用的格子。容量会写入存档；设为0不会恢复原容量。请重新打开背包查看更改。",
+            "玩家背包格數：0＝不變更，40–1000＝容量（1–39以40處理）。保留已佔用的格子。容量會寫入存檔；設為0不會恢復原容量。請重新開啟背包查看變更。",
+            "플레이어 인벤토리 슬롯: 0 = 변경 없음, 40–1000 = 용량(1–39는 40 적용). 사용 중인 슬롯은 유지됩니다. 게임에 저장되며 0으로 설정해도 이전 용량으로 돌아가지 않습니다. 인벤토리를 다시 여세요.",
+            "ช่องกระเป๋าผู้เล่น: 0 = ไม่เปลี่ยน, 40–1000 = ความจุ (1–39 ใช้ 40) ช่องที่มีของจะคงอยู่ บันทึกลงเซฟเกม ตั้งเป็น 0 จะไม่คืนขนาดเดิม เปิดกระเป๋าใหม่เพื่อดูการเปลี่ยนแปลง",
+            "Số ô túi đồ: 0 = giữ nguyên, 40–1000 = sức chứa (1–39 dùng 40). Giữ lại các ô đang có đồ. Lưu vào bản lưu game; đặt 0 không khôi phục kích thước cũ. Mở lại túi đồ để xem thay đổi.",
+        };
+
+        public static string InventorySizeName => T(inventorySizeNameRow);
+        public static string InventorySizeDescription => T(inventorySizeDescRow);
+        // Config files have no active UI language; include every translation with its language id.
+        public static string InventorySizeConfigDescription
+        {
+            get
+            {
+                var lines = new string[LanguageIds.Length];
+                for (int i = 0; i < lines.Length; i++)
+                    lines[i] = LanguageIds[i] + ": " + inventorySizeDescRow[i];
+                return string.Join("\n", lines);
+            }
+        }
+
         public static string ScaleName => T(scaleNameRow);
         public static string ScaleDescription => T(scaleDescRow);
         public static string BackdropName => T(backdropNameRow);

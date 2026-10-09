@@ -81,6 +81,7 @@ With [GK2 Mod Framework](https://www.nexusmods.com/graveyardkeeper2/mods/42) ins
 |---|---|---|
 | `General.ToggleKey` | `O` | Key that opens the window |
 | `Items.ShowQuestItems` | `false` | Show quest items (can break quests) |
+| `Inventory.Size` | `0` | Player inventory slots: `0` = leave unchanged; `40`–`1000` = capacity (values 1–39 use 40). Never shrinks below occupied slots. Saved with the game; setting 0 does not undo changes. |
 | `UI.ClickAmount` | `Max` | Amount per click: `One`, `Ten`, `Max` |
 | `UI.View` | `Grid` | `Grid` or `List` |
 | `UI.Scale` | `0` | UI scale, `0` = automatic (screen height / 1080) |
@@ -88,6 +89,8 @@ With [GK2 Mod Framework](https://www.nexusmods.com/graveyardkeeper2/mods/42) ins
 | `UI.Font` | empty | UI font: empty = automatic, `-` = Unity default, or a font name from the log |
 | `Items.Favorites`, `Items.Recent`, `UI.Category` | | Saved by the window |
 | `Debug.ForceIncompatible` | `false` | Test the "incompatible game version" path |
+
+With GK2 Mod Framework installed, inventory capacity can also be changed in **Mods → KeeperSpawner**, with its name and help text translated into all 17 game languages. The config file includes all translated descriptions. Reopen the inventory after changing capacity to refresh the visible slots.
 
 ## Troubleshooting
 
@@ -194,6 +197,15 @@ KeeperSpawner'ı hem Atölye'den hem elle kurma; BepInEx sadece birini yükler. 
 | Esc | Önce arama kutusundan çık, sonra kapat |
 
 Ayarlar `BepInEx\config\com.mrkacmaz.keeperspawner.cfg` dosyasında (tablo yukarıda, İngilizce bölümde).
+
+Envanteri büyütmek için config dosyasına aşağıdaki ayarı ekle (dosyayı oyun kapalıyken düzenle). Örneğin `120`, temel envanteri 120 slota çıkarır; çantalar ayrıca çalışmaya devam eder. `0` kapasiteyi değiştirmez, `1–39` değerleri 40 olarak uygulanır; üst sınır 1000'dir. Kapasite düşürülürken dolu slotlar korunur. Boyut oyun kaydına yazılır; `0` yapmak önceki boyutu geri yüklemez. Açık envanter ekranını kapatıp yeniden açarak yeni slotları görebilirsin.
+
+GK2 Mod Framework kuruluysa **Mods → KeeperSpawner → Envanter kapasitesi** ayarından da değiştirilebilir. Ayarın adı ve açıklaması oyunun 17 dilinde gösterilir; config dosyası tüm çevirileri içerir.
+
+```ini
+[Inventory]
+Size = 120
+```
 
 ### Sorun giderme
 

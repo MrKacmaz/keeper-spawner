@@ -49,6 +49,13 @@ namespace KeeperSpawner
             Required("Inventory.AddItemToInventory(Item, Item, bool)", () =>
                 MethodReturns(typeof(Inventory), "AddItemToInventory", typeof(bool), typeof(Item), typeof(Item), typeof(bool)));
             Required("Inventory.Data", () => AccessTools.Property(typeof(Inventory), "Data")?.PropertyType == typeof(Item));
+            Required("Item.InventorySize (int, read/write)", () =>
+            {
+                var property = AccessTools.Property(typeof(Item), "InventorySize");
+                return property?.PropertyType == typeof(int) && property.CanRead && property.CanWrite;
+            });
+            Required("Item.InventoryFillSize", () =>
+                AccessTools.Property(typeof(Item), "InventoryFillSize")?.PropertyType == typeof(int));
             Required("Item.GetTotalCountInInventory(string, Item, bool)", () =>
                 MethodReturns(typeof(Item), "GetTotalCountInInventory", typeof(int), typeof(string), typeof(Item), typeof(bool)));
             Required("Item(string, int)", () => AccessTools.Constructor(typeof(Item), new[] { typeof(string), typeof(int) }) != null);

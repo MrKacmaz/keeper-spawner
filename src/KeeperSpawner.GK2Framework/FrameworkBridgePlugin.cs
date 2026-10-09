@@ -74,6 +74,7 @@ namespace KeeperSpawner.GK2Framework
                 settings.AddEnum(main.View, L(() => Strings.ViewName), L(() => Strings.ViewDescription), order: 4);
                 settings.AddFloatSlider(main.UiScale, 0f, 3f, L(() => Strings.ScaleName), L(() => Strings.ScaleDescription), step: 0.05f, order: 5);
                 settings.AddFloatSlider(main.BackdropOpacity, 0f, 1f, L(() => Strings.BackdropName), L(() => Strings.BackdropDescription), step: 0.05f, order: 6);
+                settings.AddIntSlider(main.InventorySize, 0, 1000, L(() => Strings.InventorySizeName), L(() => Strings.InventorySizeDescription), step: 1, order: 7);
             }
         }
     }

@@ -40,6 +40,9 @@ namespace KeeperSpawner
         private ConfigEntry<string> fontName;
         private ConfigEntry<string> favorites;
         private ConfigEntry<string> recent;
+        internal ConfigEntry<int> InventorySize { get; private set; }
+        private Item configuredInventory;
+        private int appliedInventorySize;
         private SpawnerWindow window;
 
         private bool disabled;
@@ -102,6 +105,10 @@ namespace KeeperSpawner
                 "Test için: modu uyumsuz oyun sürümündeymiş gibi devre dışı bırakır / For testing: disables the mod as if the game version were incompatible.");
             ShowQuestItems = Config.Bind("Items", "ShowQuestItems", false,
                 "Görev itemlarını listede göster (kayıtları bozabilir) / Show quest items in the list (may break quests).");
+            InventorySize = Config.Bind("Inventory", "Size", 0,
+                new ConfigDescription(
+                    Strings.InventorySizeConfigDescription,
+                    new AcceptableValueRange<int>(0, 1000)));
             UiScale = Config.Bind("UI", "Scale", 0f,
                 "Arayüz ölçeği. 0 = otomatik (ekran yüksekliği / 1080) / UI scale. 0 = automatic (screen height / 1080).");
             View = Config.Bind("UI", "View", ViewMode.Grid,
@@ -142,10 +149,13 @@ namespace KeeperSpawner
             {
                 if (!GameState.IsInGame)
                 {
+                    configuredInventory = null;
                     // Ana menüye dönüldüyse ya da kayıt kapandıysa pencereyi kapat, girdiyi geri ver
                     window.Close();
                     return;
                 }
+
+                ApplyInventorySize();
 
                 // Arama kutusuna yazarken kısayol harfi menüyü kapatmasın
                 if (window.IsTyping)
@@ -162,6 +172,28 @@ namespace KeeperSpawner
             {
                 HandleError(e, "Update");
             }
+        }
+
+        private void ApplyInventorySize()
+        {
+            Item data = MainGame.PlayerData.inventory.Data;
+            int requested = InventorySize.Value;
+            if (ReferenceEquals(data, configuredInventory) && requested == appliedInventorySize)
+            {
+                return;
+            }
+
+            if (requested > 0)
+            {
+                int size = Math.Max(40, Math.Max(requested, data.InventoryFillSize));
+                if (data.InventorySize != size)
+                {
+                    Log.LogInfo($"Player inventory capacity: {data.InventorySize} -> {size} slots (configured: {requested}).");
+                    data.InventorySize = size;
+                }
+            }
+            configuredInventory = data;
+            appliedInventorySize = requested;
         }
 
         private void OnGUI()
