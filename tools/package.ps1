@@ -57,6 +57,7 @@ $pluginDir = Join-Path $content "BepInEx\plugins\KeeperSpawner"
 New-Item -ItemType Directory -Force $pluginDir | Out-Null
 Copy-Item $dlls $pluginDir -Force
 Copy-Item (Join-Path $root "workshop\INSTALL.txt") $content -Force
+Copy-Item (Join-Path $root "CHANGELOG.md") $content -Force
 
 # Önizleme: Atölye 1 MB üstünü kabul etmiyor
 $preview = Join-Path $root "workshop\preview.png"

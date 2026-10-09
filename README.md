@@ -99,7 +99,7 @@ With GK2 Mod Framework installed, inventory capacity can also be changed in **Mo
 
 - Load a save first. The window does not open in the main menu.
 - The key is the letter **O**, not the number zero. You can change it in the config or in the Mods menu.
-- Open `Graveyard Keeper 2\BepInEx\LogOutput.log` and look for `KeeperSpawner 1.1.0 loaded`. If the line is missing, BepInEx did not load the mod: check that `BepInEx\plugins\KeeperSpawner\KeeperSpawner.dll` exists and that BepInEx itself starts (it creates `BepInEx\LogOutput.log`).
+- Open `Graveyard Keeper 2\BepInEx\LogOutput.log` and look for `KeeperSpawner 1.2.0 loaded`. If the line is missing, BepInEx did not load the mod: check that `BepInEx\plugins\KeeperSpawner\KeeperSpawner.dll` exists and that BepInEx itself starts (it creates `BepInEx\LogOutput.log`).
 - `KeeperSpawner disabled: ...` in the log means a game update changed something the mod needs. Please report it with the log.
 
 **KeeperSpawner is missing from the Mods menu.** `KeeperSpawner.GK2Framework.dll` must be next to `KeeperSpawner.dll`, and you need KeeperSpawner 1.1.0+ and GK2 Mod Framework 0.1.19+. The log should contain `Registered GK2 mod [com.mrkacmaz.keeperspawner]`.
@@ -211,7 +211,7 @@ Size = 120
 
 ### Sorun giderme
 
-**O'ya basınca bir şey olmuyor.** Önce bir kayıt yükle (pencere ana menüde açılmaz). Tuş sıfır değil, **O** harfi. `BepInEx\LogOutput.log` içinde `KeeperSpawner 1.1.0 loaded` satırı yoksa BepInEx modu yüklememiştir; `BepInEx\plugins\KeeperSpawner\KeeperSpawner.dll` dosyasının yerinde olduğunu kontrol et. `KeeperSpawner disabled: ...` satırı, bir oyun güncellemesinden sonra uyumsuzluk demektir; logla birlikte bildir.
+**O'ya basınca bir şey olmuyor.** Önce bir kayıt yükle (pencere ana menüde açılmaz). Tuş sıfır değil, **O** harfi. `BepInEx\LogOutput.log` içinde `KeeperSpawner 1.2.0 loaded` satırı yoksa BepInEx modu yüklememiştir; `BepInEx\plugins\KeeperSpawner\KeeperSpawner.dll` dosyasının yerinde olduğunu kontrol et. `KeeperSpawner disabled: ...` satırı, bir oyun güncellemesinden sonra uyumsuzluk demektir; logla birlikte bildir.
 
 **Mods menüsünde KeeperSpawner yok.** `KeeperSpawner.GK2Framework.dll` dosyası `KeeperSpawner.dll`'in yanında olmalı; KeeperSpawner 1.1.0+ ve GK2 Mod Framework 0.1.19+ gerekir. Logda `Registered GK2 mod [com.mrkacmaz.keeperspawner]` satırı görünmeli.
 

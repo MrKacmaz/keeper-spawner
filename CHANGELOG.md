@@ -3,14 +3,25 @@
 Sürümler [SemVer](https://semver.org/) kurallarına göre: düzeltmeler `1.0.x`, yeni özellikler `1.x.0`.
 Atölye değişiklik notları bu dosyadan alınır.
 
-## Unreleased
+## 1.2.0 — 2026-10-09 — Envanter kapasitesi ve zombi spawn
 
 - O menüsüne **Zombiler** sekmesi eklendi: en yüksek beyaz veya kırmızı kafatası için iki hazır zombi. Oyunun her ana organ türündeki en yüksek kafatası değerine sahip organlar, son seviye beden içeriği ve uyumlu tasma kullanılır. Her tıklama karakterin önüne bir zombi bırakır; oyuncu envanterine eklenmez. Yeni metinler 17 dili destekler.
-- Added a **Zombies** tab to the O menu with maximum-white and maximum-red skull presets, using the best available organ of each main type, final-tier body contents and a compatible collar. Each click drops one registered zombie in front of the player. New text supports all 17 game languages.
 - Envanter kapasitesi ayarı GK2 Mod Framework Mods menüsüne eklendi. Ayarın adı ve açıklaması oyunun 17 dilini destekler (es-mx, İspanyolca çevirisini kullanır); config açıklaması da tüm çevirileri içerir.
-- Added the inventory capacity setting to the GK2 Mod Framework Mods menu, with its name and description in all 17 game languages (es-mx reuses Spanish). The config description includes all translations too.
 - Config dosyasına `Inventory.Size` eklendi: oyuncunun temel envanter kapasitesi 40–1000 slot olarak belirlenebilir; 0 mevcut kapasiteyi korur. Düşürürken dolu slotlar korunur. Kapasite oyun kaydına yazılır.
+- Kurulum ZIP'i changelog dosyasını da içerir.
+
+### English
+
+- Added a **Zombies** tab to the O menu with maximum-white and maximum-red skull presets, using the best available organ of each main type, final-tier body contents and a compatible collar. Each click drops one registered zombie in front of the player. New text supports all 17 game languages.
+- Added the inventory capacity setting to the GK2 Mod Framework Mods menu, with its name and description in all 17 game languages (es-mx reuses Spanish). The config description includes all translations too.
 - Added `Inventory.Size` to configure player inventory capacity (40–1000 slots, 0 leaves it unchanged), preserving occupied slots when reducing capacity. Capacity is saved with the game.
+- The installation ZIP now includes the changelog.
+
+### Validation / Doğrulama
+
+Release build: 0 warnings, 0 errors. Isolated zombie logic checks passed (organ selection, final-tier template, compatible collar, contents, placement, unique spawns and failed-drop cleanup). In-game testing has not been performed for this release.
+
+Release derlemesi: 0 uyarı, 0 hata. İzole zombi mantık kontrolleri geçti (organ seçimi, son seviye şablon, uyumlu tasma, içerik, konum, benzersiz zombiler ve başarısız bırakmada temizlik). Bu sürüm için oyun içi test yapılmadı.
 
 ## 1.1.0 — GK2 Mod Framework desteği
 
