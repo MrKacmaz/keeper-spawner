@@ -26,7 +26,7 @@ namespace KeeperSpawner
 
         partial void RebuildContentIfNeeded()
         {
-            if (selectedTab.Kind == TabKind.Zombies) return;
+            if (IsBodyTab) return;
             var all = ItemCatalog.All;
             bool showQuest = showQuestItems.Value;
             var mode = viewMode.Value;

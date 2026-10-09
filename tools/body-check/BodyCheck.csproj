@@ -1,0 +1,4 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net8.0</TargetFramework></PropertyGroup>
+  <ItemGroup><Compile Include="../../src/KeeperSpawner/ZombieSpawner.cs" Link="ZombieSpawner.cs" /><Compile Include="../../src/KeeperSpawner/CorpseSpawner.cs" Link="CorpseSpawner.cs" /></ItemGroup>
+</Project>

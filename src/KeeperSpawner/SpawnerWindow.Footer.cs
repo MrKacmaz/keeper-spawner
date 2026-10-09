@@ -7,11 +7,11 @@ namespace KeeperSpawner
     {
         partial void DrawFooter(Rect r)
         {
-            if (selectedTab.Kind == TabKind.Zombies)
+            if (IsBodyTab)
             {
                 KsTheme.Fill(r, KsTheme.FooterBg);
                 KsTheme.Label(new Rect(r.x + 14f, r.y, r.width - 28f, r.height),
-                    HasToast ? toast : Strings.ZombieHint, 13, HasToast ? toastColor : KsTheme.TextMuted);
+                    HasToast ? toast : BodyHint, 13, HasToast ? toastColor : KsTheme.TextMuted);
                 return;
             }
             KsTheme.Fill(r, KsTheme.FooterBg);

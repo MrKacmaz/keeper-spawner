@@ -62,6 +62,7 @@ namespace KeeperSpawner
 
             // Zombie presets and world drops use the same API as the game's Flow_DropZombie node.
             Required("GameBalance.bodyDefs", () => FieldOf(typeof(GameBalance), "bodyDefs", typeof(List<BodyDef>)));
+            Required("BodyDef.GenerateItem", () => MethodReturns(typeof(BodyDef), "GenerateItem", typeof(Item)));
             Required("MainGame.ZombieSystemData", () => StaticProperty(typeof(MainGame), "ZombieSystemData"));
             Required("MainGame.dropSystem", () => FieldOf(typeof(MainGame), "dropSystem", typeof(DropSystem)));
             Required("PlayerData.Direction", () => AccessTools.Property(typeof(PlayerData), "Direction")?.PropertyType == typeof(UnityEngine.Vector2));

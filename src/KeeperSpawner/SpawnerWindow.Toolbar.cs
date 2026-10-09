@@ -16,7 +16,7 @@ namespace KeeperSpawner
 
         partial void DrawMain(Rect rect)
         {
-            if (selectedTab.Kind == TabKind.Zombies)
+            if (IsBodyTab)
             {
                 DrawZombies(rect);
                 return;

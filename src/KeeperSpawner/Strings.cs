@@ -107,6 +107,35 @@ namespace KeeperSpawner
         private static readonly string[] zombieSkullsRow = { "White: {0} · Red: {1}", "Beyaz: {0} · Kırmızı: {1}", "Weiß: {0} · Rot: {1}", "Blancs : {0} · Rouges : {1}", "Blancas: {0} · Rojas: {1}", "Brancas: {0} · Vermelhas: {1}", "Белые: {0} · Красные: {1}", "Білі: {0} · Червоні: {1}", "Bianchi: {0} · Rossi: {1}", "Białe: {0} · Czerwone: {1}", "白：{0}・赤：{1}", "白：{0} · 红：{1}", "白：{0} · 紅：{1}", "흰색: {0} · 빨강: {1}", "ขาว: {0} · แดง: {1}", "Trắng: {0} · Đỏ: {1}" };
         private static readonly string[] zombieSpawnedRow = { "Zombie dropped in front of you", "Zombi önüne bırakıldı", "Zombie vor dir abgelegt", "Zombie déposé devant vous", "Zombi colocado delante de ti", "Zumbi colocado à sua frente", "Зомби положен перед вами", "Зомбі покладено перед вами", "Zombi lasciato davanti a te", "Zombie położony przed tobą", "目の前にゾンビを落としました", "僵尸已放在面前", "殭屍已放在面前", "앞에 좀비를 놓았습니다", "วางซอมบี้หน้าคุณแล้ว", "Đã thả thây ma trước mặt bạn" };
 
+        private static readonly string[] corpsesRow = { "Corpses", "Cesetler", "Leichen", "Cadavres", "Cadáveres", "Cadáveres", "Трупы", "Тіла", "Cadaveri", "Zwłoki", "遺体", "尸体", "遺體", "시신", "ศพ", "Thi thể" };
+        private static readonly string[] whiteCorpseRow = { "Corpse · maximum white skulls", "Ceset · en yüksek beyaz kafatası", "Leiche · maximale weiße Schädel", "Cadavre · crânes blancs maximum", "Cadáver · máximo de calaveras blancas", "Cadáver · máximo de caveiras brancas", "Труп · максимум белых черепов", "Тіло · максимум білих черепів", "Cadavere · massimo di teschi bianchi", "Zwłoki · maksimum białych czaszek", "遺体・白い頭蓋骨最大", "尸体 · 最多白骷髅", "遺體 · 最多白骷髏", "시신 · 흰 해골 최대", "ศพ · กะโหลกขาวสูงสุด", "Thi thể · tối đa sọ trắng" };
+        private static readonly string[] redCorpseRow = { "Corpse · maximum red skulls", "Ceset · en yüksek kırmızı kafatası", "Leiche · maximale rote Schädel", "Cadavre · crânes rouges maximum", "Cadáver · máximo de calaveras rojas", "Cadáver · máximo de caveiras vermelhas", "Труп · максимум красных черепов", "Тіло · максимум червоних черепів", "Cadavere · massimo di teschi rossi", "Zwłoki · maksimum czerwonych czaszek", "遺体・赤い頭蓋骨最大", "尸体 · 最多红骷髅", "遺體 · 最多紅骷髏", "시신 · 빨간 해골 최대", "ศพ · กะโหลกแดงสูงสุด", "Thi thể · tối đa sọ đỏ" };
+        private static readonly string[] corpseHintRow =
+        {
+            "Click a corpse to drop one in front of your character. Uses the best organs of each type and the final-tier corpse's other contents.",
+            "Cesede tıklayınca karakterinin önüne bir tane bırakılır. Her türün en iyi organları ve son seviye cesedin diğer içerikleri kullanılır.",
+            "Klicke auf eine Leiche, um eine vor deiner Figur abzulegen. Beste Organe jeder Art und übriger Inhalt einer Leiche der höchsten Stufe.",
+            "Cliquez sur un cadavre pour en déposer un devant votre personnage. Meilleurs organes de chaque type et autres contenus d'un cadavre de dernier niveau.",
+            "Haz clic en un cadáver para dejar uno delante de tu personaje. Mejores órganos de cada tipo y otros contenidos de un cadáver del último nivel.",
+            "Clique em um cadáver para deixar um à frente do personagem. Melhores órgãos de cada tipo e demais conteúdos de um cadáver do último nível.",
+            "Нажмите на труп, чтобы положить один перед персонажем. Лучшие органы каждого типа и остальное содержимое тела высшего уровня.",
+            "Натисніть на тіло, щоб покласти одне перед персонажем. Найкращі органи кожного типу та решта вмісту тіла найвищого рівня.",
+            "Clicca su un cadavere per lasciarne uno davanti al personaggio. Migliori organi di ogni tipo e altro contenuto di un cadavere di livello massimo.",
+            "Kliknij zwłoki, aby położyć je przed postacią. Najlepsze organy każdego typu i pozostała zawartość ciała najwyższego poziomu.",
+            "遺体をクリックするとキャラクターの前に1体落とします。各種類の最良の臓器と、最高段階の遺体のその他の内容物を使用します。",
+            "点击尸体，在角色面前放下一具。使用各类最佳器官及最高等级尸体的其他内容物。",
+            "點擊遺體，在角色面前放下一具。使用各類最佳器官及最高等級遺體的其他內容物。",
+            "시신을 클릭하면 캐릭터 앞에 한 구를 놓습니다. 각 종류의 최상위 장기와 최고 단계 시신의 나머지 내용물을 사용합니다.",
+            "คลิกศพเพื่อวางหนึ่งร่างหน้าตัวละคร ใช้อวัยวะที่ดีที่สุดแต่ละชนิดและสิ่งอื่นในศพระดับสูงสุด",
+            "Nhấp vào thi thể để thả một thi thể trước nhân vật. Dùng nội tạng tốt nhất mỗi loại và các vật phẩm khác của thi thể cấp cao nhất.",
+        };
+        private static readonly string[] corpseSpawnedRow = { "Corpse dropped in front of you", "Ceset önüne bırakıldı", "Leiche vor dir abgelegt", "Cadavre déposé devant vous", "Cadáver colocado delante de ti", "Cadáver colocado à sua frente", "Труп положен перед вами", "Тіло покладено перед вами", "Cadavere lasciato davanti a te", "Zwłoki położone przed tobą", "目の前に遺体を落としました", "尸体已放在面前", "遺體已放在面前", "앞에 시신을 놓았습니다", "วางศพหน้าคุณแล้ว", "Đã thả thi thể trước mặt bạn" };
+        public static string Corpses => T(corpsesRow);
+        public static string WhiteCorpse => T(whiteCorpseRow);
+        public static string RedCorpse => T(redCorpseRow);
+        public static string CorpseHint => T(corpseHintRow);
+        public static string CorpseSpawned => T(corpseSpawnedRow);
+
         public static string Zombies => T(zombiesRow);
         public static string WhiteZombie => T(whiteZombieRow);
         public static string RedZombie => T(redZombieRow);

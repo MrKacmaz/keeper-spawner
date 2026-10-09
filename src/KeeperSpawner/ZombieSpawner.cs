@@ -10,6 +10,7 @@ namespace KeeperSpawner
         public BodyDef Template;
         public readonly List<ItemDef> Organs = new List<ItemDef>();
         public ItemDef Collar;
+        public bool IsCorpse;
         public int White;
         public int Red;
     }
@@ -17,7 +18,7 @@ namespace KeeperSpawner
     internal static class ZombieSpawner
     {
         // Use the live balance, including improved organ variants, rather than inventing skull values.
-        public static ZombiePreset Build(bool white)
+        public static ZombiePreset Build(bool white, bool corpse = false)
         {
             var balance = GameBalance.Me;
             BodyDef template = null;
@@ -25,13 +26,14 @@ namespace KeeperSpawner
             {
                 if (body == null || string.IsNullOrEmpty(body.id) || IsTest(body.id)
                     || (body.linkedBodyItemId != "body_corpse" && body.linkedBodyItemId != "body_zombie")) continue;
+                if (corpse && body.linkedBodyItemId != "body_corpse") continue;
                 if (template == null || body.tier > template.tier
                     || (body.tier == template.tier && string.CompareOrdinal(body.id, template.id) < 0))
                     template = body;
             }
             if (template == null) throw new InvalidOperationException("No production body template found.");
 
-            var preset = new ZombiePreset { Template = template };
+            var preset = new ZombiePreset { Template = template, IsCorpse = corpse };
             foreach (var type in LazyConsts.MAIN_ORGANS_TYPES)
             {
                 ItemDef best = null;
@@ -59,6 +61,7 @@ namespace KeeperSpawner
             }
             preset.White = Mathf.Clamp(preset.White, 0, 999);
             preset.Red = Mathf.Clamp(preset.Red, 0, 999);
+            if (corpse) return preset;
             foreach (var def in balance.itemDefs)
             {
                 if (def == null || string.IsNullOrEmpty(def.id) || def.type != ItemType.Collar || IsTest(def.id)
@@ -83,8 +86,11 @@ namespace KeeperSpawner
             }
             foreach (var id in preset.Template.pocket) yield return GameBalance.Me.GetData<ItemDef>(id);
             foreach (var id in preset.Template.burialReward) yield return GameBalance.Me.GetData<ItemDef>(id);
-            if (!string.IsNullOrEmpty(preset.Template.armorId)) yield return GameBalance.Me.GetData<ItemDef>(preset.Template.armorId);
-            if (!string.IsNullOrEmpty(preset.Template.handsId)) yield return GameBalance.Me.GetData<ItemDef>(preset.Template.handsId);
+            if (!preset.IsCorpse)
+            {
+                if (!string.IsNullOrEmpty(preset.Template.armorId)) yield return GameBalance.Me.GetData<ItemDef>(preset.Template.armorId);
+                if (!string.IsNullOrEmpty(preset.Template.handsId)) yield return GameBalance.Me.GetData<ItemDef>(preset.Template.handsId);
+            }
         }
 
         public static void Spawn(ZombiePreset preset)

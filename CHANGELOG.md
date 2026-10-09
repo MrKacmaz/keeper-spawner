@@ -3,6 +3,14 @@
 Sürümler [SemVer](https://semver.org/) kurallarına göre: düzeltmeler `1.0.x`, yeni özellikler `1.x.0`.
 Atölye değişiklik notları bu dosyadan alınır.
 
+## Unreleased
+
+- O menüsünde Zombiler'in yanına ayrı **Cesetler** bölümü eklendi: en yüksek beyaz veya kırmızı kafatası için iki hazır organ seti. Her tıklama karakterin önüne bir ceset bırakır. Toplamlar ve içerik menüde görülebilir. Cesetler zombi olarak kaydedilmez; canlandırma için oyunun doğal beden verileri korunur. Yeni metinler 17 dili destekler.
+
+### English
+
+- Added a separate **Corpses** section next to Zombies in the O menu, with maximum-white and maximum-red skull organ presets. Each click drops one corpse in front of the player, with skull totals and contents shown in the menu. Corpses are not registered as zombies; native body metadata is retained for resurrection. New text supports all 17 game languages.
+
 ## 1.2.1 — 2026-10-09 — Faith desteği
 
 - Faith'in item listesinde görünmemesi düzeltildi. Artık **Tümü** ve **Kilise** kategorilerinde görünür; `faith` ID'si veya oyundaki adıyla aranabilir ve mevcut miktar seçenekleriyle envantere eklenebilir.
