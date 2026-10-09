@@ -37,7 +37,7 @@ UNINSTALL
 
 LOG
   Problems are written to Graveyard Keeper 2\BepInEx\LogOutput.log.
-  "KeeperSpawner 1.2.1 loaded" means the mod started.
+  "KeeperSpawner 1.3.0 loaded" means the mod started.
 
 
 KeeperSpawner - Graveyard Keeper 2 için item spawner
@@ -79,4 +79,4 @@ KALDIRMA
 
 LOG
   Sorunlar Graveyard Keeper 2\BepInEx\LogOutput.log dosyasına yazılır.
-  "KeeperSpawner 1.2.1 loaded" satırı modun başladığını gösterir.
+  "KeeperSpawner 1.3.0 loaded" satırı modun başladığını gösterir.

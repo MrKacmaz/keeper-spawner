@@ -3,13 +3,19 @@
 Sürümler [SemVer](https://semver.org/) kurallarına göre: düzeltmeler `1.0.x`, yeni özellikler `1.x.0`.
 Atölye değişiklik notları bu dosyadan alınır.
 
-## Unreleased
+## 1.3.0 — 2026-10-09 — Ceset spawn desteği
 
 - O menüsünde Zombiler'in yanına ayrı **Cesetler** bölümü eklendi: en yüksek beyaz veya kırmızı kafatası için iki hazır organ seti. Her tıklama karakterin önüne bir ceset bırakır. Toplamlar ve içerik menüde görülebilir. Cesetler zombi olarak kaydedilmez; canlandırma için oyunun doğal beden verileri korunur. Yeni metinler 17 dili destekler.
 
 ### English
 
 - Added a separate **Corpses** section next to Zombies in the O menu, with maximum-white and maximum-red skull organ presets. Each click drops one corpse in front of the player, with skull totals and contents shown in the menu. Corpses are not registered as zombies; native body metadata is retained for resurrection. New text supports all 17 game languages.
+
+### Validation / Doğrulama
+
+Release build: 0 warnings, 0 errors. Isolated zombie and corpse checks passed: organ maxima, native corpse templates, collar independence, contents and preview totals, resurrection metadata, placement, unique bodies, zombie registration, failed drops and invalid game state. In-game testing has not been performed for this release.
+
+Release derlemesi: 0 uyarı, 0 hata. İzole zombi ve ceset kontrolleri geçti: organ seçimleri, doğal ceset şablonu, tasma bağımsızlığı, içerik ve toplamlar, canlandırma verileri, konum, benzersiz bedenler, zombi kaydı, başarısız bırakma ve geçersiz oyun durumu. Bu sürüm için oyun içi test yapılmadı.
 
 ## 1.2.1 — 2026-10-09 — Faith desteği
 
