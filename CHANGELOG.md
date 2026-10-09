@@ -3,6 +3,14 @@
 Sürümler [SemVer](https://semver.org/) kurallarına göre: düzeltmeler `1.0.x`, yeni özellikler `1.x.0`.
 Atölye değişiklik notları bu dosyadan alınır.
 
+## Unreleased
+
+- Faith'in item listesinde görünmemesi düzeltildi. Artık **Tümü** ve **Kilise** kategorilerinde görünür; `faith` ID'si veya oyundaki adıyla aranabilir ve mevcut miktar seçenekleriyle envantere eklenebilir.
+
+### English
+
+- Fixed Faith being missing from the item list. It now appears under **All** and **Church**, can be found by its `faith` ID or localized name, and can be added to inventory using the existing amount controls.
+
 ## 1.2.0 — 2026-10-09 — Envanter kapasitesi ve zombi spawn
 
 - O menüsüne **Zombiler** sekmesi eklendi: en yüksek beyaz veya kırmızı kafatası için iki hazır zombi. Oyunun her ana organ türündeki en yüksek kafatası değerine sahip organlar, son seviye beden içeriği ve uyumlu tasma kullanılır. Her tıklama karakterin önüne bir zombi bırakır; oyuncu envanterine eklenmez. Yeni metinler 17 dili destekler.

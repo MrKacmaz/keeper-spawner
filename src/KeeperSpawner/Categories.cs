@@ -34,7 +34,7 @@ namespace KeeperSpawner
 
         private static readonly HashSet<string> FarmingGroups = new HashSet<string> { "seed", "seedable", "crop", "farm_bag", "fertilizer" };
 
-        private static readonly HashSet<string> ChurchIds = new HashSet<string> { "carpet", "prosperity_item", "music_notes" };
+        private static readonly HashSet<string> ChurchIds = new HashSet<string> { "faith", "carpet", "prosperity_item", "music_notes" };
         private static readonly HashSet<string> FoodIds = new HashSet<string> { "fried_egg", "boiled_egg", "moonshine", "spices", "mash" };
         private static readonly HashSet<string> PaperIds = new HashSet<string> { "clean_paper", "ink", "green_scroll" };
         private static readonly HashSet<string> BuildingIds = new HashSet<string>

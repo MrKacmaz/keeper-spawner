@@ -36,7 +36,7 @@ namespace KeeperSpawner
             // envanter kapları
             "empty", "inventory", "toolBeltInventory", "craftInventory",
             // envanter itemı değil, oyun kaynağı
-            "faith", "temptation", "fire", "alchemy_flask", "science", "town_happiness",
+            "temptation", "fire", "alchemy_flask", "science", "town_happiness",
             // geliştirici artıkları ve iç kullanım
             "wood_OLD", "chair", "saw", "fake_porter_slot_filler", "hand_tool", "mouth_spit", "no_bait",
         };
