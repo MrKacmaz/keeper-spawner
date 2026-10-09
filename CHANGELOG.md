@@ -5,6 +5,8 @@ Atölye değişiklik notları bu dosyadan alınır.
 
 ## Unreleased
 
+- O menüsüne **Zombiler** sekmesi eklendi: en yüksek beyaz veya kırmızı kafatası için iki hazır zombi. Oyunun her ana organ türündeki en yüksek kafatası değerine sahip organlar, son seviye beden içeriği ve uyumlu tasma kullanılır. Her tıklama karakterin önüne bir zombi bırakır; oyuncu envanterine eklenmez. Yeni metinler 17 dili destekler.
+- Added a **Zombies** tab to the O menu with maximum-white and maximum-red skull presets, using the best available organ of each main type, final-tier body contents and a compatible collar. Each click drops one registered zombie in front of the player. New text supports all 17 game languages.
 - Envanter kapasitesi ayarı GK2 Mod Framework Mods menüsüne eklendi. Ayarın adı ve açıklaması oyunun 17 dilini destekler (es-mx, İspanyolca çevirisini kullanır); config açıklaması da tüm çevirileri içerir.
 - Added the inventory capacity setting to the GK2 Mod Framework Mods menu, with its name and description in all 17 game languages (es-mx reuses Spanish). The config description includes all translations too.
 - Config dosyasına `Inventory.Size` eklendi: oyuncunun temel envanter kapasitesi 40–1000 slot olarak belirlenebilir; 0 mevcut kapasiteyi korur. Düşürürken dolu slotlar korunur. Kapasite oyun kaydına yazılır.

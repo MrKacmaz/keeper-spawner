@@ -18,6 +18,7 @@ Item spawner mod for **Graveyard Keeper 2** (BepInEx 5). Press **O** in game, fi
 - Quality filter, grid or list view
 - Click adds 1, 10 or a full stack; Shift+Click adds 1; the info panel adds any amount from 1 to 999
 - Favorites (right-click) and the last 5 added items
+- Zombies tab: click to drop one zombie in front of your character, with maximum-white or maximum-red skull organ presets. Skull totals and body contents are shown before spawning.
 - Quest items hidden by default, so you do not break quests by accident
 - UI in all 17 languages of the game
 - Switches itself off with a log message, instead of breaking the game, if a game update changes the code it relies on
@@ -158,6 +159,7 @@ The game and BepInEx assemblies are referenced from the game folder and are not 
 - Kalite filtresi, ızgara ya da liste görünümü
 - Tık 1, 10 ya da tam yığın ekler; Shift+Tık 1 adet ekler; bilgi panelinden 1–999 arası miktar
 - Favoriler (sağ tık) ve son eklenen 5 item
+- Zombiler sekmesi: en yüksek beyaz veya kırmızı kafatası organ setiyle, karakterin önüne tıklama başına bir zombi bırakır. Kafatası toplamları ve bedenin içeriği menüde gösterilir.
 - Görev itemları varsayılan olarak gizli
 - Arayüz oyunun 17 dilinin hepsinde
 - Bir oyun güncellemesi kullandığı kodu değiştirirse oyunu bozmak yerine kendini kapatır ve sebebini loga yazar

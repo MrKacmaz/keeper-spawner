@@ -60,6 +60,22 @@ namespace KeeperSpawner
                 MethodReturns(typeof(Item), "GetTotalCountInInventory", typeof(int), typeof(string), typeof(Item), typeof(bool)));
             Required("Item(string, int)", () => AccessTools.Constructor(typeof(Item), new[] { typeof(string), typeof(int) }) != null);
 
+            // Zombie presets and world drops use the same API as the game's Flow_DropZombie node.
+            Required("GameBalance.bodyDefs", () => FieldOf(typeof(GameBalance), "bodyDefs", typeof(List<BodyDef>)));
+            Required("MainGame.ZombieSystemData", () => StaticProperty(typeof(MainGame), "ZombieSystemData"));
+            Required("MainGame.dropSystem", () => FieldOf(typeof(MainGame), "dropSystem", typeof(DropSystem)));
+            Required("PlayerData.Direction", () => AccessTools.Property(typeof(PlayerData), "Direction")?.PropertyType == typeof(UnityEngine.Vector2));
+            Required("PlayerData.position", () => AccessTools.Field(typeof(PlayerData), "position") != null);
+            Required("PlayerData.currentGameSceneId", () => FieldOf(typeof(PlayerData), "currentGameSceneId", typeof(string)));
+            Required("ZombieSystemData.CreateZombieDrop", () => MethodReturns(typeof(ZombieSystemData), "CreateZombieDrop",
+                typeof(ZombieWgoData), typeof(string), typeof(UnityEngine.Vector3), typeof(string), typeof(Item), typeof(string), typeof(string), typeof(bool)));
+            Required("ZombieSystemData.RemoveZombie", () => MethodReturns(typeof(ZombieSystemData), "RemoveZombie", typeof(void), typeof(SGuid)));
+            Required("DropSystem.DropItem", () => MethodReturns(typeof(DropSystem), "DropItem", typeof(bool),
+                typeof(Item), typeof(string), typeof(UnityEngine.Vector3), typeof(List<Item>)));
+            Required("ItemDef skull values", () => FieldOf(typeof(ItemDef), "whiteSkulls", typeof(int))
+                && FieldOf(typeof(ItemDef), "redSkulls", typeof(int)));
+            Required("ItemDef.SkullsInBorders", () => MethodReturns(typeof(ItemDef), "SkullsInBorders", typeof(bool), typeof(int), typeof(int)));
+
             // --- Item veritabanı ---
             Required("GameBalance.Me", () => StaticProperty(typeof(GameBalance), "Me"));
             Required("GameBalance.itemDefs", () => FieldOf(typeof(GameBalance), "itemDefs", typeof(List<ItemDef>)));

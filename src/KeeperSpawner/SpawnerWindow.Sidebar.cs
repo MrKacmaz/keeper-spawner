@@ -28,7 +28,7 @@ namespace KeeperSpawner
             RefreshCounts();
 
             var listRect = new Rect(rect.x + 2f, rect.y + 2f + StripH, rect.width - 4f, rect.height - 4f - StripH);
-            float contentH = CategoryListPad * 2f + 3f * (CategoryRowH + CategoryRowGap) + SeparatorH
+            float contentH = CategoryListPad * 2f + 4f * (CategoryRowH + CategoryRowGap) + SeparatorH
                              + visibleCategories.Count * (CategoryRowH + CategoryRowGap);
             bool scrolls = contentH > listRect.height;
             float rowW = listRect.width - CategoryListPad * 2f - (scrolls ? 12f : 0f);
@@ -40,6 +40,7 @@ namespace KeeperSpawner
             CategoryRow(ref y, rowW, Tab.Of(TabKind.All), Strings.All, ItemIcons.AllSprite, totalVisible);
             CategoryRow(ref y, rowW, Tab.Of(TabKind.Favorites), Strings.Favorites, ItemIcons.FavoritesSprite, favorites.Count);
             CategoryRow(ref y, rowW, Tab.Of(TabKind.Recent), Strings.Recent, ItemIcons.RecentSprite, recent.Count);
+            CategoryRow(ref y, rowW, Tab.Of(TabKind.Zombies), Strings.Zombies, "i_body_zombie", 2);
 
             // ◆ ayırıcı
             float cy = y + SeparatorH / 2f - 1f;

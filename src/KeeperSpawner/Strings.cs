@@ -82,6 +82,38 @@ namespace KeeperSpawner
         private static readonly string[] favoritesRow = { "Favorites", "Favoriler", "Favoriten", "Favoris", "Favoritos", "Favoritos", "Избранное", "Обране", "Preferiti", "Ulubione", "お気に入り", "收藏", "收藏", "즐겨찾기", "รายการโปรด", "Yêu thích" };
         private static readonly string[] recentRow = { "Recently added", "Son eklenenler", "Zuletzt hinzugefügt", "Ajoutés récemment", "Añadidos recientemente", "Adicionados recentemente", "Недавно добавленные", "Нещодавно додані", "Aggiunti di recente", "Ostatnio dodane", "最近追加", "最近添加", "最近新增", "최근 추가", "เพิ่มล่าสุด", "Vừa thêm" };
 
+        private static readonly string[] zombiesRow = { "Zombies", "Zombiler", "Zombies", "Zombies", "Zombis", "Zumbis", "Зомби", "Зомбі", "Zombi", "Zombie", "ゾンビ", "僵尸", "殭屍", "좀비", "ซอมบี้", "Thây ma" };
+        private static readonly string[] whiteZombieRow = { "Zombie · maximum white skulls", "Zombi · en yüksek beyaz kafatası", "Zombie · maximale weiße Schädel", "Zombie · crânes blancs maximum", "Zombi · máximo de calaveras blancas", "Zumbi · máximo de caveiras brancas", "Зомби · максимум белых черепов", "Зомбі · максимум білих черепів", "Zombi · massimo di teschi bianchi", "Zombie · maksimum białych czaszek", "ゾンビ・白い頭蓋骨最大", "僵尸 · 最多白骷髅", "殭屍 · 最多白骷髏", "좀비 · 흰 해골 최대", "ซอมบี้ · กะโหลกขาวสูงสุด", "Thây ma · tối đa sọ trắng" };
+        private static readonly string[] redZombieRow = { "Zombie · maximum red skulls", "Zombi · en yüksek kırmızı kafatası", "Zombie · maximale rote Schädel", "Zombie · crânes rouges maximum", "Zombi · máximo de calaveras rojas", "Zumbi · máximo de caveiras vermelhas", "Зомби · максимум красных черепов", "Зомбі · максимум червоних черепів", "Zombi · massimo di teschi rossi", "Zombie · maksimum czerwonych czaszek", "ゾンビ・赤い頭蓋骨最大", "僵尸 · 最多红骷髅", "殭屍 · 最多紅骷髏", "좀비 · 빨간 해골 최대", "ซอมบี้ · กะโหลกแดงสูงสุด", "Thây ma · tối đa sọ đỏ" };
+        private static readonly string[] zombieHintRow =
+        {
+            "Click a zombie to drop one in front of your character. Uses the best organs of each type and the final-tier body's other contents.",
+            "Zombiye tıklayınca karakterinin önüne bir tane bırakılır. Her türün en iyi organları ve son seviye bedenin diğer içerikleri kullanılır.",
+            "Klicke auf einen Zombie, um einen vor deiner Figur abzulegen. Verwendet die besten Organe jeder Art und den übrigen Inhalt eines Körpers der höchsten Stufe.",
+            "Cliquez sur un zombie pour en déposer un devant votre personnage. Utilise les meilleurs organes de chaque type et le reste du contenu d'un corps de dernier niveau.",
+            "Haz clic en un zombi para dejar uno delante de tu personaje. Usa los mejores órganos de cada tipo y el resto del contenido de un cuerpo del último nivel.",
+            "Clique em um zumbi para deixar um à frente do personagem. Usa os melhores órgãos de cada tipo e os demais conteúdos de um corpo do último nível.",
+            "Нажмите на зомби, чтобы положить одного перед персонажем. Лучшие органы каждого типа и остальное содержимое тела высшего уровня.",
+            "Натисніть на зомбі, щоб покласти одного перед персонажем. Найкращі органи кожного типу та решта вмісту тіла найвищого рівня.",
+            "Clicca su uno zombi per lasciarne uno davanti al personaggio. Usa i migliori organi di ogni tipo e il resto del contenuto di un corpo di livello massimo.",
+            "Kliknij zombie, aby położyć jednego przed postacią. Najlepsze organy każdego typu i pozostała zawartość ciała najwyższego poziomu.",
+            "ゾンビをクリックするとキャラクターの前に1体落とします。各種類の最良の臓器と、最高段階の遺体のその他の内容物を使用します。",
+            "点击僵尸，在角色面前放下一只。使用各类最佳器官及最高等级尸体的其他内容物。",
+            "點擊殭屍，在角色面前放下一隻。使用各類最佳器官及最高等級遺體的其他內容物。",
+            "좀비를 클릭하면 캐릭터 앞에 한 구를 놓습니다. 각 종류의 최상위 장기와 최고 단계 시신의 나머지 내용물을 사용합니다.",
+            "คลิกซอมบี้เพื่อวางหนึ่งตัวหน้าตัวละคร ใช้อวัยวะที่ดีที่สุดแต่ละชนิดและสิ่งอื่นในร่างระดับสูงสุด",
+            "Nhấp vào thây ma để thả một con trước nhân vật. Dùng nội tạng tốt nhất mỗi loại và các vật phẩm khác của thi thể cấp cao nhất.",
+        };
+        private static readonly string[] zombieSkullsRow = { "White: {0} · Red: {1}", "Beyaz: {0} · Kırmızı: {1}", "Weiß: {0} · Rot: {1}", "Blancs : {0} · Rouges : {1}", "Blancas: {0} · Rojas: {1}", "Brancas: {0} · Vermelhas: {1}", "Белые: {0} · Красные: {1}", "Білі: {0} · Червоні: {1}", "Bianchi: {0} · Rossi: {1}", "Białe: {0} · Czerwone: {1}", "白：{0}・赤：{1}", "白：{0} · 红：{1}", "白：{0} · 紅：{1}", "흰색: {0} · 빨강: {1}", "ขาว: {0} · แดง: {1}", "Trắng: {0} · Đỏ: {1}" };
+        private static readonly string[] zombieSpawnedRow = { "Zombie dropped in front of you", "Zombi önüne bırakıldı", "Zombie vor dir abgelegt", "Zombie déposé devant vous", "Zombi colocado delante de ti", "Zumbi colocado à sua frente", "Зомби положен перед вами", "Зомбі покладено перед вами", "Zombi lasciato davanti a te", "Zombie położony przed tobą", "目の前にゾンビを落としました", "僵尸已放在面前", "殭屍已放在面前", "앞에 좀비를 놓았습니다", "วางซอมบี้หน้าคุณแล้ว", "Đã thả thây ma trước mặt bạn" };
+
+        public static string Zombies => T(zombiesRow);
+        public static string WhiteZombie => T(whiteZombieRow);
+        public static string RedZombie => T(redZombieRow);
+        public static string ZombieHint => T(zombieHintRow);
+        public static string ZombieSkulls(int white, int red) => string.Format(T(zombieSkullsRow), white, red);
+        public static string ZombieSpawned => T(zombieSpawnedRow);
+
         public static string Categories => T(categoriesRow);
         public static string All => T(allRow);
         public static string Favorites => T(favoritesRow);

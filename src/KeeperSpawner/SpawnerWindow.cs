@@ -45,6 +45,7 @@ namespace KeeperSpawner
             Favorites,
             Recent,
             Category,
+            Zombies,
         }
 
         private struct Tab : IEquatable<Tab>
@@ -146,6 +147,8 @@ namespace KeeperSpawner
                 return;
             }
             IsOpen = true;
+            zombiePresets = null;
+            zombiePresetError = null;
             InvalidateContent(); // katalog ya da dil değişmiş olabilir
             InputBlocker.Suspend();
         }

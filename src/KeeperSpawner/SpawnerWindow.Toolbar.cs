@@ -16,6 +16,11 @@ namespace KeeperSpawner
 
         partial void DrawMain(Rect rect)
         {
+            if (selectedTab.Kind == TabKind.Zombies)
+            {
+                DrawZombies(rect);
+                return;
+            }
             DrawToolbar(new Rect(rect.x, rect.y, rect.width, ToolbarH));
             DrawFilters(new Rect(rect.x, rect.y + ToolbarH + RowGap, rect.width, FilterH));
             float top = ToolbarH + RowGap + FilterH + RowGap;

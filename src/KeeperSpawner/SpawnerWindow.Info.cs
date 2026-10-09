@@ -17,6 +17,11 @@ namespace KeeperSpawner
 
         partial void DrawInfo(Rect r)
         {
+            if (selectedTab.Kind == TabKind.Zombies)
+            {
+                DrawZombieInfo(r);
+                return;
+            }
             KsTheme.Draw(KsTheme.Panel, r);
             KsTheme.Strip(new Rect(r.x + 2f, r.y + 2f, r.width - 4f, StripH), Strings.ItemInfo);
 
