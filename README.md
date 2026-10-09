@@ -12,7 +12,7 @@ Item spawner mod for **Graveyard Keeper 2** (BepInEx 5). Press **O** in game, fi
 
 ## Features
 
-- All 726 regular items with the game's own icons, names in your game language and bronze / silver / gold quality stars
+- All 727 regular items with the game's own icons, names in your game language and bronze / silver / gold quality stars
 - 15 categories: building, food, farming, alchemy, potions, tools, equipment, fishing, body parts, graves, church, papers, bags, quest, other
 - Search by name or id, accent-insensitive
 - Quality filter, grid or list view
@@ -99,7 +99,7 @@ With GK2 Mod Framework installed, inventory capacity can also be changed in **Mo
 
 - Load a save first. The window does not open in the main menu.
 - The key is the letter **O**, not the number zero. You can change it in the config or in the Mods menu.
-- Open `Graveyard Keeper 2\BepInEx\LogOutput.log` and look for `KeeperSpawner 1.2.0 loaded`. If the line is missing, BepInEx did not load the mod: check that `BepInEx\plugins\KeeperSpawner\KeeperSpawner.dll` exists and that BepInEx itself starts (it creates `BepInEx\LogOutput.log`).
+- Open `Graveyard Keeper 2\BepInEx\LogOutput.log` and look for `KeeperSpawner 1.2.1 loaded`. If the line is missing, BepInEx did not load the mod: check that `BepInEx\plugins\KeeperSpawner\KeeperSpawner.dll` exists and that BepInEx itself starts (it creates `BepInEx\LogOutput.log`).
 - `KeeperSpawner disabled: ...` in the log means a game update changed something the mod needs. Please report it with the log.
 
 **KeeperSpawner is missing from the Mods menu.** `KeeperSpawner.GK2Framework.dll` must be next to `KeeperSpawner.dll`, and you need KeeperSpawner 1.1.0+ and GK2 Mod Framework 0.1.19+. The log should contain `Registered GK2 mod [com.mrkacmaz.keeperspawner]`.
@@ -154,7 +154,7 @@ The game and BepInEx assemblies are referenced from the game folder and are not 
 
 ### Özellikler
 
-- Oyunun kendi ikonlarıyla 726 normal item; adlar oyunun dilinde, bronz / gümüş / altın kalite yıldızlarıyla
+- Oyunun kendi ikonlarıyla 727 normal item; adlar oyunun dilinde, bronz / gümüş / altın kalite yıldızlarıyla
 - 15 kategori, isim ya da id ile Türkçe harflere duyarsız arama ("kilic" yazınca "Kılıç" bulunur)
 - Kalite filtresi, ızgara ya da liste görünümü
 - Tık 1, 10 ya da tam yığın ekler; Shift+Tık 1 adet ekler; bilgi panelinden 1–999 arası miktar
@@ -211,7 +211,7 @@ Size = 120
 
 ### Sorun giderme
 
-**O'ya basınca bir şey olmuyor.** Önce bir kayıt yükle (pencere ana menüde açılmaz). Tuş sıfır değil, **O** harfi. `BepInEx\LogOutput.log` içinde `KeeperSpawner 1.2.0 loaded` satırı yoksa BepInEx modu yüklememiştir; `BepInEx\plugins\KeeperSpawner\KeeperSpawner.dll` dosyasının yerinde olduğunu kontrol et. `KeeperSpawner disabled: ...` satırı, bir oyun güncellemesinden sonra uyumsuzluk demektir; logla birlikte bildir.
+**O'ya basınca bir şey olmuyor.** Önce bir kayıt yükle (pencere ana menüde açılmaz). Tuş sıfır değil, **O** harfi. `BepInEx\LogOutput.log` içinde `KeeperSpawner 1.2.1 loaded` satırı yoksa BepInEx modu yüklememiştir; `BepInEx\plugins\KeeperSpawner\KeeperSpawner.dll` dosyasının yerinde olduğunu kontrol et. `KeeperSpawner disabled: ...` satırı, bir oyun güncellemesinden sonra uyumsuzluk demektir; logla birlikte bildir.
 
 **Mods menüsünde KeeperSpawner yok.** `KeeperSpawner.GK2Framework.dll` dosyası `KeeperSpawner.dll`'in yanında olmalı; KeeperSpawner 1.1.0+ ve GK2 Mod Framework 0.1.19+ gerekir. Logda `Registered GK2 mod [com.mrkacmaz.keeperspawner]` satırı görünmeli.
 
