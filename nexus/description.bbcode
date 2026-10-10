@@ -5,12 +5,16 @@ Press [b]O[/b] (the letter) in game, find an item and click it to add it to your
 
 [center][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3810736028]Steam Workshop[/url]  ·  [url=https://github.com/MrKacmaz/keeper-spawner]GitHub (source code)[/url]  ·  [url=https://github.com/MrKacmaz/keeper-spawner/releases]GitHub releases[/url][/center]
 
-[b]New in 1.1.0:[/b] KeeperSpawner shows up in the game's [b]Mods[/b] menu when [url=https://www.nexusmods.com/graveyardkeeper2/mods/42]GK2 Mod Framework[/url] is installed, with its status and settings. The Framework is optional; KeeperSpawner still works without it.
+[b]New in 1.3.0:[/b] A separate [b]Corpses[/b] section joins Zombies in the O menu. Choose maximum-white or maximum-red skull presets; each click drops one corpse in front of your character.
 
 [line]
 [size=5][b]Features[/b][/size]
 [list]
-[*]All 726 regular items with the game's own icons, names in your game language and bronze / silver / gold quality stars
+[*]All 727 regular items with the game's own icons, names in your game language and bronze / silver / gold quality stars
+[*]Faith is available under All and Church; search by its faith ID or localized name
+[*]Separate Zombies and Corpses sections with maximum-white and maximum-red skull organ presets, with skull totals and contents shown in the menu
+[*]Each zombie or corpse click drops one body in front of your character instead of adding it to inventory. Zombies are registered with the game; corpses retain native body metadata for resurrection
+[*]Configurable inventory capacity: 40–1000 slots through the config file or optional Mods settings
 [*]15 categories: building, food, farming, alchemy, potions, tools, equipment, fishing, body parts, graves, church, papers, bags, quest, other
 [*]Search by name or id, accent-insensitive
 [*]Quality filter, grid or list view
@@ -31,7 +35,7 @@ Press [b]O[/b] (the letter) in game, find an item and click it to add it to your
 [size=5][b]Installation[/b][/size]
 [list=1]
 [*]Install BepInEx: extract [i]BepInEx_win_x64_5.4.23.5.zip[/i] next to [i]GraveyardKeeper2.exe[/i], start the game once and close it.
-[*]Extract [i]KeeperSpawner-1.1.0.zip[/i] into the game folder, so that you get
+[*]Extract [i]KeeperSpawner-1.3.0.zip[/i] into the game folder, so that you get
 [code]Graveyard Keeper 2\BepInEx\plugins\KeeperSpawner\KeeperSpawner.dll
 Graveyard Keeper 2\BepInEx\plugins\KeeperSpawner\KeeperSpawner.GK2Framework.dll[/code]
 [*]Optional: install GK2 Mod Framework as described on its page.
@@ -39,7 +43,7 @@ Graveyard Keeper 2\BepInEx\plugins\KeeperSpawner\KeeperSpawner.GK2Framework.dll[
 [/list]
 [i]KeeperSpawner.GK2Framework.dll[/i] is the small bridge to GK2 Mod Framework. Without the Framework, BepInEx skips it with a "missing dependencies" line in the log; that is expected.
 
-Updating from 1.0.0: extract the new zip over the old files. Your settings, favorites and recent items are kept.
+Updating from an older version: extract the new zip over the old files. Your settings, favorites and recent items are kept.
 
 Uninstall: delete the [i]BepInEx\plugins\KeeperSpawner[/i] folder.
 
@@ -56,21 +60,27 @@ Also on the [url=https://steamcommunity.com/sharedfiles/filedetails/?id=38107360
 [/list]
 
 [size=5][b]Settings[/b][/size]
-In game: [b]Mods > KeeperSpawner > Settings[/b] (with GK2 Mod Framework): hotkey, amount per click, quest items, view, UI scale, background dimming.
+In game: [b]Mods > KeeperSpawner > Settings[/b] (with GK2 Mod Framework): hotkey, amount per click, quest items, view, UI scale, background dimming, inventory capacity.
 Or edit [i]BepInEx\config\com.mrkacmaz.keeperspawner.cfg[/i] (created on the first start).
+
+[size=5][b]Inventory capacity[/b][/size]
+Close the game and edit [i]BepInEx\config\com.mrkacmaz.keeperspawner.cfg[/i]. For example, for 120 slots:
+[code][Inventory]
+Size = 120[/code]
+[b]0[/b] leaves the current capacity unchanged; choose 40–1000 slots to set a capacity. Occupied slots are preserved when reducing it. Capacity is saved with the game; setting 0 does not undo a previous change. Close and reopen the inventory to see the new slots. With GK2 Mod Framework, you can also change this under Mods > KeeperSpawner > Settings.
 
 [size=5][b]Nothing happens when I press O?[/b][/size]
 [list]
 [*]Load a save first. The window does not open in the main menu.
 [*]The key is the letter [b]O[/b], not the number zero.
-[*]Open [i]Graveyard Keeper 2\BepInEx\LogOutput.log[/i] and look for [i]KeeperSpawner 1.1.0 loaded[/i]. If the line is missing, BepInEx did not load the mod: check that [i]BepInEx\plugins\KeeperSpawner\KeeperSpawner.dll[/i] exists and that BepInEx itself starts.
+[*]Open [i]Graveyard Keeper 2\BepInEx\LogOutput.log[/i] and look for [i]KeeperSpawner 1.3.0 loaded[/i]. If the line is missing, BepInEx did not load the mod: check that [i]BepInEx\plugins\KeeperSpawner\KeeperSpawner.dll[/i] exists and that BepInEx itself starts.
 [*][i]KeeperSpawner disabled: ...[/i] in the log means a game update changed something the mod needs. Please report it with the log.
 [*]Missing from the Mods menu? Both DLLs must be in the same folder, and you need GK2 Mod Framework 0.1.19 or newer. The log should contain [i]Registered GK2 mod [com.mrkacmaz.keeperspawner][/i].
 [/list]
 
 [size=5][b]Good to know[/b][/size]
 [list]
-[*]Tested with game version 1.007.1 (Steam build 25601286) and GK2 Mod Framework 0.1.19.
+[*]Version 1.1.0 was tested with game version 1.007.1 (Steam build 25601286) and GK2 Mod Framework 0.1.19.
 [*]Items are added with the same call the game's own scripts use, so they stay in your save. Keeping a backup of your save is still a good idea.
 [*]The mod does not use the network, does not delete files and does not load other code.
 [/list]

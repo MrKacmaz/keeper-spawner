@@ -1,11 +1,15 @@
 [h1]KeeperSpawner[/h1]
 Graveyard Keeper 2 için hafif bir item spawner. Oyunda [b]O[/b] harfine bas, itemı bul ve tıklayarak envanterine ekle.
 
-[b]1.1.0'da yeni:[/b] [url=https://www.nexusmods.com/graveyardkeeper2/mods/42]GK2 Mod Framework[/url] kuruluysa KeeperSpawner oyunun [b]Mods[/b] menüsünde durumu ve ayarlarıyla görünür. Framework isteğe bağlı.
+[b]1.3.0'da yeni:[/b] O menüsünde Zombiler'in yanına ayrı [b]Cesetler[/b] bölümü eklendi. En yüksek beyaz veya kırmızı kafatası için iki seçenek bulunur; her tık karakterinin önüne bir ceset bırakır.
 
 [h2]Özellikler[/h2]
 [list]
-[*]Oyunun kendi ikonlarıyla 726 normal item; adlar oyunun dilinde, bronz / gümüş / altın kalite yıldızlarıyla
+[*]Oyunun kendi ikonlarıyla 727 normal item; adlar oyunun dilinde, bronz / gümüş / altın kalite yıldızlarıyla
+[*]Faith (İnanç), Tümü ve Kilise kategorilerinde bulunur; faith ID'si veya oyundaki adıyla aranabilir
+[*]Ayrı Zombiler ve Cesetler bölümleri: en yüksek beyaz veya kırmızı kafatası için iki hazır organ seti; toplamlar ve içerik menüde gösterilir
+[*]Her zombi veya ceset tıklaması karakterinin önüne bir beden bırakır; envantere eklenmez. Zombiler oyunun zombi sistemine kaydedilir; cesetler canlandırma için doğal beden verilerini korur
+[*]Config veya isteğe bağlı Mods menüsünden ayarlanabilir envanter kapasitesi: 40–1000 slot
 [*]15 kategori (inşaat, yiyecek, tarım, simya, iksirler, aletler, ekipman, balıkçılık, organlar, mezar, kilise, kâğıt, çantalar, görev, diğer)
 [*]İsim ya da id ile arama; Türkçe harflere duyarsız ("kilic" yazınca "Kılıç" bulunur)
 [*]Kalite filtresi, ızgara ya da liste görünümü
@@ -26,28 +30,34 @@ Graveyard Keeper 2 için hafif bir item spawner. Oyunda [b]O[/b] harfine bas, it
 [h2]Tuşlar[/h2]
 [table]
 [tr][td]O[/td][td]Aç / kapat (değiştirilebilir)[/td][/tr]
-[tr][td]Tık[/td][td]Seçili miktarı ekle[/td][/tr]
+[tr][td]Tık[/td][td]Itemlarda seçili miktarı envantere ekle[/td][/tr]
 [tr][td]Shift+Tık[/td][td]1 adet ekle[/td][/tr]
 [tr][td]Sağ tık[/td][td]Favori[/td][/tr]
 [tr][td]Ctrl+F[/td][td]Arama[/td][/tr]
 [tr][td]Esc[/td][td]Kapat[/td][/tr]
 [/table]
 
-Ayarlar: [i]BepInEx\config\com.mrkacmaz.keeperspawner.cfg[/i] (kısayol, arayüz ölçeği, görünüm, arka plan karartma, görev itemları) ya da GK2 Mod Framework ile Mods > KeeperSpawner > Settings.
+Ayarlar: [i]BepInEx\config\com.mrkacmaz.keeperspawner.cfg[/i] (kısayol, arayüz ölçeği, görünüm, arka plan karartma, görev itemları, envanter kapasitesi) ya da GK2 Mod Framework ile Mods > KeeperSpawner > Settings.
+
+[h2]Envanter kapasitesi[/h2]
+Oyunu kapatıp [i]BepInEx\config\com.mrkacmaz.keeperspawner.cfg[/i] dosyasındaki ayarı değiştir. Örneğin 120 slot için:
+[code][Inventory]
+Size = 120[/code]
+[b]0[/b] mevcut kapasiteyi korur; 40–1000 arası değer seçebilirsin. Kapasite düşürülürken dolu slotlar korunur. Değişiklik oyun kaydına yazılır; 0 yapmak önceki kapasiteyi geri getirmez. Yeni slotları görmek için envanteri kapatıp tekrar aç. GK2 Mod Framework kuruluysa ayarı Mods > KeeperSpawner > Settings içinden de değiştirebilirsin.
 
 [h2]O'ya basınca bir şey olmuyor mu?[/h2]
 [list]
 [*]Önce bir kayıt yükle; pencere ana menüde açılmaz.
 [*]Tuş sıfır değil, O harfi.
-[*][i]BepInEx\LogOutput.log[/i] içinde [i]KeeperSpawner 1.1.0 loaded[/i] satırını ara. Yoksa BepInEx modu yüklememiştir (BepInEx ve Workshop Loader kurulumunu kontrol et).
+[*][i]BepInEx\LogOutput.log[/i] içinde [i]KeeperSpawner 1.3.0 loaded[/i] satırını ara. Yoksa BepInEx modu yüklememiştir (BepInEx ve Workshop Loader kurulumunu kontrol et).
 [*]Modu hem Atölye'den hem elle kurma.
 [/list]
 
 [h2]Bilmen gerekenler[/h2]
 [list]
-[*]Oyun sürümü 1.007.1 ve GK2 Mod Framework 0.1.19 ile test edildi. Bir oyun güncellemesinden sonra mod kullandığı oyun kodunu kontrol eder; bir şey değiştiyse oyununu bozmak yerine kendini kapatır ve sebebini [i]BepInEx\LogOutput.log[/i] dosyasına yazar.
+[*]1.1.0 sürümü oyun 1.007.1 ve GK2 Mod Framework 0.1.19 ile test edildi. Bir oyun güncellemesinden sonra mod kullandığı oyun kodunu kontrol eder; bir şey değiştiyse oyununu bozmak yerine kendini kapatır ve sebebini [i]BepInEx\LogOutput.log[/i] dosyasına yazar.
 [*]Itemlar oyunun kendi senaryolarının kullandığı çağrıyla eklenir, kayıtta kalır. Yine de kaydının yedeğini almak iyi fikir.
-[*]Workshop Loader güvenlik notu: mod reflection'ı sadece pencere açıkken oyunun kendi girdi durumunu okumak ve sıfırlamak için kullanır. Ağ kullanmaz, dosya silmez, başka kod yüklemez.
+[*]Workshop Loader güvenlik notu: mod reflection'ı oyun API uyumluluğunu kontrol etmek ve pencere açıkken girdi durumunu yönetmek için kullanır. Ağ kullanmaz, dosya silmez, başka kod yüklemez.
 [*]Bu oyunun Atölye'si sadece "Translation" etiketi sunduğu için bu item, bir kod modu olsa da bu etiketi taşıyor.
 [/list]
 

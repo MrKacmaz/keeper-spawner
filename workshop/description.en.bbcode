@@ -1,11 +1,15 @@
 [h1]KeeperSpawner[/h1]
 A lightweight item spawner for Graveyard Keeper 2. Press [b]O[/b] (the letter) in game, find an item and click it to add it to your inventory.
 
-[b]New in 1.1.0:[/b] KeeperSpawner shows up in the game's [b]Mods[/b] menu when [url=https://www.nexusmods.com/graveyardkeeper2/mods/42]GK2 Mod Framework[/url] is installed, with its status and settings. The Framework is optional.
+[b]New in 1.3.0:[/b] A separate [b]Corpses[/b] section joins Zombies in the O menu. Choose maximum-white or maximum-red skull presets; each click drops one corpse in front of your character.
 
 [h2]Features[/h2]
 [list]
-[*]All 726 regular items with the game's own icons, names in your game language and bronze / silver / gold quality stars
+[*]All 727 regular items with the game's own icons, names in your game language and bronze / silver / gold quality stars
+[*]Faith is available under All and Church; search by its faith ID or localized name
+[*]Separate Zombies and Corpses sections with maximum-white and maximum-red skull organ presets, with skull totals and contents shown in the menu
+[*]Each zombie or corpse click drops one body in front of your character instead of adding it to inventory. Zombies are registered with the game; corpses retain native body metadata for resurrection
+[*]Configurable inventory capacity: 40–1000 slots through the config file or optional Mods settings
 [*]15 categories (building, food, farming, alchemy, potions, tools, equipment, fishing, body parts, graves, church, papers, bags, quest, other)
 [*]Search by name or id, accent-insensitive
 [*]Quality filter, grid or list view
@@ -33,21 +37,27 @@ A lightweight item spawner for Graveyard Keeper 2. Press [b]O[/b] (the letter) i
 [tr][td]Esc[/td][td]Close[/td][/tr]
 [/table]
 
-Settings: [i]BepInEx\config\com.mrkacmaz.keeperspawner.cfg[/i] (hotkey, UI scale, view, backdrop, quest items), or Mods > KeeperSpawner > Settings with GK2 Mod Framework.
+Settings: [i]BepInEx\config\com.mrkacmaz.keeperspawner.cfg[/i] (hotkey, UI scale, view, backdrop, quest items, inventory capacity), or Mods > KeeperSpawner > Settings with GK2 Mod Framework.
+
+[h2]Inventory capacity[/h2]
+Close the game and edit [i]BepInEx\config\com.mrkacmaz.keeperspawner.cfg[/i]. For example, for 120 slots:
+[code][Inventory]
+Size = 120[/code]
+[b]0[/b] leaves the current capacity unchanged; choose 40–1000 slots to set a capacity. Occupied slots are preserved when reducing it. Capacity is saved with the game; setting 0 does not undo a previous change. Close and reopen the inventory to see the new slots. With GK2 Mod Framework, you can also change this under Mods > KeeperSpawner > Settings.
 
 [h2]Nothing happens when I press O?[/h2]
 [list]
 [*]Load a save first; the window does not open in the main menu.
 [*]It is the letter O, not zero.
-[*]Look for [i]KeeperSpawner 1.1.0 loaded[/i] in [i]BepInEx\LogOutput.log[/i]. If it is missing, BepInEx did not load the mod (check BepInEx and the Workshop Loader install).
+[*]Look for [i]KeeperSpawner 1.3.0 loaded[/i] in [i]BepInEx\LogOutput.log[/i]. If it is missing, BepInEx did not load the mod (check BepInEx and the Workshop Loader install).
 [*]Do not install the mod both from the Workshop and manually.
 [/list]
 
 [h2]Good to know[/h2]
 [list]
-[*]Tested with game version 1.007.1 and GK2 Mod Framework 0.1.19. After a game update the mod checks the game code it uses; if something changed it switches itself off and writes the reason to [i]BepInEx\LogOutput.log[/i] instead of breaking your game.
+[*]Version 1.1.0 was tested with game version 1.007.1 and GK2 Mod Framework 0.1.19. After a game update the mod checks the game code it uses; if something changed it switches itself off and writes the reason to [i]BepInEx\LogOutput.log[/i] instead of breaking your game.
 [*]Items are added with the same call the game's own scripts use, so they stay in your save. Keeping a backup of your save is still a good idea.
-[*]Security note for the Workshop Loader: the mod uses reflection only to read and reset the game's own input state while the window is open. It does not use the network, does not delete files and does not load other code.
+[*]Security note for the Workshop Loader: the mod uses reflection to check game API compatibility and manage input state while the window is open. It does not use the network, does not delete files and does not load other code.
 [*]The Workshop of this game only offers the "Translation" tag, so this item carries it even though it is a code mod.
 [/list]
 
